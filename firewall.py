@@ -16,6 +16,7 @@ BLOCK_ARRAY = {
     "GET / HTTP",
     '"-" "-"',
     "/commits/commit/",
+    "/blame/commit",
     "/src/commit/",
     "/raw/commit/",
     "/rss/commit",
