@@ -300,7 +300,8 @@ def main():
                         # Check if the IP address has exceeded the threshold and block it if necessary
                         if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                             block_ip(ip_address)
-        print("\nIP Address Counts:")
+                            
+        print("\n\n\n[IP Address Counts]\n")
         for ip, count in ip_counts.items():
             messaging(f"{ip}: {count}")
         
