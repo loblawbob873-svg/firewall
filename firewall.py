@@ -291,7 +291,6 @@ def main():
                 if (
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
-                    and not any(item.lower() in line.lower() for item in BLOCK_ARRAY)
                 ):
                     if ip_match:
                         ip_address = ip_match.group()
