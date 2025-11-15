@@ -26,7 +26,7 @@ FEDIVERSE_TRAFFIC = {
     "WhatsApp",
     "Friendica",
     "Fedilab",
-    "incestoma"
+    "incestoma",
 }
 
 BLOCK_ARRAY = {
@@ -167,7 +167,7 @@ BLOCK_ARRAY = {
     "YandexFavicon",
     "AdsBot-Google",
     "GPTBot",
-    "CyberFind"
+    "CyberFind",
 }
 
 SKIPPED_TERMS = [
@@ -245,7 +245,9 @@ SKIPPED_TERMS = [
 ]
 
 # Set up logging
-logging.basicConfig(filename='firewall.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+logging.basicConfig(
+    filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
+)
 
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
@@ -254,6 +256,7 @@ ip_requests = defaultdict(int)
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
+
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
@@ -277,7 +280,7 @@ def main():
     parser.add_argument("--print", action="store_true", help="Print IP address counts")
     args = parser.parse_args()
     ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
-
+    log_array = {}
     while True:
         # Get the current time and the time one minute ago
         now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
@@ -289,35 +292,34 @@ def main():
         with open(LOG_FILE, "r") as f:
             for line in f:
                 # Increment the occurrence count for the IP address
-                # Excludes Fediverse Traffic 
-                if (
-                    one_minute_ago.lower() in line.lower()
-                    and not any(term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC)
+                # Excludes Fediverse Traffic
+                if one_minute_ago.lower() in line.lower() and not any(
+                    term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC
                 ):
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
                         ip_address = ip_match.group()
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
-                
-                        # Excludes Fediverse Traffic and SKIPPED_TERMS
-                        if(
-                            any(term.lower() in line.lower() for term in BLOCK_ARRAY)
-                            and not any(skipped_term.lower() in line.lower() for skipped_term in SKIPPED_TERMS)
-                          ):
-                            if ip_match:
-                                ip_address = ip_match.group()
-                                
-                                if not args.print:
-                                    messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
-                                    # Check if the IP address has exceeded the threshold and block it if necessary
-                                    if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
-                                        block_ip(ip_address)
 
-        if args.print:
-            messaging("\n\n\n[IP Address Counts]\n")
-            for ip, count in ip_counts.items():
-                messaging(f"{ip}: {count}")
-        
+                        # Excludes Fediverse Traffic and SKIPPED_TERMS
+                        if not any(
+                            item.lower() in line.lower() for item in SKIPPED_TERMS
+                        ) and not any(
+                            term.lower() in line.lower() for term in BLOCK_ARRAY
+                        ):
+                            if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
+                                block_ip(ip_address)
+                            if not args.print:
+                                messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
+                                # Check if the IP address has exceeded the threshold and block it if necessary
+                            if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
+                                block_ip(ip_address)
+
+                    if args.print:
+                        messaging("\n\n\n[IP Address Counts]\n")
+                    for ip, count in ip_counts.items():
+                        messaging(f"{ip}: {count}")
+
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
         time.sleep(
             TIME_FRAME
