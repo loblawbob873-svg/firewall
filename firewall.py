@@ -285,11 +285,15 @@ def main():
                     ip_address = ip_match.group()
                     # Increment the occurrence count for the IP address
                     ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
+
                 if (
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
                     and not any(item.lower() in line.lower() for item in BLOCK_ARRAY)
                 ):
+                    ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
+                    if ip_match:
+                        ip_address = ip_match.group()
                         messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
 
                         # Check if the IP address has exceeded the threshold and block it if necessary
