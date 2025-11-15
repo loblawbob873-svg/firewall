@@ -270,8 +270,8 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    send_to_ntfy(message)
-
+    if NTFY_URL:
+        send_to_ntfy(message)
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
