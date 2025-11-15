@@ -304,6 +304,7 @@ def main():
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
                     and not any(term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC)
+                    and any(term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC)
                 ):
                     if ip_match:
                         ip_address = ip_match.group()
