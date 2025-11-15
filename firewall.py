@@ -303,8 +303,8 @@ def main():
                 if (
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
-                    and not any(term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC)
-                    and any(term.lower() in line.lower() for term in BLOCK_ARRAY)
+                    and not any(item.lower() in line.lower() for item in FEDIVERSE_TRAFFIC)
+                    and any(blocked.lower() in line.lower() for blocked in BLOCK_ARRAY)
                 ):
                     if ip_match:
                         ip_address = ip_match.group()
