@@ -294,7 +294,7 @@ def main():
                         # Check if the IP address has exceeded the threshold and block it if necessary
                         if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                             block_ip(ip_address)
-
+        messaging(f"Firewall sleeping for: {TIME_FRAME}")
         time.sleep(
             TIME_FRAME
         )  # Wait for the specified time frame before processing again
