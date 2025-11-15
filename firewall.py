@@ -299,7 +299,8 @@ def main():
                 ):
                     if ip_match:
                         ip_address = ip_match.group()
-                        messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
+                        if not args.print:
+                            messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
 
                         # Check if the IP address has exceeded the threshold and block it if necessary
                         if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
