@@ -9,7 +9,7 @@ import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
-OCCURRENCE_THRESHOLD = 50
+OCCURRENCE_THRESHOLD = 2
 NTFY_URL = "https://push.poster.place/firewall"
 TIME_FRAME = 30  # 30 Seconds
 
@@ -278,9 +278,10 @@ def send_notification(message):
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
     parser.add_argument("--print", action="store_true", help="Print IP address counts")
+    parser.add_argument("--blocked", action="store_true", help="Shows what is blocked")
     args = parser.parse_args()
     ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
-    log_array = {}
+
     while True:
         # Get the current time and the time one minute ago
         now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
@@ -300,14 +301,19 @@ def main():
                     if ip_match:
                         ip_address = ip_match.group()
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
-                
-                        if any in BLOCK_ARRAY and not SKIPPED_TERMS:
-                            if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
-                                block_ip(ip_address)
-                            if not args.print:
-                                messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
-                                # Check if the IP address has exceeded the threshold and block it if necessary
 
+                         # Excludes SKIPPED_TERMS
+                        if not any(item.lower() in line.lower() for item in SKIPPED_TERMS):                            
+                            # BLOCK BLOCK_ARRAY
+                            if any(word.lower() in line.lower() for word in BLOCK_ARRAY):
+                                if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
+                                    if args.blocked:
+                                        messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")      
+                                    block_ip(ip_address)
+                            else:
+                                if not args.print:
+                                    messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")        
+                                
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
                         for ip, count in ip_counts.items():
