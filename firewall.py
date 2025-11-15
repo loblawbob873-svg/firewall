@@ -300,9 +300,8 @@ def main():
                     if ip_match:
                         ip_address = ip_match.group()
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
-
-                        # Excludes Fediverse Traffic and SKIPPED_TERMS
-                        if any in BLOCK_ARRAY and not any in SKIPPED_TERMS:
+                
+                        if any in BLOCK_ARRAY and not SKIPPED_TERMS:
                             if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                                 block_ip(ip_address)
                             if not args.print:
@@ -311,8 +310,8 @@ def main():
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
-                    for ip, count in ip_counts.items():
-                        messaging(f"{ip}: {count}")
+                        for ip, count in ip_counts.items():
+                            messaging(f"{ip}: {count}")
 
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
         time.sleep(
