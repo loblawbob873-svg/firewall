@@ -1,0 +1,15 @@
+[Unit]
+Description=python-firewall 
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/python-firewall/venv/bin/python /opt/python-firewall/firewall.py
+ExecStop=-kill -9 $(ps aux | grep -i firewall.py | grep -Evi grep | cut -d ' ' -f7 | head -1)
+RemainAfterExit=true
+Restart=on-failure
+SyslogIdentifier=python-firewall
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
