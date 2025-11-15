@@ -302,18 +302,12 @@ def main():
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
 
                         # Excludes Fediverse Traffic and SKIPPED_TERMS
-                        if not any(
-                            item.lower() in line.lower() for item in SKIPPED_TERMS
-                        ) and not any(
-                            term.lower() in line.lower() for term in BLOCK_ARRAY
-                        ):
+                        if any in BLOCK_ARRAY and not any in SKIPPED_TERMS:
                             if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                                 block_ip(ip_address)
                             if not args.print:
                                 messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
                                 # Check if the IP address has exceeded the threshold and block it if necessary
-                            if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
-                                block_ip(ip_address)
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
