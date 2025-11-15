@@ -280,11 +280,9 @@ def block_ip(ip):
             f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
         )
         os.system(command)
-        send_notification(f"IP address {ip} blocked")
         messaging(f"IP address {ip} blocked")
     else:
         messaging(f"IP address {ip} already in the ruleset.")
-
 
 
 def main():
