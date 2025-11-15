@@ -5,6 +5,7 @@ import os
 import subprocess
 import logging
 from collections import defaultdict
+import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
@@ -271,6 +272,9 @@ def send_notification(message):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Firewall Script")
+    parser.add_argument("--print", action="store_true", help="Print IP address counts")
+    args = parser.parse_args()
     ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
 
     while True:
@@ -301,9 +305,10 @@ def main():
                         if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                             block_ip(ip_address)
 
-        messaging("\n\n\n[IP Address Counts]\n")
-        #for ip, count in ip_counts.items():
-        #    messaging(f"{ip}: {count}")
+        if args.print:
+            messaging("\n\n\n[IP Address Counts]\n")
+            for ip, count in ip_counts.items():
+                messaging(f"{ip}: {count}")
         
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
         time.sleep(
