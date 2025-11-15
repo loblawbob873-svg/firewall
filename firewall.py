@@ -10,7 +10,7 @@ from collections import defaultdict
 LOG_FILE = "/tmp/access.log"
 OCCURRENCE_THRESHOLD = 5
 NTFY_URL = "https://push.poster.place/firewall"
-TIME_FRAME = 60  # 1 minute
+TIME_FRAME = 30  # 1 minute
 
 BLOCK_ARRAY = {
     "GET / HTTP",
