@@ -287,7 +287,6 @@ def main():
                         ip_address = ip_match.group()
                         messaging(f"Debug: {ip_address}")
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
-                    print("")
                 if (
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
