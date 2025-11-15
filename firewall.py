@@ -11,7 +11,7 @@ import argparse
 LOG_FILE = "/tmp/access.log"
 OCCURRENCE_THRESHOLD = 2
 IP_OCCURRENCE_THRESHOLD = 30
-NTFY_URL = "https://push.poster.place/firewall"
+NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
 
 FEDIVERSE_TRAFFIC = {
@@ -256,10 +256,21 @@ logging.basicConfig(
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
 
-
+def send_to_ntfy(message):
+    response = requests.post(
+        NTFY_URL,
+        data=message.encode("utf-8"),
+        headers={"IP BLOCK": "message"},
+    )
+    if response.status_code == 200:
+        print(f"🌈 Successfully sent message: {message} 🌈")
+    else:
+        print(f"❌ Failed to send message. Status code: {response.status_code} ❌")
+        
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
+    send_to_ntfy(message)
 
 
 def block_ip(ip):
