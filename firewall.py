@@ -286,9 +286,6 @@ def block_ip(ip):
         messaging(f"IP address {ip} already in the ruleset.")
 
 
-def send_notification(message):
-    requests.post(NTFY_URL, data=message.encode("utf-8"))
-
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
