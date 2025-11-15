@@ -10,13 +10,14 @@ from collections import defaultdict
 LOG_FILE = "/tmp/access.log"
 OCCURRENCE_THRESHOLD = 5
 NTFY_URL = "https://push.poster.place/firewall"
-TIME_FRAME = 30  # 1 minute
+TIME_FRAME = 30  # 30 Seconds
 
 BLOCK_ARRAY = {
     "GET / HTTP",
     '"-" "-"',
     "/commits/commit/",
     "/src/commit/",
+    "/raw/commit/",
     "/tree-view/commit/",
     "/tree-list/commit/",
     "/find/commit/",
