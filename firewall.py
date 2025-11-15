@@ -9,9 +9,25 @@ import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
-OCCURRENCE_THRESHOLD = 5
+OCCURRENCE_THRESHOLD = 50
 NTFY_URL = "https://push.poster.place/firewall"
 TIME_FRAME = 30  # 30 Seconds
+
+FEDIVERSE_TRAFFIC = {
+    "husky",
+    "mastodon",
+    "misskey",
+    "akkoma",
+    "pleroma",
+    "soapbox",
+    "ShitPissCum",
+    "poa.st",
+    "poast",
+    "WhatsApp",
+    "Friendica",
+    "Fedilab",
+    "incestoma"
+}
 
 BLOCK_ARRAY = {
     "GET / HTTP",
@@ -155,7 +171,6 @@ BLOCK_ARRAY = {
 }
 
 SKIPPED_TERMS = [
-    "Friendica",
     "/manifest.json",
     "/socket/websocket",
     "CherryPick",
@@ -171,7 +186,6 @@ SKIPPED_TERMS = [
     "emoji",
     "assets",
     "favicon",
-    "WhatsApp",
     "avatar",
     "inbox",
     "kuma",
@@ -193,20 +207,10 @@ SKIPPED_TERMS = [
     "sw-pleroma.js",
     "wolfgirl.bar",
     "socks.cafe",
-    "husky",
-    "mastodon",
-    "misskey",
-    "akkoma",
-    "pleroma",
-    "soapbox",
     "videojs",
     "ActivityRelay",
-    "Momostr",
     "GuzzleHttp",
     "FoundKey",
-    "ShitPissCum",
-    "poa.st",
-    "poast",
     "comments",
     "fonts",
     "storyboards",
@@ -230,10 +234,7 @@ SKIPPED_TERMS = [
     "Husky",
     ".js",
     "feed/popular",
-    "incestoma",
-    "Fedilab",
     "apple-touch",
-    "damus",
     "ANNIHILATION",
     ".png",
     ".jpg",
@@ -288,7 +289,10 @@ def main():
         with open(LOG_FILE, "r") as f:
             for line in f:
                 # Increment the occurrence count for the IP address 
-                if (one_minute_ago.lower() in line.lower()):
+                if (
+                    one_minute_ago.lower() in line.lower()
+                    and not any(term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC)
+                ):
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
                         ip_address = ip_match.group()
@@ -296,6 +300,7 @@ def main():
                 if (
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
+                    and not any(term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC)
                 ):
                     if ip_match:
                         ip_address = ip_match.group()
