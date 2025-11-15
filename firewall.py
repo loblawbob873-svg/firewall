@@ -10,6 +10,7 @@ import argparse
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
 OCCURRENCE_THRESHOLD = 2
+IP_OCCURRENCE_THRESHOLD = 25
 NTFY_URL = "https://push.poster.place/firewall"
 TIME_FRAME = 30  # 30 Seconds
 
@@ -170,13 +171,16 @@ BLOCK_ARRAY = {
     "CyberFind",
 }
 
+LOCAL_NETWORK = [
+    "192.168.0",    
+]
+
 SKIPPED_TERMS = [
     "/manifest.json",
     "/socket/websocket",
     "CherryPick",
     "/api/v1",
     "/search",
-    "192.168.0",
     "POST",
     "/inbox",
     "/api/v2",
@@ -299,21 +303,28 @@ def main():
                 ):
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
-                        ip_address = ip_match.group()
-                        ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
+                        
+                         #Don't Cound the Local Network Against you
+                         if not any(lan.lower() in line.lower() for lan in LOCAL_NETWORK):      
+                            ip_address = ip_match.group()
+                            ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
 
-                         # Excludes SKIPPED_TERMS
-                        if not any(item.lower() in line.lower() for item in SKIPPED_TERMS):                            
-                            # BLOCK BLOCK_ARRAY
-                            if any(word.lower() in line.lower() for word in BLOCK_ARRAY):
-                                if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
-                                    if args.blocked:
-                                        messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")      
-                                    block_ip(ip_address)
-                            else:
-                                if not args.print:
-                                    messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")        
-                                
+                            # Block IP's over IP_OCCURRENCE_THRESHOLD
+                            if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
+                                block_ip(ip_address)
+
+                            # Excludes SKIPPED_TERMS
+                            if not any(item.lower() in line.lower() for item in SKIPPED_TERMS):                            
+                                # BLOCK BLOCK_ARRAY
+                                if any(word.lower() in line.lower() for word in BLOCK_ARRAY):
+                                    if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
+                                        if args.blocked:
+                                            messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")      
+                                        block_ip(ip_address)
+                                else:
+                                    if not args.print:
+                                        messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")        
+                                        
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
                         for ip, count in ip_counts.items():
