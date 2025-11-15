@@ -18,6 +18,7 @@ BLOCK_ARRAY = {
     "/commits/commit/",
     "/src/commit/",
     "/raw/commit/",
+    "/rss/commit",
     "/tree-view/commit/",
     "/tree-list/commit/",
     "/find/commit/",
@@ -300,8 +301,8 @@ def main():
                             block_ip(ip_address)
 
         messaging("\n\n\n[IP Address Counts]\n")
-        for ip, count in ip_counts.items():
-            messaging(f"{ip}: {count}")
+        #for ip, count in ip_counts.items():
+        #    messaging(f"{ip}: {count}")
         
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
         time.sleep(
