@@ -293,7 +293,6 @@ def main():
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
                     and not any(item.lower() in line.lower() for item in BLOCK_ARRAY)
                 ):
-                    ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
                         ip_address = ip_match.group()
                         messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
