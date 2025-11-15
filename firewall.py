@@ -245,8 +245,8 @@ ip_requests = defaultdict(int)
 
 
 def messaging(message):
-    logging.info(f'{message}')
-    print(f"message")
+    logging.info(f"{message}")
+    print(f"{message}")
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
