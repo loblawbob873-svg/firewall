@@ -296,6 +296,10 @@ def main():
                         # Check if the IP address has exceeded the threshold and block it if necessary
                         if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                             block_ip(ip_address)
+        print("\nIP Address Counts:")
+        for ip, count in ip_counts.items():
+            messaging(f"{ip}: {count}")
+        
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
         time.sleep(
             TIME_FRAME
