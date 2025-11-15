@@ -285,6 +285,7 @@ def main():
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
                         ip_address = ip_match.group()
+                        messaging(f"Debug: {ip_address}")
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
                     print("")
                 if (
@@ -300,8 +301,8 @@ def main():
                         # Check if the IP address has exceeded the threshold and block it if necessary
                         if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                             block_ip(ip_address)
-                            
-        print("\n\n\n[IP Address Counts]\n")
+
+        messaging("\n\n\n[IP Address Counts]\n")
         for ip, count in ip_counts.items():
             messaging(f"{ip}: {count}")
         
