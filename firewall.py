@@ -285,7 +285,6 @@ def main():
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
                         ip_address = ip_match.group()
-                        messaging(f"Debug: {ip_address}")
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
                 if (
                     one_minute_ago.lower() in line.lower()
