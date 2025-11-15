@@ -288,7 +288,8 @@ def main():
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
         with open(LOG_FILE, "r") as f:
             for line in f:
-                # Increment the occurrence count for the IP address 
+                # Increment the occurrence count for the IP address
+                # Excludes Fediverse Traffic 
                 if (
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC)
@@ -297,6 +298,8 @@ def main():
                     if ip_match:
                         ip_address = ip_match.group()
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
+                
+                # Excludes Fediverse Traffic and SKIPPED_TERMS
                 if (
                     one_minute_ago.lower() in line.lower()
                     and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
