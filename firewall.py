@@ -3,6 +3,7 @@ import time
 import requests
 import os
 import subprocess
+import logging
 from collections import defaultdict
 
 # Configuration variables
@@ -236,9 +237,16 @@ SKIPPED_TERMS = [
     "_app",
 ]
 
+# Set up logging
+logging.basicConfig(filename='firewall.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
 
+
+def messaging(message):
+    logging.info(f'{message}')
+    print(f"message")
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
@@ -248,8 +256,9 @@ def block_ip(ip):
         )
         os.system(command)
         send_notification(f"IP address {ip} blocked")
+        messaging(f"IP address {ip} blocked")
     else:
-        print(f"IP address {ip} already in the ruleset.")
+        messaging(f"IP address {ip} already in the ruleset.")
 
 
 def send_notification(message):
@@ -266,7 +275,7 @@ def main():
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
         )
 
-        print(f"Searching logs for Time Stamp: {one_minute_ago}")
+        messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
         with open(LOG_FILE, "r") as f:
             for line in f:
                 if (
@@ -280,7 +289,7 @@ def main():
                         # Increment the occurrence count for the IP address
                         ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
 
-                        print(f"Allowed:  {line.strip()}, IP: {ip_address}")
+                        messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
 
                         # Check if the IP address has exceeded the threshold and block it if necessary
                         if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
