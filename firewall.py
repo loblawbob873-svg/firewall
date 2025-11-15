@@ -302,9 +302,9 @@ def main():
                 # Excludes Fediverse Traffic and SKIPPED_TERMS
                 if (
                     one_minute_ago.lower() in line.lower()
-                    and any(blocked.lower() in line.lower() for blocked in BLOCK_ARRAY)
-                    and not any(term.lower() in line.lower() for term in SKIPPED_TERMS)
-                    and not any(item.lower() in line.lower() for item in FEDIVERSE_TRAFFIC)
+                    and any(term.lower() in line.lower() for term in BLOCK_ARRAY)
+                    and not any(skipped_term.lower() in line.lower() for skipped_term in SKIPPED_TERMS)
+                    and not any(fediverse_traffic.lower() in line.lower() for fediverse_traffic in FEDIVERSE_TRAFFIC)
                 ):
                     if ip_match:
                         ip_address = ip_match.group()
