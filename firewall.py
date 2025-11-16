@@ -298,15 +298,11 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    for message in SKIP_ALERTS:
-        if word.lower() in input_string.lower():
-            return f"✨ Oh my gosh! The string has '{word}' in it! ✨"
+    for word in SKIP_ALERTS:
+        if word.lower() in message.lower():
+            logging.info("✨ Oh my gosh! The string has '{word}' in it! ✨")
         else: 
            send_to_ntfy(message)
-    return "😢 Aw, the string doesn't have any of those words. Let's try again! 😢"
-
- 
-
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
