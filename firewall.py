@@ -9,7 +9,6 @@ import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
-OCCURRENCE_THRESHOLD = 4
 IP_OCCURRENCE_THRESHOLD = 50
 #NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"
@@ -83,17 +82,6 @@ TIER_ONE = {
     "/_matrix",
     "/socket",
 }
-
-#Additional Items to Exclude after TIER_ONE. BLOCKS IP's count that is larger than OCCURRENCE_THRESHOLD
-TIER_TWO = [
-    "fediverse-light",
-    "videojs",
-    "storyboards",
-    "lists",
-    "bookmarks.xbel.lock",
-    "illegitimate",
-    "_app",
-]
 
 BLOCK_ARRAY = [
     "/commits/commit/",
@@ -336,20 +324,14 @@ def main():
                             # Block IP's over the IP_OCCURRENCE_THRESHOLD
                             if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
                                 block_ip(ip_address)
-
-                            # Excludes TIER_TWO
-                            if not any(
-                                item.lower() in line.lower() for item in TIER_TWO
+                                                     
+                            if any(
+                                word.lower() in line.lower() for word in BLOCK_ARRAY
                             ):
-                                # BLOCK_ARRAY
-                                if any(
-                                    word.lower() in line.lower() for word in BLOCK_ARRAY
-                                ):
-                                    if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
-                                        messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")
-                                        block_ip(ip_address)
-                                else:
-                                    messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
+                                messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")
+                                block_ip(ip_address)
+                            else:
+                                messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
