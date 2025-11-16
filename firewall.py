@@ -9,7 +9,7 @@ import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
-OCCURRENCE_THRESHOLD = 3
+OCCURRENCE_THRESHOLD = 2
 IP_OCCURRENCE_THRESHOLD = 30
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
