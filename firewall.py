@@ -9,7 +9,7 @@ import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
-OCCURRENCE_THRESHOLD = 5
+OCCURRENCE_THRESHOLD = 3
 IP_OCCURRENCE_THRESHOLD = 30
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
@@ -356,7 +356,7 @@ def main():
                             if not any(
                                 item.lower() in line.lower() for item in SKIPPED_TERMS
                             ):
-                                # BLOCK BLOCK_ARRAY
+                                # BLOCK_ARRAY
                                 if any(
                                     word.lower() in line.lower() for word in BLOCK_ARRAY
                                 ):
