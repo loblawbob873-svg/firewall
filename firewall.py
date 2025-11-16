@@ -296,13 +296,12 @@ def send_to_ntfy(message):
 
 
 def check_message(message):
-    Proceed = False
+    Proceed = True
     for word in SKIP_ALERTS:
         print(f"Looking for {word.lower()} in {message.lower()}")
-        if word.lower() not in message.lower():
-            Proceed = True
-        else:
-            Proceed = False           
+        if word.lower() in message.lower():
+            Proceed = False
+        
     return Proceed
 
 def messaging(message):
