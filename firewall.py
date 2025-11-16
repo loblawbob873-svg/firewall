@@ -299,7 +299,7 @@ def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
     for word in SKIP_ALERTS:
-        print(f"Looking for {word} in {message}")
+        print(f"Looking for {word.lower()} in {message.lower()}")
         if word.lower() not in message.lower():
             send_to_ntfy(message)
         
