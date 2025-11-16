@@ -81,6 +81,20 @@ TIER_ONE = {
     "/fonts",
     "/_matrix",
     "/socket",
+    "/signin",
+    "/files",
+    "/graph",
+    "/api/v0",
+    "/ocs",
+    "/app",
+    "/themes",
+    "/web",
+    "/Branding",
+    "/ws",
+    "/web-oidc",
+    "/oidc",
+    "/status.php",
+    "/konnect"
 }
 
 BLOCK_ARRAY = [
