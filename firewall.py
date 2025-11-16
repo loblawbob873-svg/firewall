@@ -327,7 +327,6 @@ def block_ip(ip):
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
     parser.add_argument("--print", action="store_true", help="Print IP address counts")
-    parser.add_argument("--blocked", action="store_true", help="Shows what is blocked")
     args = parser.parse_args()
     ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
 
