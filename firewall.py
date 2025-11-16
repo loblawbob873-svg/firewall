@@ -347,8 +347,6 @@ def main():
                             ):
                                 message = (f"Blocked: {line.strip()}, IP: {line.lower()}")
                                 block_ip(ip_address, message)
-                            else:
-                                messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
