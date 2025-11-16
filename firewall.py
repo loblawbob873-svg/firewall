@@ -300,7 +300,7 @@ def messaging(message):
     if message not in SKIP_ALERTS:
         send_to_ntfy(message)
     else:
-        print("Skipping NTFY")
+        logging.info("Skipping NTFY")
         
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
