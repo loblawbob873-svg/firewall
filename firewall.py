@@ -254,7 +254,7 @@ SKIPPED_TERMS = [
 #SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = [
     "already in the ruleset",
-    "Searching logs for Time Stamp"
+    "Searching"
 ]
 
 # Set up logging
@@ -297,10 +297,11 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if message in SKIP_ALERTS:
-        print("Skipping NTFY Message")
-    else:
+    if message not in fruits:
         send_to_ntfy(message)
+    else:
+        print("Skipping NTFT")
+        
 
 
 def block_ip(ip):
