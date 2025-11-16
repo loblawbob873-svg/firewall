@@ -360,7 +360,7 @@ def main():
                                     word.lower() in line.lower() for word in BLOCK_ARRAY
                                 ):
                                     if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
-                                        messaging("Blocked: {line.strip()}, IP: {line.lower()}")
+                                        messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")
                                         block_ip(ip_address)
                                 else:
                                     messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
