@@ -28,6 +28,9 @@ FEDIVERSE_TRAFFIC = {
     "Friendica",
     "Fedilab",
     "incestoma",
+    "sharkey",
+    "calkey",
+    "rebased"
 }
 
 BLOCK_ARRAY = {
@@ -293,7 +296,7 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if (not any in SKIP_ALERTS):
+    if not message in SKIP_ALERTS:
         send_to_ntfy(message)
 
 
@@ -334,14 +337,14 @@ def main():
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
 
-                        # Don't Cound the Local Network Against you
+                        # Don't Count the Local Network Against you
                         if not any(
                             lan.lower() in line.lower() for lan in LOCAL_NETWORK
                         ):
                             ip_address = ip_match.group()
                             ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
 
-                            # Block IP's over IP_OCCURRENCE_THRESHOLD
+                            # Block IP's over the IP_OCCURRENCE_THRESHOLD
                             if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
                                 block_ip(ip_address)
 
