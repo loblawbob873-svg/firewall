@@ -262,7 +262,7 @@ def send_to_ntfy(message):
         response = requests.post(
             NTFY_URL,
             data=message.encode("utf-8"),
-            headers={"IP BLOCK": "message"},
+            #headers={"IP BLOCK": "message"},
             timeout=5,  # Add a timeout to prevent the function from hanging indefinitely
         )
         response.raise_for_status()  # Raise an exception for bad status codes (4xx, 5xx)
