@@ -179,6 +179,7 @@ LOCAL_NETWORK = [
 
 SKIPPED_TERMS = [
     "/manifest.json",
+    "json",
     "/socket/websocket",
     "CherryPick",
     "/api/v1",
@@ -207,6 +208,7 @@ SKIPPED_TERMS = [
     "nodeinfo",
     "fetch",
     "css",
+    "main",
     "notifications",
     "fediverse-light",
     "AodeRelay",
