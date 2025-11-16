@@ -357,11 +357,11 @@ def main():
 
                             # Excludes SKIPPED_TERMS
                             if not any(
-                                item.lower() in line.lower() for item in SKIPPED_TERMS
+                                item.lower() in line.lower() for item in SKIPPED_TERMS.lower()
                             ):
                                 # BLOCK_ARRAY
                                 if any(
-                                    word.lower() in line.lower() for word in BLOCK_ARRAY
+                                    word.lower() in line.lower() for word in BLOCK_ARRAY.lower()
                                 ):
                                     if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                                         messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")
