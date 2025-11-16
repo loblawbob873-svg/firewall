@@ -264,6 +264,7 @@ ip_requests = defaultdict(int)
 
 
 def send_to_ntfy(message):
+    time.sleep(10)
     try:
 
         if message in BLOCK_ARRAY:
