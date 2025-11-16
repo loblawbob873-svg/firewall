@@ -293,17 +293,15 @@ def send_to_ntfy(message):
     # Print the entire response for debugging purposes
     print(f"Response: {response.text}")
 
-
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if message not in fruits:
+    
+    if message not in SKIP_ALERTS:
         send_to_ntfy(message)
     else:
-        print("Skipping NTFT")
+        print("Skipping NTFY")
         
-
-
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
