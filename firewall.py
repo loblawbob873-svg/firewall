@@ -133,7 +133,6 @@ BLOCK_ARRAY = {
     "DataForSeoBot",
     "baidu",
     "RedekenBot",
-    "well-known",
     "coccocbot-web",
     "GNUsocialBot",
     "PagePeeker",
@@ -182,6 +181,7 @@ LOCAL_NETWORK = [
 ]
 
 SKIPPED_TERMS = [
+    "well-known",
     "images",
     "/manifest.json",
     "json",
