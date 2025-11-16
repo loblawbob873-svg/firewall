@@ -252,7 +252,7 @@ SKIPPED_TERMS = [
 ]
 
 # SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = ["already in the ruleset", "Searching"]
+SKIP_ALERTS = ["already", "searching"]
 
 # Set up logging
 logging.basicConfig(
