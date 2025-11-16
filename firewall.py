@@ -254,7 +254,7 @@ SKIPPED_TERMS = [
 #SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = [
     "already in the ruleset",
-    "searching"
+    "Searching logs for Time Stamp"
 ]
 
 # Set up logging
