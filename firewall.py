@@ -9,7 +9,7 @@ import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
-OCCURRENCE_THRESHOLD = 2
+OCCURRENCE_THRESHOLD = 5
 IP_OCCURRENCE_THRESHOLD = 30
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
@@ -172,7 +172,7 @@ BLOCK_ARRAY = {
 }
 
 LOCAL_NETWORK = [
-    "192.168.0",    
+    "192.168.0",
 ]
 
 SKIPPED_TERMS = [
@@ -256,22 +256,42 @@ logging.basicConfig(
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
 
+
 def send_to_ntfy(message):
-    response = requests.post(
-        NTFY_URL,
-        data=message.encode("utf-8"),
-        headers={"IP BLOCK": "message"},
-    )
+    try:
+        response = requests.post(
+            NTFY_URL,
+            data=message.encode("utf-8"),
+            headers={"IP BLOCK": "message"},
+            timeout=5,  # Add a timeout to prevent the function from hanging indefinitely
+        )
+        response.raise_for_status()  # Raise an exception for bad status codes (4xx, 5xx)
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"Something went wrong: {err}")
+
     if response.status_code == 200:
         print(f"🌈 Successfully sent message: {message} 🌈")
     else:
-        print(f"❌ Failed to send message. Status code: {response.status_code} ❌")
-        
+        print(
+            f"❌ Failed to send message. Status code: {response.status_code}. Error: {response.text} ❌"
+        )
+
+    # Print the entire response for debugging purposes
+    print(f"Response: {response.text}")
+
+
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
     if NTFY_URL:
         send_to_ntfy(message)
+
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
@@ -309,9 +329,11 @@ def main():
                 ):
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
-                        
-                         #Don't Cound the Local Network Against you
-                         if not any(lan.lower() in line.lower() for lan in LOCAL_NETWORK):      
+
+                        # Don't Cound the Local Network Against you
+                        if not any(
+                            lan.lower() in line.lower() for lan in LOCAL_NETWORK
+                        ):
                             ip_address = ip_match.group()
                             ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
 
@@ -320,17 +342,25 @@ def main():
                                 block_ip(ip_address)
 
                             # Excludes SKIPPED_TERMS
-                            if not any(item.lower() in line.lower() for item in SKIPPED_TERMS):                            
+                            if not any(
+                                item.lower() in line.lower() for item in SKIPPED_TERMS
+                            ):
                                 # BLOCK BLOCK_ARRAY
-                                if any(word.lower() in line.lower() for word in BLOCK_ARRAY):
+                                if any(
+                                    word.lower() in line.lower() for word in BLOCK_ARRAY
+                                ):
                                     if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                                         if args.blocked:
-                                            messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")      
+                                            messaging(
+                                                f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                            )
                                         block_ip(ip_address)
                                 else:
                                     if not args.print:
-                                        messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")        
-                                        
+                                        messaging(
+                                            f"Allowed:  {line.strip()}, IP: {ip_address}"
+                                        )
+
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
                         for ip, count in ip_counts.items():
