@@ -242,7 +242,7 @@ LOCAL_NETWORK = [
 ]
 
 # SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = ["already", "searching", "sleeping", "IP Address Counts", "Amethyst", "rottenwheel", "/commits"]
+SKIP_ALERTS = ["already", "searching", "sleeping", "IP Address Counts", "Amethyst", "rottenwheel", "/commit"]
 
 # Set up logging
 logging.basicConfig(
