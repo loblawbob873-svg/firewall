@@ -284,13 +284,6 @@ def send_to_ntfy(message):
     except requests.exceptions.RequestException as err:
         print(f"Something went wrong: {err}")
 
-    if response.status_code == 200:
-        print(f"🌈 Successfully sent message: {message} 🌈")
-    else:
-        print(
-            f"❌ Failed to send message. Status code: {response.status_code}. Error: {response.text} ❌"
-        )
-
     # Print the entire response for debugging purposes
     print(f"Response: {response.text}")
 
