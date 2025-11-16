@@ -15,7 +15,7 @@ IP_OCCURRENCE_THRESHOLD = 50
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30 # 30 Seconds
 
-FEDIVERSE_TRAFFIC = {
+TIER_ONE = {
     "lalilulelo",
     "guzzlehttp",
     "aoderelay",
@@ -74,8 +74,20 @@ FEDIVERSE_TRAFFIC = {
     "/.well-known",
     "/manifest.json",
     "/apple-touch",
-    "/fonts"
+    "/fonts",
+    "/_matrix",
+    "/socket",
 }
+
+TIER_TWO = [
+    "fediverse-light",
+    "videojs",
+    "storyboards",
+    "lists",
+    "bookmarks.xbel.lock",
+    "illegitimate",
+    "_app",
+]
 
 BLOCK_ARRAY = [
     "/commits/commit/",
@@ -221,18 +233,6 @@ LOCAL_NETWORK = [
     "192.168.0",
 ]
 
-SKIPPED_TERMS = [
-    "/socket",
-    "fediverse-light",
-    "videojs",
-    "storyboards",
-    "lists",
-    "bookmarks.xbel.lock",
-    "illegitimate",
-    "/_matrix",
-    "_app",
-]
-
 # SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = ["already", "searching", "allowed", "sleeping", "IP Address Counts"]
 
@@ -313,9 +313,9 @@ def main():
         with open(LOG_FILE, "r") as f:
             for line in f:
                 # Increment the occurrence count for the IP address
-                # Excludes Fediverse Traffic
+                # Excludes TIER_ONE Traffic
                 if one_minute_ago.lower() in line.lower() and not any(
-                    term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC
+                    term.lower() in line.lower() for term in TIER_ONE
                 ):
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
@@ -331,9 +331,9 @@ def main():
                             if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
                                 block_ip(ip_address)
 
-                            # Excludes SKIPPED_TERMS
+                            # Excludes TIER_TWO
                             if not any(
-                                item.lower() in line.lower() for item in SKIPPED_TERMS
+                                item.lower() in line.lower() for item in TIER_TWO
                             ):
                                 # BLOCK_ARRAY
                                 if any(
