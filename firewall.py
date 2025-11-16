@@ -15,6 +15,7 @@ IP_OCCURRENCE_THRESHOLD = 50
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30 # 30 Seconds
 
+#Basically Unlimited 
 TIER_ONE = {
     "lalilulelo",
     "guzzlehttp",
@@ -56,7 +57,33 @@ TIER_ONE = {
     "/friends",
     "/notice",
     "/nodeinfo",
-    "/api/v1",
+    "/api/v1/notifications",
+    "/api/v1/timelines",
+    "/api/v1/statuses",
+    "/api/v1/polls/",
+    "/api/v1/tools",
+    "/api/v1/directory",
+    "/api/v1/streaming",
+    "/api/v1/profile",
+    "/api/v1/auths",
+    "/api/v1/configs",
+    "/api/v1/pleroma/admin",
+    "/api/v1/functions",
+    "/api/v1/announcements",
+    "/api/v1/timelines/public",
+    "/api/v1/timelines/home",
+    "/api/v1/timelines/tag",
+    "/api/v1/pleroma/statuses",
+    "/api/v1/pleroma/chats",
+    "/api/v1/pleroma/emoji",
+    "/api/v1/instance",
+    "/api/v1/users/user/settings", 
+    "/api/v1/accounts",
+    "/api/v1/lists",
+    "/api/v1/mutes",
+    "/api/v1/akkoma/frontend_settings",
+    "/api/v1/akkoma/translation",
+    "/api/v1/media",
     "/search",
     "/inbox",
     "/api/v2",
@@ -79,6 +106,7 @@ TIER_ONE = {
     "/socket",
 }
 
+#Limited 
 TIER_TWO = [
     "fediverse-light",
     "videojs",
