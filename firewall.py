@@ -16,6 +16,7 @@ NTFY_URL=""
 TIME_FRAME = 30 # 30 Seconds
 
 FEDIVERSE_TRAFFIC = {
+    "guzzlehttp",
     "images",
     "aoderelay",
     "cherrypick",
@@ -235,7 +236,6 @@ SKIPPED_TERMS = [
     "fediverse-light",
     "videojs",
     "activityrelay",
-    "guzzlehttp",
     "foundKey",
     "comments",
     "fonts",
