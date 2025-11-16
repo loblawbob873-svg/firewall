@@ -293,9 +293,7 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if not any(
-        lan.lower() in line.lower() for lan in SKIP_ALERTS
-    ):
+    if (not any in SKIP_ALERTS):
         send_to_ntfy(message)
 
 
