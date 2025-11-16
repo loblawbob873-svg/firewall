@@ -251,6 +251,7 @@ SKIPPED_TERMS = [
     "_app",
 ]
 
+#SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = [
     "already",
     "searching"
