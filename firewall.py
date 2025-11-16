@@ -182,6 +182,7 @@ LOCAL_NETWORK = [
 ]
 
 SKIPPED_TERMS = [
+    "images",
     "/manifest.json",
     "json",
     "/socket/websocket",
