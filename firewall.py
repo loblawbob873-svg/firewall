@@ -30,7 +30,7 @@ FEDIVERSE_TRAFFIC = {
     "incestoma",
     "sharkey",
     "calkey",
-    "rebased"
+    "rebased",
 }
 
 BLOCK_ARRAY = {
@@ -251,11 +251,8 @@ SKIPPED_TERMS = [
     "_app",
 ]
 
-#SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = [
-    "already in the ruleset",
-    "Searching"
-]
+# SKIP NTFY Alerts if a word is on this list
+SKIP_ALERTS = ["already in the ruleset", "Searching"]
 
 # Set up logging
 logging.basicConfig(
@@ -293,16 +290,19 @@ def send_to_ntfy(message):
     # Print the entire response for debugging purposes
     print(f"Response: {response.text}")
 
+
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    
-    if message not in SKIP_ALERTS:
-        logging.info("Sending to NTFY")
-        send_to_ntfy(message)
-    else:
-        logging.info("Skipping NTFY")
-        
+
+    for word in BAD_WORDS:
+        if word.lower() in message.lower():
+            logging.info("Skipping NTFY")
+        else:
+            logging.info("Sending to NTFY")
+            send_to_ntfy(message)
+
+
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
