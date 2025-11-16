@@ -15,6 +15,7 @@ NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 3 # 30 Seconds
 
 FEDIVERSE_TRAFFIC = {
+    "images",
     "aoderelay",
     "cherrypick",
     "sw-pleroma.js",
@@ -230,7 +231,6 @@ LOCAL_NETWORK = [
 ]
 
 SKIPPED_TERMS = [
-    "images",
     "/socket/websocket",
     "fediverse-light",
     "videojs",
