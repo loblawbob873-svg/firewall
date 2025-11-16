@@ -339,7 +339,7 @@ def main():
                 # Increment the occurrence count for the IP address
                 # Excludes Fediverse Traffic
                 if one_minute_ago.lower() in line.lower() and not any(
-                    term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC
+                    term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC.lower()
                 ):
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
