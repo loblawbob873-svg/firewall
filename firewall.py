@@ -298,7 +298,7 @@ def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
     if message in SKIP_ALERTS:
-        print("Skippint NTFY Message")
+        print("Skipping NTFY Message")
     else:
         send_to_ntfy(message)
 
