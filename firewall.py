@@ -9,7 +9,7 @@ import argparse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
-OCCURRENCE_THRESHOLD = 20
+OCCURRENCE_THRESHOLD = 4
 IP_OCCURRENCE_THRESHOLD = 50
 NTFY_URL=""
 #NTFY_URL = "https://push.poster.place/logs"
@@ -138,7 +138,6 @@ BLOCK_ARRAY = [
     "livelapbot",
     "duckduckbot",
     "yandexbot",
-    "internal",
     "intelx.io_bot",
     "fediiindex",
     "sogou",
@@ -223,8 +222,7 @@ BLOCK_ARRAY = [
     "mj12bot",
     "yandexfavicon",
     "adsbot-google",
-    "gptbot",
-    "husky",
+    "gptbot"
 ]
 
 
