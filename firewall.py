@@ -32,7 +32,8 @@ FEDIVERSE_TRAFFIC = {
     "calkey",
     "rebased",
     "detroit",
-    "poster.place"
+    "poster.place",
+    "ANNIHILATION_DOT_SOCIAL"
 }
 
 BLOCK_ARRAY = {
