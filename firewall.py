@@ -252,7 +252,7 @@ SKIPPED_TERMS = [
 ]
 
 # SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = ["already", "searching", "allowed"]
+SKIP_ALERTS = ["already", "searching", "allowed", "sleeping"]
 
 # Set up logging
 logging.basicConfig(
@@ -298,7 +298,14 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    send_to_ntfy(message)
+    for message in SKIP_ALERTS:
+        if word.lower() in input_string.lower():
+            return f"✨ Oh my gosh! The string has '{word}' in it! ✨"
+        else: 
+           send_to_ntfy(message)
+    return "😢 Aw, the string doesn't have any of those words. Let's try again! 😢"
+
+ 
 
 
 def block_ip(ip):
