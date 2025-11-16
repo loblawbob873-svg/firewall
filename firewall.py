@@ -289,7 +289,7 @@ def block_ip(ip, message):
             f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
         )
         os.system(command)
-        messaging(f"Blocked {message}")
+        messaging(f"{message}")
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
