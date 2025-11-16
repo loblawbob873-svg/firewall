@@ -295,7 +295,7 @@ def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
 
-    for word in BAD_WORDS:
+    for word in SKIP_ALERTS:
         if word.lower() in message.lower():
             logging.info("Skipping NTFY")
         else:
