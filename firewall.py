@@ -18,8 +18,6 @@ TIME_FRAME = 30 # 30 Seconds
 #Basically Unlimited 
 TIER_ONE = {
     "lalilulelo",
-    "guzzlehttp",
-    "aoderelay",
     "cherrypick",
     "husky",
     "whatsapp",
