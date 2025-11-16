@@ -339,7 +339,7 @@ def main():
                 # Increment the occurrence count for the IP address
                 # Excludes Fediverse Traffic
                 if one_minute_ago.lower() in line.lower() and not any(
-                    term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC.lower()
+                    term.lower() in line.lower() for term in FEDIVERSE_TRAFFIC
                 ):
                     ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
                     if ip_match:
@@ -357,11 +357,11 @@ def main():
 
                             # Excludes SKIPPED_TERMS
                             if not any(
-                                item.lower() in line.lower() for item in SKIPPED_TERMS.lower()
+                                item.lower() in line.lower() for item in SKIPPED_TERMS
                             ):
                                 # BLOCK_ARRAY
                                 if any(
-                                    word.lower() in line.lower() for word in BLOCK_ARRAY.lower()
+                                    word.lower() in line.lower() for word in BLOCK_ARRAY
                                 ):
                                     if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                                         messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")
