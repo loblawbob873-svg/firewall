@@ -248,6 +248,11 @@ SKIPPED_TERMS = [
     "_app",
 ]
 
+SKIP_ALERTS = [
+    "already",
+    "searching"
+]
+
 # Set up logging
 logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
@@ -288,7 +293,9 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if not "already" in message:
+    if not any(
+        lan.lower() in line.lower() for lan in SKIP_ALERTS
+    ):
         send_to_ntfy(message)
 
 
