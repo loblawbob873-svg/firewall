@@ -307,7 +307,7 @@ def check_message(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if check_message:
+    if check_message(message):
         send_to_ntfy(message)
            
 
