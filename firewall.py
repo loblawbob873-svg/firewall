@@ -300,10 +300,10 @@ def messaging(message):
     print(f"{message}")
     for word in SKIP_ALERTS:
         print(f"Looking for {word} in {message}")
-        if word.lower() in message.lower():
-            logging.info("✨ Oh my gosh! The string has '{word}' in it! ✨")
-        else: 
-           send_to_ntfy(message)
+        if word.lower() not in message.lower():
+            send_to_ntfy(message)
+        
+           
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
