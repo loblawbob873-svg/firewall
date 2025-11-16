@@ -11,7 +11,7 @@ import argparse
 LOG_FILE = "/tmp/access.log"
 OCCURRENCE_THRESHOLD = 2
 IP_OCCURRENCE_THRESHOLD = 30
-NTFY_URL = "https://push.poster.place/logs"
+#NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 3 # 30 Seconds
 
 FEDIVERSE_TRAFFIC = {
@@ -307,7 +307,8 @@ def messaging(message):
     if check_message(message):
         logging.info(f"{message}")
         print(f"{message}")
-        send_to_ntfy(message)
+        if NTFY_URL:
+            send_to_ntfy(message)
 
 
 def block_ip(ip):
