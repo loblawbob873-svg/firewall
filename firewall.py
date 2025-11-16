@@ -229,7 +229,7 @@ SKIPPED_TERMS = [
     "lists",
     "bookmarks.xbel.lock",
     "illegitimate",
-    "matrix",
+    "/_matrix",
     "_app",
 ]
 
