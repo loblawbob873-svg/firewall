@@ -253,7 +253,7 @@ SKIPPED_TERMS = [
 
 #SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = [
-    "already",
+    "already in the ruleset",
     "searching"
 ]
 
@@ -297,7 +297,9 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if not message in SKIP_ALERTS:
+    if message in SKIP_ALERTS:
+        print("Skippint NTFY Message")
+    else:
         send_to_ntfy(message)
 
 
