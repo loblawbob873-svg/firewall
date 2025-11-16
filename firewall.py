@@ -282,13 +282,14 @@ def messaging(message):
             send_to_ntfy(message)
 
 
-def block_ip(ip):
+def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
         command = (
             f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
         )
         os.system(command)
+        messaging(f"Blocked {message}")
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -323,13 +324,15 @@ def main():
 
                             # Block IP's over the IP_OCCURRENCE_THRESHOLD
                             if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
-                                block_ip(ip_address)
-                                                     
+                                message = (f"Blocked: {line.strip()}, IP: {line.lower()}")
+                                block_ip(ip_address, message)
+
+                            # Blocks anything in BLOCK_ARRAY                                                     
                             if any(
                                 word.lower() in line.lower() for word in BLOCK_ARRAY
                             ):
-                                messaging(f"Blocked: {line.strip()}, IP: {line.lower()}")
-                                block_ip(ip_address)
+                                message = (f"Blocked: {line.strip()}, IP: {line.lower()}")
+                                block_ip(ip_address, message)
                             else:
                                 messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
 
