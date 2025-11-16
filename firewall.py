@@ -295,14 +295,20 @@ def send_to_ntfy(message):
     print(f"Response: {response.text}")
 
 
-def messaging(message):
-    logging.info(f"{message}")
-    print(f"{message}")
+def check_message(message):
     for word in SKIP_ALERTS:
         print(f"Looking for {word.lower()} in {message.lower()}")
         if word.lower() not in message.lower():
-            send_to_ntfy(message)
+            return True
+        else:
+            return False
+            
         
+def messaging(message):
+    logging.info(f"{message}")
+    print(f"{message}")
+    if check_message:
+        send_to_ntfy(message)
            
 
 def block_ip(ip):
