@@ -49,8 +49,7 @@ BLOCK_ARRAY = {
     "47.79.",
     "43.74.",
     "nostr",
-    "nostter.app"
-    "170.33.24",
+    "nostter.app" "170.33.24",
     "98.11.128.",
     "203.107.",
     "205.205.",
@@ -301,15 +300,16 @@ def check_message(message):
     for word in SKIP_ALERTS:
         if word.lower() in message.lower():
             Proceed = False
-        
+
     return Proceed
+
 
 def messaging(message):
     if check_message(message):
         logging.info(f"{message}")
         print(f"{message}")
         send_to_ntfy(message)
-           
+
 
 def block_ip(ip):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
@@ -368,12 +368,20 @@ def main():
                                 ):
                                     if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
                                         if args.print:
-                                            messaging(
+                                            print(
                                                 f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                            )
+                                        else:
+                                            messaging(
+                                                "Blocked: {line.strip()}, IP: {line.lower()}"
                                             )
                                         block_ip(ip_address)
                                 else:
-                                    if not args.print:
+                                    if args.print:
+                                        print(
+                                            f"Allowed:  {line.strip()}, IP: {ip_address}"
+                                        )
+                                    else:
                                         messaging(
                                             f"Allowed:  {line.strip()}, IP: {ip_address}"
                                         )
@@ -381,7 +389,7 @@ def main():
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
                         for ip, count in ip_counts.items():
-                            messaging(f"{ip}: {count}")
+                            print(f"{ip}: {count}")
 
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
         time.sleep(
