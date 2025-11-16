@@ -299,6 +299,7 @@ def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
     for word in SKIP_ALERTS:
+        print(f"Looking for {word}")
         if word.lower() in message.lower():
             logging.info("✨ Oh my gosh! The string has '{word}' in it! ✨")
         else: 
