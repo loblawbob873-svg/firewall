@@ -23,7 +23,6 @@ TIER_ONE = {
     "cherrypick",
     "husky",
     "whatsapp",
-    "friendica",
     "fedilab",
     ".js",
     ".png",
