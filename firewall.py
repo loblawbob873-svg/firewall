@@ -63,7 +63,7 @@ FEDIVERSE_TRAFFIC = {
     "assets",
     "/favicon",
     "/avatar",
-    "kuma",
+    "uptime-kuma",
     "/logo",
     ".web",
     ".html",
