@@ -35,7 +35,6 @@ FEDIVERSE_TRAFFIC = {
 
 BLOCK_ARRAY = {
     "GET / HTTP",
-    '"-" "-"',
     "/commits/commit/",
     "/blame/commit",
     "/src/commit/",
