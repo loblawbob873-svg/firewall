@@ -31,6 +31,8 @@ FEDIVERSE_TRAFFIC = {
     "sharkey",
     "calkey",
     "rebased",
+    "detroit",
+    "poster.place"
 }
 
 BLOCK_ARRAY = {
