@@ -253,7 +253,7 @@ SKIPPED_TERMS = [
 ]
 
 # SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = ["already", "searching", "allowed", "sleeping"]
+SKIP_ALERTS = ["already", "searching", "allowed", "sleeping", "IP Address Counts"]
 
 # Set up logging
 logging.basicConfig(
