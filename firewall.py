@@ -262,7 +262,6 @@ def send_to_ntfy(message):
         response = requests.post(
             NTFY_URL,
             data=message.encode("utf-8"),
-            #headers={"IP BLOCK": "message"},
             timeout=5,  # Add a timeout to prevent the function from hanging indefinitely
         )
         response.raise_for_status()  # Raise an exception for bad status codes (4xx, 5xx)
@@ -289,7 +288,7 @@ def send_to_ntfy(message):
 def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
-    if NTFY_URL:
+    if not "already" in message:
         send_to_ntfy(message)
 
 
