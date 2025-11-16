@@ -360,24 +360,10 @@ def main():
                                     word.lower() in line.lower() for word in BLOCK_ARRAY
                                 ):
                                     if ip_counts[ip_address] > OCCURRENCE_THRESHOLD:
-                                        if args.print:
-                                            print(
-                                                f"Blocked: {line.strip()}, IP: {line.lower()}"
-                                            )
-                                        else:
-                                            messaging(
-                                                "Blocked: {line.strip()}, IP: {line.lower()}"
-                                            )
+                                        messaging("Blocked: {line.strip()}, IP: {line.lower()}")
                                         block_ip(ip_address)
                                 else:
-                                    if args.print:
-                                        print(
-                                            f"Allowed:  {line.strip()}, IP: {ip_address}"
-                                        )
-                                    else:
-                                        messaging(
-                                            f"Allowed:  {line.strip()}, IP: {ip_address}"
-                                        )
+                                    messaging(f"Allowed:  {line.strip()}, IP: {ip_address}")
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
