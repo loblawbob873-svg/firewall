@@ -295,6 +295,11 @@ def messaging(message):
     logging.info(f"{message}")
     print(f"{message}")
 
+    if message in SKIP_ALERTS:
+        logging.info("Skipping NTFY")
+    else:
+        logging.info("Skipping NTFY")
+        
     for word in SKIP_ALERTS:
         if word.lower() in message.lower():
             logging.info("Skipping NTFY")
