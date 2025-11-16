@@ -16,6 +16,7 @@ NTFY_URL=""
 TIME_FRAME = 30 # 30 Seconds
 
 FEDIVERSE_TRAFFIC = {
+    "lalilulelo",
     "guzzlehttp",
     "aoderelay",
     "cherrypick",
@@ -73,6 +74,7 @@ FEDIVERSE_TRAFFIC = {
     "/.well-known",
     "/manifest.json",
     "/apple-touch",
+    "/fonts"
 }
 
 BLOCK_ARRAY = [
@@ -223,17 +225,10 @@ SKIPPED_TERMS = [
     "/socket",
     "fediverse-light",
     "videojs",
-    "comments",
-    "fonts",
     "storyboards",
     "lists",
     "bookmarks.xbel.lock",
-    "node_modules",
-    "embed",
-    "latest_version",
-    "danksquad",
     "illegitimate",
-    "Lalilulelo",
     "matrix",
     "_app",
 ]
