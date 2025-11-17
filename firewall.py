@@ -87,6 +87,9 @@ TIER_ONE = {
     "/api/v0",
     "/ocs",
     "/app",
+    "/app/list",
+    "/remote.php/webdav",
+    "/status.php",
     "/themes",
     "/web",
     "/Branding",
@@ -95,6 +98,12 @@ TIER_ONE = {
     "/oidc",
     "/status.php",
     "/konnect",
+    "/icons",
+    "/api/v0/settings",
+    "/ocs/v2.php/cloud",
+    "/web-oidc-callback",
+    "/dav/spaces",
+    "/api/v0/settings/assignments-list"
 }
 
 IP_BLOCKS = [
