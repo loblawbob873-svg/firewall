@@ -357,7 +357,7 @@ def main():
                                 word.lower() in line.lower() for word in SUBNET_BLOCKS
                             ):
                                 BIG_IP = extract_first_three_parts(ip_address)
-                                message = f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                message = f"Blocked Subnet: {line.strip()}, IP: {line.lower()}"
                                 block_ip(f"{BIG_IP}.0/24", message)
 
                             # Blocks anything in IP_BLOCKS
