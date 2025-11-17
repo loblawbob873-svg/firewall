@@ -239,6 +239,8 @@ BLOCK_ARRAY = [
 
 LOCAL_NETWORK = [
     "192.168.0",
+    "47.5.68.214",
+    "192.168.5"
 ]
 
 # SKIP NTFY Alerts if a word is on this list
