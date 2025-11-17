@@ -316,7 +316,8 @@ def special_block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
 
     if BIG_IP not in nft_output:
-        command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {BIG_IP}/19 drop"
+        command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {BIG_IP}.0/24 drop"
+        print(command)
         os.system(command)
         messaging(f"Big IP Block: {BIG_IP}")
 
