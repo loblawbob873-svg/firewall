@@ -12,11 +12,7 @@ LOG_FILE = "/tmp/access.log"
 IP_OCCURRENCE_THRESHOLD = 50
 # NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"
-TIME_FRAME = 30  # 30 Seconds
-
-# Default Action to block subnets or Individual IP's
-BLOCK_TYPE = "subnet"
-# BLOCK_TYPE = "ip"
+TIME_FRAME = 5  # 30 Seconds
 
 # Basically Unlimited
 TIER_ONE = {
@@ -101,7 +97,7 @@ TIER_ONE = {
     "/konnect",
 }
 
-BLOCK_ARRAY = [
+IP_BLOCKS = [
     "/commits/commit/",
     "/blame/commit",
     "/src/commit/",
@@ -111,9 +107,6 @@ BLOCK_ARRAY = [
     "/tree-list/commit/",
     "/find/commit/",
     "amethyst",
-    "47.82.",
-    "47.79.",
-    "43.74.",
     "nostr",
     "nostter.app",
     "170.33.24",
@@ -240,7 +233,12 @@ BLOCK_ARRAY = [
     "gptbot",
 ]
 
-
+SUBNET_BLOCKS = [
+    "rottenwheel",
+    "47.82.",
+    "47.79.",
+    "43.74.",
+]
 LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5"]
 
 # SKIP NTFY Alerts if a word is on this list
@@ -267,7 +265,7 @@ def send_to_ntfy(message):
     time.sleep(10)
     try:
 
-        if message in BLOCK_ARRAY:
+        if message in SKIP_ALERTS:
             logging.info(f"Skipping NTFY Message")
         else:
             response = requests.post(
@@ -309,21 +307,14 @@ def messaging(message):
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
 
-
-# Blocks Subnets for big DDOS Attacks coming from a VPS
-def block_ip(ip, message, type):
-    BIG_IP = extract_first_three_parts(ip)
+def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
-
-    if BIG_IP not in nft_output:
-        if type == "ip":
-            command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
-            messaging(f"{message}")
-        else:
-            command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {BIG_IP}.0/24 drop"
-            messaging(f"Big IP Block {BIG_IP}: \n {message}")
-
+    if ip not in nft_output:
+        command = (
+            f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
+        )
         os.system(command)
+        messaging(f"{message}")
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -361,12 +352,20 @@ def main():
                                 message = f"Blocked: {line.strip()}, IP: {line.lower()}"
                                 block_ip(ip_address, message)
 
-                            # Blocks anything in BLOCK_ARRAY
+                            # Blocks anything in SUBNET_BLOCKS
                             if any(
-                                word.lower() in line.lower() for word in BLOCK_ARRAY
+                                word.lower() in line.lower() for word in SUBNET_BLOCKS
+                            ):
+                                BIG_IP = extract_first_three_parts(ip_address)
+                                message = f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                block_ip(f"{BIG_IP}.0/24", message)
+
+                            # Blocks anything in IP_BLOCKS
+                            elif any(
+                                word.lower() in line.lower() for word in IP_BLOCKS
                             ):
                                 message = f"Blocked: {line.strip()}, IP: {line.lower()}"
-                                block_ip(ip_address, message, BLOCK_TYPE)
+                                block_ip(ip_address, message)
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
