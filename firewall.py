@@ -10,11 +10,11 @@ import argparse
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
 IP_OCCURRENCE_THRESHOLD = 50
-#NTFY_URL=""
+# NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"
-TIME_FRAME = 30 # 30 Seconds
+TIME_FRAME = 30  # 30 Seconds
 
-#Basically Unlimited 
+# Basically Unlimited
 TIER_ONE = {
     "lalilulelo",
     "cherrypick",
@@ -54,7 +54,7 @@ TIER_ONE = {
     "/api/v1/pleroma/chats",
     "/api/v1/pleroma/emoji",
     "/api/v1/instance",
-    "/api/v1/users/user/settings", 
+    "/api/v1/users/user/settings",
     "/api/v1/accounts",
     "/api/v1/lists",
     "/api/v1/mutes",
@@ -94,7 +94,7 @@ TIER_ONE = {
     "/web-oidc",
     "/oidc",
     "/status.php",
-    "/konnect"
+    "/konnect",
 }
 
 BLOCK_ARRAY = [
@@ -233,7 +233,7 @@ BLOCK_ARRAY = [
     "mj12bot",
     "yandexfavicon",
     "adsbot-google",
-    "gptbot"
+    "gptbot",
 ]
 
 
@@ -242,7 +242,15 @@ LOCAL_NETWORK = [
 ]
 
 # SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = ["already", "searching", "sleeping", "IP Address Counts", "Amethyst", "rottenwheel", "/commit"]
+SKIP_ALERTS = [
+    "already",
+    "searching",
+    "sleeping",
+    "IP Address Counts",
+    "Amethyst",
+    "rottenwheel",
+    "/commit",
+]
 
 # Set up logging
 logging.basicConfig(
@@ -296,6 +304,20 @@ def messaging(message):
             send_to_ntfy(message)
 
 
+def extract_first_three_parts(ip):
+    return ".".join(ip.split(".")[:3])
+
+
+# Blocks Subnets for big DDOS Attacks coming from a VPS
+def special_block_ip(ip, message):
+    BIG_IP = extract_first_three_parts(ip)
+    nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
+
+    if BIG_IP not in nft_output:
+        command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {BIG_IP}/19 drop"
+        os.system(command)
+        messaging(f"Big IP Block: {BIG_IP}")
+
 def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
@@ -304,6 +326,7 @@ def block_ip(ip, message):
         )
         os.system(command)
         messaging(f"{message}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -338,15 +361,24 @@ def main():
 
                             # Block IP's over the IP_OCCURRENCE_THRESHOLD
                             if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
-                                message = (f"Blocked: {line.strip()}, IP: {line.lower()}")
+                                message = f"Blocked: {line.strip()}, IP: {line.lower()}"
                                 block_ip(ip_address, message)
 
-                            # Blocks anything in BLOCK_ARRAY                                                     
+                            # Blocks anything in BLOCK_ARRAY
                             if any(
                                 word.lower() in line.lower() for word in BLOCK_ARRAY
                             ):
-                                message = (f"Blocked: {line.strip()}, IP: {line.lower()}")
-                                block_ip(ip_address, message)
+                                SPECIAL = "rottenwheel"
+                                if SPECIAL in line.lower():
+                                    message = (
+                                        f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                    )
+                                    special_block_ip(ip_address, message)
+                                else:
+                                    message = (
+                                        f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                    )
+                                    block_ip(ip_address, message)
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
