@@ -283,9 +283,6 @@ def send_to_ntfy(message):
     except requests.exceptions.RequestException as err:
         print(f"Something went wrong: {err}")
 
-    # Print the entire response for debugging purposes
-    print(f"Response: {response.text}")
-
 
 def check_message(message):
     Proceed = True
