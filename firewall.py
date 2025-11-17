@@ -88,6 +88,7 @@ TIER_ONE = {
     "/ocs",
     "/app",
     "/app/list",
+    "/remote.php",
     "/remote.php/webdav",
     "/status.php",
     "/themes",
@@ -100,7 +101,9 @@ TIER_ONE = {
     "/konnect",
     "/icons",
     "/api/v0/settings",
-    "/ocs/v2.php/cloud",
+    "/ocs/v2.php/cloud/user",
+    "/ocs/v2.php/apps/notifications/api/v1/notifications",
+    "/ocs/v2.php/cloud/capabilities",
     "/web-oidc-callback",
     "/dav/spaces",
     "/api/v0/settings/assignments-list"
