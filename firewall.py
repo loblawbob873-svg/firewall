@@ -14,6 +14,10 @@ IP_OCCURRENCE_THRESHOLD = 50
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
 
+# Default Action to block subnets or Individual IP's
+BLOCK_TYPE = "subnet"
+# BLOCK_TYPE = "ip"
+
 # Basically Unlimited
 TIER_ONE = {
     "lalilulelo",
@@ -237,11 +241,7 @@ BLOCK_ARRAY = [
 ]
 
 
-LOCAL_NETWORK = [
-    "192.168.0",
-    "47.5.68.214",
-    "192.168.5"
-]
+LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5"]
 
 # SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = [
@@ -311,25 +311,19 @@ def extract_first_three_parts(ip):
 
 
 # Blocks Subnets for big DDOS Attacks coming from a VPS
-def special_block_ip(ip, message):
+def block_ip(ip, message, type):
     BIG_IP = extract_first_three_parts(ip)
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
 
     if BIG_IP not in nft_output:
-        command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {BIG_IP}.0/24 drop"
-        print(command)
-        os.system(command)
-        messaging(f"Big IP Block: {BIG_IP}")
+        if type == "ip":
+            command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
+            messaging(f"{message}")
+        else:
+            command = f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {BIG_IP}.0/24 drop"
+            messaging(f"Big IP Block {BIG_IP}: \n {message}")
 
-def block_ip(ip, message):
-    nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
-    if ip not in nft_output:
-        command = (
-            f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
-        )
         os.system(command)
-        messaging(f"{message}")
-
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -371,17 +365,8 @@ def main():
                             if any(
                                 word.lower() in line.lower() for word in BLOCK_ARRAY
                             ):
-                                SPECIAL = "rottenwheel"
-                                if SPECIAL in line.lower():
-                                    message = (
-                                        f"Blocked: {line.strip()}, IP: {line.lower()}"
-                                    )
-                                    special_block_ip(ip_address, message)
-                                else:
-                                    message = (
-                                        f"Blocked: {line.strip()}, IP: {line.lower()}"
-                                    )
-                                    block_ip(ip_address, message)
+                                message = f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                block_ip(ip_address, message, BLOCK_TYPE)
 
                     if args.print:
                         messaging("\n\n\n[IP Address Counts]\n")
