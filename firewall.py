@@ -216,7 +216,6 @@ IP_BLOCKS = [
     "ioncrawl",
     "sitecheckerbottcrawler",
     "yacybot",
-    "freshrss",
     "yandexwebmaster",
     "linkedinbot",
     "headlesschrome",
