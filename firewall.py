@@ -379,6 +379,8 @@ def main():
                                 block_ip(ip_address, message)
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
+        if args.print:
+            print("\n----------------------------------")
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
@@ -386,7 +388,9 @@ def main():
                 # print(f"{ip_address}: {count}")
                 message = f"Blocked: {ip} with a count of {count}"
                 block_ip(ip, message)
-        
+        if args.print:
+            print("\n----------------------------------")
+
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
 
         time.sleep(
