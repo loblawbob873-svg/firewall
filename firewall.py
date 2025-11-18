@@ -401,7 +401,7 @@ def main():
                                 word.lower() in line.lower() for word in SUBNET_BLOCKS
                             ):
                                 BIG_IP = extract_first_three_parts(ip_address)
-                                message = f"\t🚨 Blocked Subnet: 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
+                                message = f"\t🚨 Blocked Subnet: 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}🗡️💀"
                                 activity.append(message)
                                 block_ip(f"{BIG_IP}.0/24", message)
 
@@ -409,7 +409,7 @@ def main():
                             elif any(
                                 word.lower() in line.lower() for word in IP_BLOCKS
                             ):  
-                                message = f"\t🚨 Blocked: 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
+                                message = f"\t🚨 Blocked: 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}🗡️💀"
                                 activity.append(message)
                                 block_ip(ip_address, message)
                             else:
