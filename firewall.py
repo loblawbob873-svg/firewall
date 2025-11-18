@@ -378,7 +378,7 @@ def main():
                             ):
                                 message = f"Blocked: {line.strip()}, IP: {line.lower()}"
                                 block_ip(ip_address, message)
-
+                            else:
                                 if args.print:
                                     print(message)
                                     print("\n----------------------------------")
