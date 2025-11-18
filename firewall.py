@@ -371,7 +371,6 @@ def main():
 
         activity.append("\n----------------------------------")
         activity.append(f"\n⚠️ Unfiltered Traffic as of: {one_minute_ago}:⚠️\n")
-        activity.append(f"CPU Utilization: {get_cpu_usage()}")
 
         with open(LOG_FILE, "r") as f:
             for line in f:
@@ -412,6 +411,7 @@ def main():
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
+        activity.append(f"CPU Utilization: {get_cpu_usage()}")
         activity.append(f"📋 Blocked IP's: {get_block_count()} ⚡")
         activity.append(f"\nIP Address Count:\n")
 
