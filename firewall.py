@@ -379,6 +379,7 @@ def main():
                                 message = f"Blocked: {line.strip()}, IP: {line.lower()}"
                                 block_ip(ip_address, message)
                             else:
+                                # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                 if args.print:
                                     print(line.lower())
                                     print(f"\nUnfiltered Traffic: {line.lower()}\n")
