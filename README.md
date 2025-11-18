@@ -17,3 +17,8 @@ python -m venv venv
 . venv/bin/activate
 pip install requests logging psutil
 ```
+
+### Run the app with Protection and Live Reporting
+```
+python firewall.py --print
+```
