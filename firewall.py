@@ -411,7 +411,7 @@ def main():
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
-        activity.append(f"{get_cpu_usage()}")
+        activity.append(f"{get_cpu_usage()}\n\n")
         activity.append(f"📋 Blocked IP's: {get_block_count()}")
         activity.append(f"\nIP Address Count:\n")
 
