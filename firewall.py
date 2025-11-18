@@ -466,7 +466,7 @@ def main():
                                 ):
                                     
                                     BIG_IP = extract_first_three_parts(ip_address)
-                                    message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
+                                    message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
                         
@@ -475,13 +475,13 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
+                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
                                     # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                     activity.append(
-                                        f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
+                                        f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     )
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")  
@@ -510,8 +510,8 @@ def main():
                 if not args.print and "🔍" in line:
                     URL = line.split("🔍")
                     URL_FIX = f"<a target=\"blank\" href=\"{URL[1].strip()}\">🔍</a>"
-                    print(f"Debug {URL_FIX[:-1]}")
-                    line = f"{URL[0]} {URL_FIX[:-1]}"
+                    print(f"Debug {URL_FIX}")
+                    line = f"{URL[0]} {URL_FIX}"
                 if "\t" in line:
                     line.replace("\t","") 
                 if "\t" in line:
