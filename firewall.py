@@ -380,6 +380,7 @@ def main():
                                 block_ip(ip_address, message)
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
+        # TIER_ONE Traffic does not count
         if args.print:
             print("\n----------------------------------")
             print(f"IP Address Count as of: {one_minute_ago}\n")
