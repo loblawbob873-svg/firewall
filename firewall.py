@@ -17,6 +17,7 @@ TIME_FRAME = 30  # 30 Seconds
 
 # Basically Unlimited
 TIER_ONE = {
+    "/extension.php",
     "/logs",
     "/drc/",
     "lalilulelo",
