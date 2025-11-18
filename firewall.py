@@ -293,9 +293,7 @@ def get_cpu_usage():
     cpu_percent = psutil.cpu_percent(interval=1)
     if cpu_percent < 50:
         final = f"💻 CPU usage: {cpu_percent}% 😀"
-    elif cpu_percent > 50:
-        final = f"💻 CPU usage: {cpu_percent}% 😧"
-    elif cpu_percent > 75:
+    else: 
         final = f"💻 CPU usage: {cpu_percent}% 😡"
     return f"{final}"
 
