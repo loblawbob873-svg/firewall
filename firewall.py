@@ -357,6 +357,7 @@ def main():
     while True:
         # Get the current time and the time one minute ago
         ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
+        activity = {}
         now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
         one_minute_ago = time.strftime(
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
@@ -364,9 +365,8 @@ def main():
 
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
 
-        if args.print:
-            print("\n----------------------------------")
-            print(f"\nUnfiltered Traffic as of: {one_minute_ago}:\n")
+        activity.append("\n----------------------------------")
+        activity.append(f"\nUnfiltered Traffic as of: {one_minute_ago}:\n")
 
         with open(LOG_FILE, "r") as f:
             for line in f:
@@ -391,6 +391,7 @@ def main():
                             ):
                                 BIG_IP = extract_first_three_parts(ip_address)
                                 message = f"Blocked Subnet: {line.strip()}, IP: {line.lower()}"
+                                activity.append(message)
                                 block_ip(f"{BIG_IP}.0/24", message)
 
                             # Blocks anything in IP_BLOCKS
@@ -398,26 +399,28 @@ def main():
                                 word.lower() in line.lower() for word in IP_BLOCKS
                             ):
                                 message = f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                activity.append(message)
                                 block_ip(ip_address, message)
                             else:
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
-                                if args.print:
-                                    print(f"{line.lower()}\n")
+                                activity.append(f"{line.lower()}\n")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
-        if args.print:
-            print(f"Blocked IP's: {get_block_count()}")
-            print(f"\nIP Address Count:\n")
+        activity.append(f"Blocked IP's: {get_block_count()}")
+        activity.append(f"\nIP Address Count:\n")
 
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
-                # print(f"{ip_address}: {count}")
                 message = f"Blocked: {ip} with a count of {count}"
+                activity.append(message)
                 block_ip(ip, message)
-
+        
+        for line in activity:
+            print(f"\n{line}")
+            
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
 
         time.sleep(
