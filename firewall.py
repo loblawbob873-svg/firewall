@@ -117,6 +117,7 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
+    "/.git/config",
     "wp-content",
     "deno",
     "Deno/",
