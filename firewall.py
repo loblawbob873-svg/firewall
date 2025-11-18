@@ -379,7 +379,7 @@ def main():
         activity.append("🔥 Python Firewall 🔥")
         activity.append(f"{get_cpu_usage()} 📋 Blocked IP's: {get_block_count()}")
         activity.append("----------------------------------------------")
-        activity.append(f"⚠️ Unfiltered Traffic as of: {one_minute_ago}\n")
+        activity.append(f"\t\t\t⚠️ Unfiltered Traffic as of: {one_minute_ago}\n")
         with open(LOG_FILE, "r") as f:
             for line in f:
                 # Increment the occurrence count for the IP address
