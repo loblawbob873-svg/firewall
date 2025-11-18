@@ -6,6 +6,7 @@
 * Live Reporting 
 * Automatic Blocking
 * Customizable 
+* Send Alerts to NTFY
 
 ### Requirements
 * Python
