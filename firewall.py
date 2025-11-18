@@ -463,7 +463,7 @@ def main():
                                 if any(
                                     word.lower() in line.lower() for word in SUBNET_BLOCKS
                                 ):
-                                    print(line.lower())
+                                    
                                     BIG_IP = extract_first_three_parts(ip_address)
                                     message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
                                     activity.append(message)
