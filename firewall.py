@@ -367,7 +367,7 @@ async def main(ip: str):
 
     messages = []
     messages.append(
-        {"role": "user", "web_search": True, "content": f"Tell me information about this IP address such as the owner and location: {ip}"}
+        {"role": "user", "web_search": True, "content": f"Tell me information about this IP address such as the owner, abuse details, and location: {ip}. Find as much information as y ou can."}
     )
 
     payload = {"model": MODEL, "messages": messages}
