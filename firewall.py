@@ -124,7 +124,8 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
-    "/issues?assignee" "/.git/config",
+    "/issues?assignee",
+    "/.git/config",
     "wp-content",
     "wp-includes",
     "deno",
@@ -293,11 +294,12 @@ logging.basicConfig(
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
 
+
 def get_cpu_usage():
     cpu_percent = psutil.cpu_percent(interval=1)
     if cpu_percent < 50:
         final = f"💻 CPU usage: {cpu_percent}% 😀"
-    else: 
+    else:
         final = f"💻 CPU usage: {cpu_percent}% 😡"
     return f"{final}"
 
@@ -375,11 +377,19 @@ def main():
         )
 
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
-        activity.append("-------------------------------------------------------------------------------------------------")
+        activity.append(
+            "-------------------------------------------------------------------------------------------------"
+        )
         activity.append("\t\t🔥 Python Firewall 🔥")
-        activity.append(f"{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅")
-        activity.append("-------------------------------------------------------------------------------------------------")
-        activity.append(f"\t\t\t⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}\n")
+        activity.append(
+            f"{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅"
+        )
+        activity.append(
+            "-------------------------------------------------------------------------------------------------"
+        )
+        activity.append(
+            f"\t\t\t⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}\n"
+        )
         with open(LOG_FILE, "r") as f:
             for line in f:
                 # Increment the occurrence count for the IP address
@@ -409,13 +419,15 @@ def main():
                             # Blocks anything in IP_BLOCKS
                             elif any(
                                 word.lower() in line.lower() for word in IP_BLOCKS
-                            ):  
+                            ):
                                 message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
                                 activity.append(message)
                                 block_ip(ip_address, message)
                             else:
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
-                                activity.append(f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-")
+                                activity.append(
+                                    f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
+                                )
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
