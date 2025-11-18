@@ -381,7 +381,7 @@ def main():
                             else:
                                 if args.print:
                                     print(line.lower())
-                                    print("\n----------------------------------")
+                                    print(f"\nAllowed Traffic: {line.lower()}\n")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
