@@ -364,7 +364,7 @@ def main():
 
         if args.print:
             print("\n----------------------------------")
-            print("\nUnfiltered Traffic:\n")
+            print(f"\nUnfiltered Traffic as of: {one_minute_ago}:\n")
 
         with open(LOG_FILE, "r") as f:
             for line in f:
@@ -405,7 +405,7 @@ def main():
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         if args.print:
-            print(f"\nIP Address Count as of: {one_minute_ago}\n")
+            print(f"\nIP Address Count:\n")
             print(f"Blocked IP's: {get_block_count()}")
         for ip, count in ip_counts.items():
             if args.print:
