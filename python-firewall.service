@@ -4,7 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/opt/python-firewall/venv/bin/python /opt/python-firewall/firewall.py & /opt/python-firewall/venv/bin/uvicorn firewall:app --reload --port 6767 --host 0.0.0.0
+WorkingDirectory=/opt/python-firewall
+ExecStart=/usr/bin/bash -c  "/opt/python-firewall/venv/bin/python /opt/python-firewall/firewall.py & /opt/python-firewall/venv/bin/uvicorn firewall:app --reload --port 6767 --host 0.0.0.0 & sleep infinity"
 ExecStop=-kill -9 $(ps aux | grep -i firewall.py | grep -Evi grep | cut -d ' ' -f7 | head -1)
 RemainAfterExit=true
 Restart=on-failure
