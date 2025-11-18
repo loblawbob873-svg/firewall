@@ -20,6 +20,7 @@ TIER_ONE = {
     "lalilulelo",
     "cherrypick",
     "husky",
+    "tusky",
     "whatsapp",
     "fedilab",
     ".js",
