@@ -362,7 +362,7 @@ def main():
 
                             # Block IP's over the IP_OCCURRENCE_THRESHOLD
                             if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
-                                message = f"Blocked: {line.strip()}, IP: {line.lower()}"
+                                message = f"Blocked: {line.strip()} with a count of:{ip_counts[ip_address]}, IP: {line.lower()}"
                                 block_ip(ip_address, message)
 
                             # Blocks anything in SUBNET_BLOCKS
