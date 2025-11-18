@@ -400,7 +400,7 @@ def main():
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                 if args.print:
                                     print(line.lower())
-                                    print(f"\nUnfiltered Traffic:\n {line.lower()}\n")
+                                    print(f"{line.lower()}\n")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
