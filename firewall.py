@@ -368,7 +368,7 @@ def main():
         )
 
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
-        activity.append("\n--------------------------------------------")
+        activity.append("\n---------------------------------------------")
         activity.append("🔥 Python Firewall 🔥")
         activity.append(f"\n⚠️ Unfiltered Traffic as of: {one_minute_ago}")
         activity.append("----------------------------------------------")
