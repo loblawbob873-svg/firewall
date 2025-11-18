@@ -143,6 +143,7 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
+    "/status",
     "\\x00\\x00",
     "/issues?assignee",
     "/.git/config",
