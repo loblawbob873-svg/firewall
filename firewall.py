@@ -381,7 +381,6 @@ def main():
         activity.append(f"\t\t\t⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}\n")
         with open(LOG_FILE, "r") as f:
             for line in f:
-                REMOVE_DATE = line.lower().split("]")
                 # Increment the occurrence count for the IP address
                 # Excludes TIER_ONE Traffic
                 if one_minute_ago.lower() in line.lower() and not any(
@@ -402,7 +401,7 @@ def main():
                                 word.lower() in line.lower() for word in SUBNET_BLOCKS
                             ):
                                 BIG_IP = extract_first_three_parts(ip_address)
-                                message = f"\t🚨 Blocked Subnet: 👉 {REMOVE_DATE[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
+                                message = f"\t🚨 Blocked Subnet: 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
                                 activity.append(message)
                                 block_ip(f"{BIG_IP}.0/24", message)
 
