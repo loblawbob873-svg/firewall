@@ -291,7 +291,14 @@ ip_requests = defaultdict(int)
 
 def get_cpu_usage():
     cpu_percent = psutil.cpu_percent(interval=1)
-    return f"💻 CPU usage: {cpu_percent}%! 🌡️"
+    if cpu_percent < 50:
+        final = "💻 CPU usage: {cpu_percent}% 😀"
+    elif cpu_percent > 50:
+        final = "💻 CPU usage: {cpu_percent}% 😧"
+    elif cpu_percent > 75:
+        final = "💻 CPU usage: {cpu_percent}% 😡"
+    return f"{final}"
+
 
 def send_to_ntfy(message):
     time.sleep(10)
@@ -421,11 +428,11 @@ def main():
                 message = f"🚨 Blocked: {ip} with a count of {count}"
                 activity.append(message)
                 block_ip(ip, message)
-        
-        os.system('clear')  
+
+        os.system("clear")
         for line in activity:
             print(f"\n{line}")
-            
+
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
 
         time.sleep(
