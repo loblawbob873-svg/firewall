@@ -265,6 +265,7 @@ SKIP_ALERTS = [
     "Amethyst",
     "rottenwheel",
     "/commit",
+    "bot"
 ]
 
 # Set up logging
