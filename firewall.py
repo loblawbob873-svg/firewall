@@ -510,6 +510,7 @@ def main():
                 if not args.print and "🔍" in line:
                     URL = line.split("🔍")
                     URL_FIX = f"<a target=\"blank\" href=\"{URL[1]}\">🔍</a>"
+                    print(f"Debug {URL_FIX}")
                     line = f"{URL[0]} {URL_FIX}"
                 if "\t" in line:
                     line.replace("\t","") 
