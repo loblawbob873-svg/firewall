@@ -23,6 +23,12 @@ pip install requests logging psutil
 python firewall.py --print
 ```
 
+### NTFY Notifications for Mobile or Desktop
+Modify ```firewall.py``` and change this to your desired NTFY server/Topic:
+```
+NTFY_URL = "https://push.poster.place/logs"
+```
+
 ### Sample NFT firewall
 
 Save it as ```/etc/firewall.nft``` and load it with ```nft -f /etc/firewall.nft```
