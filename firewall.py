@@ -357,7 +357,7 @@ def main():
     while True:
         # Get the current time and the time one minute ago
         ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
-        activity = {}
+        activity = []
         now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
         one_minute_ago = time.strftime(
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
