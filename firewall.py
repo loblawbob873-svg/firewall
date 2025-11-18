@@ -504,7 +504,10 @@ def main():
             f.write("<script>\nwindow.setTimeout( function() {window.location.reload();}, 30000);</script>")
             for line in activity:
                 print(f"\n{line}")
-                f.write("\n")    
+                f.write("\n")   
+                if "🔍" in line:
+                    URL = line.split("=");
+                    line.replace(line,f"<a href=\"{url}[1]\">🔍 IP Info></a>")
                 if "\t" in line:
                     line.replace("\t","") 
                 if "\t" in line:
