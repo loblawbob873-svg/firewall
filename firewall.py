@@ -68,6 +68,7 @@ TIER_ONE = {
     "/api/pleroma/frontend_configurations",
     "/api/v1/akkoma/translation",
     "/api/v1/media",
+    "/tag/",
     "/internal/fetch",
     "/contexts/",
     "/search",
