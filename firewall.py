@@ -414,7 +414,7 @@ def main():
                                 block_ip(ip_address, message)
                             else:
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
-                                activity.append(f"\t🔎 {line.lower()}")
+                                activity.append(f"\t🕵️ {line.lower()}\n 🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
