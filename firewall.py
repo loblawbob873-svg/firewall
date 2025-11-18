@@ -115,6 +115,7 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
+    "wp-content"
     "Deno/",
     "/commits/commit/",
     "/blame/commit",
