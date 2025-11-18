@@ -115,6 +115,7 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
+    "Deno/",
     "/commits/commit/",
     "/blame/commit",
     "/src/commit/",
