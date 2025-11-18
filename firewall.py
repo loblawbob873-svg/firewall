@@ -16,6 +16,7 @@ TIME_FRAME = 5  # 30 Seconds
 
 # Basically Unlimited
 TIER_ONE = {
+    "/drc/",
     "lalilulelo",
     "cherrypick",
     "husky",
