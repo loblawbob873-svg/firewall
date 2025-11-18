@@ -14,6 +14,8 @@ from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
+import openai
+import json
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
@@ -23,19 +25,25 @@ IP_OCCURRENCE_THRESHOLD = 50
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
 
-#Web Inferface HTML File
+# Web Inferface HTML File
 WEB_HTML = "/tmp/python-firewall.html"
 
-#Where to save the firewall rules
+# Where to save the firewall rules
 NFT_SAVED_RULES = "/etc/firewall.nft"
 
 # Get the current time and the time one minute ago
 ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
 activity = []
-        
-# Basically Unlimited/ Comment out a line if you want to 
+
+# Open AI Integration
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_ENDPOINT = os.getenv("OPENAI_ENDPOINT")
+MODEL = "mistral-nemo:latest"
+
+# Basically Unlimited/ Comment out a line if you want to
 # block if it's accessed greater than IP_OCCURRENCE_THRESHOLD
 TIER_ONE = {
+    "mumble",
     "/status",
     "/extension.php",
     "/logs",
@@ -317,12 +325,12 @@ app = FastAPI(
 )
 
 app.add_middleware(
-
     CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.get("/")
 async def main():
@@ -331,23 +339,52 @@ async def main():
         content = f.read()
     return HTMLResponse(content=content)
 
+
 async def get_html():
     with open(f"{WEB_HTML}", "r") as f:
         return f.read()
-    
+
+
 # Set up logging
 logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
 )
 
-    
+
 # Set up logging
 logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
 )
+
+
+@app.get("/ai")
+async def main(ip: str):
+    openai_headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+    }
+
+    messages = []
+    messages.append(
+        {"role": "user", "web_search": True, "content": f"Tell me information about this IP address such as the owner and location: {ip}"}
+    )
+
+    payload = {"model": MODEL, "messages": messages}
+    if(OPENAI_API_KEY):
+        try:
+            r = requests.post(
+                OPENAI_ENDPOINT,
+                headers=openai_headers,
+                data=json.dumps(payload),
+                timeout=500,
+            )
+            result = r.json()
+            return result["choices"][0]["message"]["content"].strip()
+        except Exception as e: return(e)
 
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
+
 
 def get_cpu_usage():
     cpu_percent = psutil.cpu_percent(interval=1)
@@ -356,6 +393,7 @@ def get_cpu_usage():
     else:
         final = f"💻 CPU usage: {cpu_percent}% 😡"
     return f"{final}"
+
 
 def send_to_ntfy(message):
     time.sleep(10)
@@ -388,22 +426,27 @@ def check_message(message):
 
     return Proceed
 
+
 def messaging(message):
     if check_message(message):
         if NTFY_URL:
             send_to_ntfy(message)
 
+
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
+
 
 def save_nft_rules():
     command = f"/usr/sbin/nft list ruleset > {NFT_SAVED_RULES}"
     subprocess.check_output(command, shell=True, text=True)
 
+
 def get_block_count():
     command = f"/usr/sbin/nft list ruleset | grep -i drop | wc -l"
     data = subprocess.check_output(command, shell=True, text=True)
     return data
+
 
 def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
@@ -413,6 +456,7 @@ def block_ip(ip, message):
         )
         os.system(command)
         messaging(f"{message}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -462,16 +506,16 @@ def main():
                             try:
                                 # Blocks anything in SUBNET_BLOCKS
                                 if any(
-                                    word.lower() in line.lower() for word in SUBNET_BLOCKS
+                                    word.lower() in line.lower()
+                                    for word in SUBNET_BLOCKS
                                 ):
-                                    
+
                                     BIG_IP = extract_first_three_parts(ip_address)
                                     message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
-                        
-                                    
-                            # Blocks anything in IP_BLOCKS
+
+                                # Blocks anything in IP_BLOCKS
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
@@ -484,8 +528,8 @@ def main():
                                         f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     )
                             except requests.exceptions.RequestException as err:
-                                print(f"Something went wrong: {err}")  
-       
+                                print(f"Something went wrong: {err}")
+
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         activity.append(f"\nIP Address Count:\n")
@@ -500,22 +544,24 @@ def main():
 
         save_nft_rules()
         os.system("clear")
-        
+
         with open(WEB_HTML, "w") as f:
             f.write("<html>")
-            f.write("<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>")
+            f.write(
+                "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
+            )
             for line in activity:
+                GET_AI_IP = ""
                 print(f"\n{line}")
-                f.write("\n")   
+                f.write("\n")
                 if not args.print and "🔍" in line:
                     URL = line.split("🔍")
-                    URL_FIX = f"<a target=\"blank\" href=\"{URL[1].strip()}\">🔍</a>"
-                    print(f"Debug {URL_FIX}")
+                    URL_FIX = f'<a target="blank" href="{URL[1].strip()}">🔍</a>  <a href="http://107.175.34.92:6767/ai?ip={URL[1].split("=")[1]}" target="_blank">🤖</a>'
                     line = f"{URL[0]} {URL_FIX}"
                 if "\t" in line:
-                    line.replace("\t","") 
+                    line.replace("\t", "")
                 if "\t" in line:
-                    line.replace("\n","<br>")    
+                    line.replace("\n", "<br>")
                 f.write(f"<br>{line}</br>")
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
 
