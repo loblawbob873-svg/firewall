@@ -375,10 +375,10 @@ def main():
         )
 
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
-        activity.append("---------------------------------------------")
+        activity.append("--------------------------------------------------------------")
         activity.append("🔥 Python Firewall 🔥")
         activity.append(f"{get_cpu_usage()} 📋 Blocked IP's: {get_block_count()}")
-        activity.append("----------------------------------------------")
+        activity.append("--------------------------------------------------------------")
         activity.append(f"\t\t\t⚠️ Unfiltered Traffic as of: {one_minute_ago}\n")
         with open(LOG_FILE, "r") as f:
             for line in f:
@@ -419,11 +419,11 @@ def main():
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
-        activity.append(f"IP Address Count:\n")
+        activity.append(f"\nIP Address Count:\n")
 
         for ip, count in ip_counts.items():
             if count > 1:
-                activity.append(f"📍 {ip}: {count}")
+                activity.append(f"\t📍 {ip}: {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"🚨 Blocked: {ip} with a count of {count}"
                 activity.append(message)
