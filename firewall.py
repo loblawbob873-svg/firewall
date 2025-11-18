@@ -116,6 +116,7 @@ TIER_ONE = {
     "/ocs/v2.php/cloud/user",
     "/ocs/v2.php/apps/notifications/",
     "/api/v1/notifications",
+    "/api/v1/pleroma/notifications/read",
     "/ocs/v2.php/cloud/capabilities",
     "/web-oidc-callback",
     "/dav/spaces",
