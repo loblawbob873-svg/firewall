@@ -458,28 +458,32 @@ def main():
                             ip_address = ip_match.group()
                             ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
 
-                            # Blocks anything in SUBNET_BLOCKS
-                            if any(
-                                word.lower() in line.lower() for word in SUBNET_BLOCKS
-                            ):
-                                BIG_IP = extract_first_three_parts(ip_address)
-                                message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
-                                activity.append(message)
-                                block_ip(f"{BIG_IP}.0/24", message)
+                            try:
+                                # Blocks anything in SUBNET_BLOCKS
+                                if any(
+                                    word.lower() in line.lower() for word in SUBNET_BLOCKS
+                                ):
 
+                                    BIG_IP = extract_first_three_parts(ip_address)
+                                    message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
+                                    activity.append(message)
+                                    block_ip(f"{BIG_IP}.0/24", message)
+                        
+                                    
                             # Blocks anything in IP_BLOCKS
-                            elif any(
-                                word.lower() in line.lower() for word in IP_BLOCKS
-                            ):
-                                message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
-                                activity.append(message)
-                                block_ip(ip_address, message)
-                            else:
-                                # Prints any Web Traffic that does not fit into any of the filtering arrays above
-                                activity.append(
-                                    f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
-                                )
-
+                                elif any(
+                                    word.lower() in line.lower() for word in IP_BLOCKS
+                                ):
+                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
+                                    activity.append(message)
+                                    block_ip(ip_address, message)
+                                else:
+                                    # Prints any Web Traffic that does not fit into any of the filtering arrays above
+                                    activity.append(
+                                        f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n-"
+                                    )
+                            except requests.exceptions.RequestException as err:
+                                print(f"Something went wrong: {err}")  
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         activity.append(f"\nIP Address Count:\n")
