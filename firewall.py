@@ -408,8 +408,9 @@ def main():
                             # Blocks anything in IP_BLOCKS
                             elif any(
                                 word.lower() in line.lower() for word in IP_BLOCKS
-                            ):
-                                message = f"\t🚨 Blocked: 👉 {line.lower()}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
+                            ):  
+                                REMOVE_DATE = line.lower().split("]")
+                                message = f"\t🚨 Blocked: 👉 {REMOVE_DATE[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
                                 activity.append(message)
                                 block_ip(ip_address, message)
                             else:
