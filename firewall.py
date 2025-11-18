@@ -371,7 +371,7 @@ def main():
         activity.append("\n---------------------------------------------")
         activity.append("🔥 Python Firewall 🔥")
         activity.append("----------------------------------------------")
-        activity.append(f"\n⚠️ Unfiltered Traffic as of: {one_minute_ago}")
+        activity.append(f"⚠️ Unfiltered Traffic as of: {one_minute_ago}\n")
         with open(LOG_FILE, "r") as f:
             for line in f:
                 # Increment the occurrence count for the IP address
