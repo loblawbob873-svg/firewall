@@ -291,7 +291,7 @@ ip_requests = defaultdict(int)
 
 def get_cpu_usage():
     cpu_percent = psutil.cpu_percent(interval=1)
-    return f"💻 The current CPU usage is {cpu_percent}%! 🌡️"
+    return f"💻 CPU usage: {cpu_percent}%! 🌡️"
 
 def send_to_ntfy(message):
     time.sleep(10)
