@@ -376,7 +376,7 @@ def main():
 
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
         activity.append("--------------------------------------------------------------------------------------")
-        activity.append("🔥 Python Firewall 🔥")
+        activity.append("\t\t\t🔥 Python Firewall 🔥")
         activity.append(f"{get_cpu_usage()}\t\tBlocked IP's: {get_block_count().strip()} ✅")
         activity.append("-------------------------------------------------------------------------------------")
         activity.append(f"\t\t\t⚠️ Unfiltered Traffic as of: {one_minute_ago}\n")
