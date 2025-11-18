@@ -368,11 +368,11 @@ def main():
         )
 
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
-        activity.append("\n---------------------------------------------")
+        activity.append("---------------------------------------------")
         activity.append("🔥 Python Firewall 🔥")
         activity.append(f"📋 Blocked IP's: {get_block_count()}")
+        activity.append(f"{get_cpu_usage()}")
         activity.append("----------------------------------------------")
-        activity.append(f"{get_cpu_usage()}\n")
         activity.append(f"⚠️ Unfiltered Traffic as of: {one_minute_ago}\n")
         with open(LOG_FILE, "r") as f:
             for line in f:
