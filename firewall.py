@@ -126,6 +126,7 @@ TIER_ONE = {
 IP_BLOCKS = [
     "/issues?assignee" "/.git/config",
     "wp-content",
+    "wp-includes",
     "deno",
     "Deno/",
     "/commits/commit/",
