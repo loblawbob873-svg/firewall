@@ -409,12 +409,12 @@ def main():
                             elif any(
                                 word.lower() in line.lower() for word in IP_BLOCKS
                             ):  
-                                message = f"\t🚨 Blocked: 👉 {REMOVE_DATE[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
+                                message = f"\t🚨 Blocked: 👉 {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
                                 activity.append(message)
                                 block_ip(ip_address, message)
                             else:
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
-                                activity.append(f"\t🕵️ {REMOVE_DATE}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}")
+                                activity.append(f"\t🕵️ {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
