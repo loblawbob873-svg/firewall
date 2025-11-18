@@ -337,10 +337,10 @@ def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
     parser.add_argument("--print", action="store_true", help="Print IP address counts")
     args = parser.parse_args()
-    ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
 
     while True:
         # Get the current time and the time one minute ago
+        ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
         now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
         one_minute_ago = time.strftime(
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
