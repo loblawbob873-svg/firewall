@@ -332,9 +332,6 @@ def check_message(message):
 
 def messaging(message):
     if check_message(message):
-        print("Debug")
-        #logging.info(f"{message}")
-        print(f"{message}")
         if NTFY_URL:
             send_to_ntfy(message)
 
