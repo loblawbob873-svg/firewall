@@ -361,6 +361,10 @@ def main():
         )
 
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
+
+        if args.print:
+            print(f"\nUnfiltered Traffic:\n {line.lower()}\n")
+
         with open(LOG_FILE, "r") as f:
             for line in f:
                 # Increment the occurrence count for the IP address
