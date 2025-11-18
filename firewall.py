@@ -12,7 +12,7 @@ LOG_FILE = "/tmp/access.log"
 IP_OCCURRENCE_THRESHOLD = 50
 # NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"
-TIME_FRAME = 5  # 30 Seconds
+TIME_FRAME = 30  # 30 Seconds
 
 # Basically Unlimited
 TIER_ONE = {
