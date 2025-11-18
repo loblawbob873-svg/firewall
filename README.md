@@ -1,5 +1,5 @@
 ```
 python -m venv venv
 . venv/bin/activate
-pip install requests logging
+pip install requests logging psutil
 ```

@@ -6,6 +6,7 @@ import subprocess
 import logging
 from collections import defaultdict
 import argparse
+import psutil
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
@@ -288,6 +289,9 @@ logging.basicConfig(
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
 
+def get_cpu_usage():
+    cpu_percent = psutil.cpu_percent(interval=1)
+    return f"💻 The current CPU usage is {cpu_percent}%! 🌡️"
 
 def send_to_ntfy(message):
     time.sleep(10)
@@ -367,6 +371,7 @@ def main():
 
         activity.append("\n----------------------------------")
         activity.append(f"\n⚠️ Unfiltered Traffic as of: {one_minute_ago}:⚠️\n")
+        activity.append(f"CPU Utilization: {get_cpu_usage()}")
 
         with open(LOG_FILE, "r") as f:
             for line in f:
@@ -407,7 +412,7 @@ def main():
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
-        activity.append(f"📋 Blocked IP's: {get_block_count()}")
+        activity.append(f"📋 Blocked IP's: {get_block_count()} ⚡")
         activity.append(f"\nIP Address Count:\n")
 
         for ip, count in ip_counts.items():
