@@ -328,6 +328,11 @@ def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
 
 
+def get_block_count():
+    command = f"/usr/sbin/nft list ruleset | grep -i drop | wc -l"
+    return os.system(command)
+
+
 def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
@@ -394,6 +399,7 @@ def main():
         if args.print:
             print("\n----------------------------------")
             print(f"IP Address Count as of: {one_minute_ago}\n")
+            print(f"Blocked IP's: {get_block_count()}")
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
