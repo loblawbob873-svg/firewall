@@ -36,6 +36,7 @@ activity = []
 # Basically Unlimited/ Comment out a line if you want to 
 # block if it's accessed greater than IP_OCCURRENCE_THRESHOLD
 TIER_ONE = {
+    "/status",
     "/extension.php",
     "/logs",
     "/drc/",
@@ -143,7 +144,6 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
-    "/status",
     "\\x00\\x00",
     "/issues?assignee",
     "/.git/config",
