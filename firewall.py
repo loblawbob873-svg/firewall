@@ -406,8 +406,9 @@ def main():
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         if args.print:
-            print(f"\nIP Address Count:\n")
             print(f"Blocked IP's: {get_block_count()}")
+            print(f"\nIP Address Count:\n")
+
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
