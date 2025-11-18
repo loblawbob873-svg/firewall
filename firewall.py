@@ -403,17 +403,17 @@ def main():
                                 block_ip(ip_address, message)
                             else:
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
-                                activity.append(f"{line.lower()}\n")
+                                activity.append(f"🔎 {line.lower()}\n")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
-        activity.append(f"Blocked IP's: {get_block_count()}")
+        activity.append(f"📋 Blocked IP's: {get_block_count()}")
         activity.append(f"\nIP Address Count:\n")
 
         for ip, count in ip_counts.items():
             activity.append(f"{ip}: {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
-                message = f"Blocked: {ip} with a count of {count}"
+                message = f"⏰ Blocked ⏰: {ip} with a count of {count}"
                 activity.append(message)
                 block_ip(ip, message)
         
