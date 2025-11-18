@@ -399,7 +399,6 @@ def main():
                             else:
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                 if args.print:
-                                    print(line.lower())
                                     print(f"{line.lower()}\n")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
