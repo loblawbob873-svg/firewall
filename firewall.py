@@ -349,7 +349,6 @@ def messaging(message):
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
 
-
 def save_nft_rules():
     command = f"/usr/sbin/nft list ruleset > {NFT_SAVED_RULES}"
     subprocess.check_output(command, shell=True, text=True)
