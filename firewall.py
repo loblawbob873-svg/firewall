@@ -331,7 +331,8 @@ def extract_first_three_parts(ip):
 
 def get_block_count():
     command = f"/usr/sbin/nft list ruleset | grep -i drop | wc -l"
-    return os.system(command)
+    data = os.system(command)
+    return data
 
 
 def block_ip(ip, message):
@@ -398,10 +399,9 @@ def main():
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         if args.print:
-            block_count = get_block_count()
             print("\n----------------------------------")
             print(f"IP Address Count as of: {one_minute_ago}\n")
-            print(f"\nBlocked IP's: {block_count}")
+            print(f"\nBlocked IP's: {get_block_count()}")
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
