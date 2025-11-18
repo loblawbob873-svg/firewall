@@ -7,6 +7,7 @@
 * Automatic Blocking
 * Customizable 
 * Send Alerts to NTFY
+* Web Interface for Reporting
 
 ### Requirements
 * Python
@@ -15,7 +16,7 @@
 ```
 python -m venv venv
 . venv/bin/activate
-pip install requests logging psutil
+pip install requests logging psutil httpx fastapi asyncio uvicorn
 ```
 
 ### Run the app with Protection and Live Reporting
@@ -27,6 +28,11 @@ python firewall.py --print
 Modify ```firewall.py``` and change this to your desired NTFY server/Topic:
 ```
 NTFY_URL = "https://push.poster.place/logs"
+```
+
+### Web Interface for Reporting
+```
+./venv/bin/uvicorn firewall:app  --reload --port 8000 --host 0.0.0.0
 ```
 
 ### Sample NFT firewall

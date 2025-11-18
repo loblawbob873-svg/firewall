@@ -7,17 +7,32 @@ import logging
 from collections import defaultdict
 import argparse
 import psutil
+import re
+import httpx
+import asyncio
+from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
 IP_OCCURRENCE_THRESHOLD = 50
+
 # NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
 
+#Web Inferface HTML File
+WEB_HTML = "/tmp/python-firewall.html"
+
 #Where to save the firewall rules
 NFT_SAVED_RULES = "/etc/firewall.nft"
 
+# Get the current time and the time one minute ago
+ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
+activity = []
+        
 # Basically Unlimited/ Comment out a line if you want to 
 # block if it's accessed greater than IP_OCCURRENCE_THRESHOLD
 TIER_ONE = {
@@ -291,6 +306,40 @@ SKIP_ALERTS = [
     "bot",
 ]
 
+# ------------------------------------------------------------------
+# FastAPI app
+# ------------------------------------------------------------------
+app = FastAPI(
+    title="Python Firewall",
+    description="DDOS Protection",
+    version="1.0.0",
+)
+
+app.add_middleware(
+
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+async def main():
+    DATA = ""
+    with open(f"{WEB_HTML}", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+async def get_html():
+    with open(f"{WEB_HTML}", "r") as f:
+        return f.read()
+    
+# Set up logging
+logging.basicConfig(
+    filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
+)
+
+    
 # Set up logging
 logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
@@ -445,9 +494,18 @@ def main():
 
         save_nft_rules()
         os.system("clear")
-        for line in activity:
-            print(f"\n{line}")
-
+        
+        with open(WEB_HTML, "w") as f:
+            f.write("<html>")
+            f.write("<script>\nwindow.setTimeout( function() {window.location.reload();}, 30000);</script>")
+            for line in activity:
+                print(f"\n{line}")
+                f.write("\n")    
+                if "\t" in line:
+                    line.replace("\t","") 
+                if "\t" in line:
+                    line.replace("\n","<br>")    
+                f.write(f"<br>{line}</br>")
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
 
         time.sleep(
