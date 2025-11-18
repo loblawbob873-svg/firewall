@@ -331,7 +331,7 @@ def extract_first_three_parts(ip):
 
 def get_block_count():
     command = f"/usr/sbin/nft list ruleset | grep -i drop | wc -l"
-    data = os.system(command)
+    data = subprocess.check_output(command, shell=True, text=True)
     return data
 
 
