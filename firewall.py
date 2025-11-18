@@ -409,7 +409,7 @@ def main():
                             elif any(
                                 word.lower() in line.lower() for word in IP_BLOCKS
                             ):
-                                message = f"\t🚨 Blocked: 👉 {line.lower()}"
+                                message = f"\t🚨 Blocked: 👉 {line.lower()}\n\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}"
                                 activity.append(message)
                                 block_ip(ip_address, message)
                             else:
