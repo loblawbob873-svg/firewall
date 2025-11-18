@@ -68,6 +68,7 @@ TIER_ONE = {
     "/api/pleroma/frontend_configurations",
     "/api/v1/akkoma/translation",
     "/api/v1/media",
+    "/internal/fetch",
     "/contexts/",
     "/search",
     "/inbox",
@@ -119,8 +120,7 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
-    "/issues?assignee"
-    "/.git/config",
+    "/issues?assignee" "/.git/config",
     "wp-content",
     "deno",
     "Deno/",
