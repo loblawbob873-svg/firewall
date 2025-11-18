@@ -416,7 +416,8 @@ def main():
         activity.append(f"\nIP Address Count:\n")
 
         for ip, count in ip_counts.items():
-            activity.append(f"🖥️ {ip}: {count}")
+            if count > 1:
+                activity.append(f"🖥️ {ip}: {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"⏰ Blocked: {ip} with a count of {count}"
                 activity.append(message)
