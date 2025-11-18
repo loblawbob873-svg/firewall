@@ -485,6 +485,7 @@ def main():
                                     )
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")  
+       
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         activity.append(f"\nIP Address Count:\n")
@@ -506,11 +507,12 @@ def main():
             for line in activity:
                 print(f"\n{line}")
                 f.write("\n")   
-                if "🔍" in line:
-                    URL = line.split("🔍");
-                    URL_FIX = f"<a target=\"blank\" href=\"{URL[1]}\">🔍</a>"
-                    line = f"{URL[0]} {URL_FIX}"
-                    print(f"DEbug: {line}")
+                if not args.print:
+                    if "🔍" in line:
+                        URL = line.split("🔍");
+                        URL_FIX = f"<a target=\"blank\" href=\"{URL[1]}\">🔍</a>"
+                        line = f"{URL[0]} {URL_FIX}"
+                        print(f"DEbug: {line}")
                 if "\t" in line:
                     line.replace("\t","") 
                 if "\t" in line:
