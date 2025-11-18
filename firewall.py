@@ -260,6 +260,7 @@ IP_BLOCKS = [
     "yandexfavicon",
     "adsbot-google",
     "gptbot",
+    "damus",
 ]
 
 SUBNET_BLOCKS = [
