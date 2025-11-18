@@ -381,6 +381,7 @@ def main():
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         if args.print:
             print("\n----------------------------------")
+            print(f"\As of: {none_minute_ago}")
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
