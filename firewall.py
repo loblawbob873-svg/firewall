@@ -508,7 +508,7 @@ def main():
                 if "🔍" in line:
                     URL = line.split("🔍");
                     URL_FIX = f"<a href=\"{URL[1]}\">🔍 IP Info></a>"
-                    line = f"{URL[1]} {URL_FIX}"
+                    line = f"{URL[0]} {URL_FIX}"
                     print(f"DEbug: {line}")
                 if "\t" in line:
                     line.replace("\t","") 
