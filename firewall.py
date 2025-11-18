@@ -507,8 +507,7 @@ def main():
             for line in activity:
                 print(f"\n{line}")
                 f.write("\n")   
-                if not args.print:
-                    if "🔍" in line:
+                if not args.print and "🔍" in line:
                         URL = line.split("🔍");
                         URL_FIX = f"<a target=\"blank\" href=\"{URL[1]}\">🔍</a>"
                         line = f"{URL[0]} {URL_FIX}"
