@@ -380,7 +380,7 @@ def main():
                                 block_ip(ip_address, message)
                             else:
                                 if args.print:
-                                    print(message)
+                                    print(line.lower())
                                     print("\n----------------------------------")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
