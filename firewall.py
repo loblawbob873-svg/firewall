@@ -115,8 +115,7 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
-    "wp-content"
-    "Deno/",
+    "wp-content" "Deno/",
     "/commits/commit/",
     "/blame/commit",
     "/src/commit/",
@@ -379,6 +378,10 @@ def main():
                             ):
                                 message = f"Blocked: {line.strip()}, IP: {line.lower()}"
                                 block_ip(ip_address, message)
+
+                                if args.print:
+                                    print(message)
+                                    print("\n----------------------------------")
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
