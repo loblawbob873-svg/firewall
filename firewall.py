@@ -503,7 +503,7 @@ def main():
         
         with open(WEB_HTML, "w") as f:
             f.write("<html>")
-            f.write("<script>\nwindow.setTimeout( function() {window.location.reload();}, 30000);</script>")
+            f.write("<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>")
             for line in activity:
                 print(f"\n{line}")
                 f.write("\n")   
