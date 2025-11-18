@@ -159,6 +159,7 @@ IP_BLOCKS = [
     "wp-includes",
     "deno",
     "Deno/",
+    "/commits/",
     "/commits/commit/",
     "/blame/commit",
     "/src/commit/",
