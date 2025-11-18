@@ -401,7 +401,7 @@ def main():
         if args.print:
             print("\n----------------------------------")
             print(f"IP Address Count as of: {one_minute_ago}\n")
-            print(f"\nBlocked IP's: {get_block_count()}")
+            print(f"Blocked IP's: {get_block_count()}")
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
