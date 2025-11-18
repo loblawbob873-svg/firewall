@@ -402,7 +402,7 @@ def main():
                             elif any(
                                 word.lower() in line.lower() for word in IP_BLOCKS
                             ):
-                                message = f"⏰ Blocked: 👉 {line.strip()}, IP: 💀 {line.lower()}"
+                                message = f"⏰ Blocked: 👉 {line.lower()}💀"
                                 activity.append(message)
                                 block_ip(ip_address, message)
                             else:
