@@ -1,6 +1,6 @@
 ## DDOS Protection System
 
-![image](app.png)
+![image](image2.png)
 
 ### Features
 * Live Reporting 
