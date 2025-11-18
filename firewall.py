@@ -298,7 +298,6 @@ logging.basicConfig(
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
 
-
 def get_cpu_usage():
     cpu_percent = psutil.cpu_percent(interval=1)
     if cpu_percent < 50:
@@ -306,7 +305,6 @@ def get_cpu_usage():
     else:
         final = f"💻 CPU usage: {cpu_percent}% 😡"
     return f"{final}"
-
 
 def send_to_ntfy(message):
     time.sleep(10)
@@ -339,12 +337,10 @@ def check_message(message):
 
     return Proceed
 
-
 def messaging(message):
     if check_message(message):
         if NTFY_URL:
             send_to_ntfy(message)
-
 
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
@@ -358,7 +354,6 @@ def get_block_count():
     data = subprocess.check_output(command, shell=True, text=True)
     return data
 
-
 def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
@@ -367,7 +362,6 @@ def block_ip(ip, message):
         )
         os.system(command)
         messaging(f"{message}")
-
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
