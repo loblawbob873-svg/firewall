@@ -352,7 +352,7 @@ def extract_first_three_parts(ip):
 
 def save_nft_rules():
     command = f"/usr/sbin/nft list ruleset > {NFT_SAVED_RULES}"
-    data = subprocess.check_output(command, shell=True, text=True)
+    subprocess.check_output(command, shell=True, text=True)
 
 def get_block_count():
     command = f"/usr/sbin/nft list ruleset | grep -i drop | wc -l"
