@@ -363,6 +363,7 @@ def main():
         messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
 
         if args.print:
+            print("\n----------------------------------")
             print("\nUnfiltered Traffic:\n")
 
         with open(LOG_FILE, "r") as f:
