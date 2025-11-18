@@ -423,6 +423,7 @@ def main():
                 activity.append(message)
                 block_ip(ip, message)
         
+        os.system('clear')  
         for line in activity:
             print(f"\n{line}")
             
