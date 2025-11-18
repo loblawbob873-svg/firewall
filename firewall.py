@@ -61,6 +61,7 @@ TIER_ONE = {
     "/api/v1/akkoma/frontend_settings",
     "/api/v1/akkoma/translation",
     "/api/v1/media",
+    "/contexts/",
     "/search",
     "/inbox",
     "/api/v2",
