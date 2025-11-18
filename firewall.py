@@ -16,7 +16,6 @@ TIME_FRAME = 5  # 30 Seconds
 
 # Basically Unlimited
 TIER_ONE = {
-    "misskey",
     "lalilulelo",
     "cherrypick",
     "husky",
@@ -35,6 +34,9 @@ TIER_ONE = {
     "/friends",
     "/notice",
     "/nodeinfo",
+    "/outbox",
+    "/following",
+    "/followers",
     "/api/v1/notifications",
     "/api/v1/timelines",
     "/api/v1/statuses",
