@@ -398,9 +398,10 @@ def main():
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         if args.print:
+            block_count = get_block_count()
             print("\n----------------------------------")
             print(f"IP Address Count as of: {one_minute_ago}\n")
-            print(f"\nBlocked IP's: {get_block_count()}")
+            print(f"\nBlocked IP's: {block_count}")
         for ip, count in ip_counts.items():
             if args.print:
                 print(f"{ip}: {count}")
