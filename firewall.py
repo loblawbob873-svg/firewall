@@ -15,6 +15,9 @@ IP_OCCURRENCE_THRESHOLD = 50
 NTFY_URL = "https://push.poster.place/logs"
 TIME_FRAME = 30  # 30 Seconds
 
+#Where to save the firewall rules
+NFT_SAVED_RULES = "/etc/firewall.nft"
+
 # Basically Unlimited/ Comment out a line if you want to 
 # block if it's accessed greater than IP_OCCURRENCE_THRESHOLD
 TIER_ONE = {
@@ -347,6 +350,10 @@ def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
 
 
+def save_nft_rules():
+    command = f"/usr/sbin/nft list ruleset > {NFT_SAVED_RULES}"
+    data = subprocess.check_output(command, shell=True, text=True)
+
 def get_block_count():
     command = f"/usr/sbin/nft list ruleset | grep -i drop | wc -l"
     data = subprocess.check_output(command, shell=True, text=True)
@@ -442,6 +449,7 @@ def main():
                 activity.append(message)
                 block_ip(ip, message)
 
+        save_nft_rules()
         os.system("clear")
         for line in activity:
             print(f"\n{line}")
