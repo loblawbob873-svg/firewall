@@ -111,7 +111,7 @@ TIER_ONE = {
     "/ocs/v2.php/cloud/capabilities",
     "/web-oidc-callback",
     "/dav/spaces",
-    "/api/v0/settings/assignments-list"
+    "/api/v0/settings/assignments-list",
 }
 
 IP_BLOCKS = [
@@ -266,7 +266,7 @@ SKIP_ALERTS = [
     "Amethyst",
     "rottenwheel",
     "/commit",
-    "bot"
+    "bot",
 ]
 
 # Set up logging
@@ -321,6 +321,7 @@ def messaging(message):
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
 
+
 def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
@@ -329,6 +330,7 @@ def block_ip(ip, message):
         )
         os.system(command)
         messaging(f"{message}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -361,11 +363,6 @@ def main():
                             ip_address = ip_match.group()
                             ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
 
-                            # Block IP's over the IP_OCCURRENCE_THRESHOLD
-                            if ip_counts[ip_address] > IP_OCCURRENCE_THRESHOLD:
-                                message = f"Blocked: {line.strip()} with a count of:{ip_counts[ip_address]}, IP: {line.lower()}"
-                                block_ip(ip_address, message)
-
                             # Blocks anything in SUBNET_BLOCKS
                             if any(
                                 word.lower() in line.lower() for word in SUBNET_BLOCKS
@@ -381,12 +378,17 @@ def main():
                                 message = f"Blocked: {line.strip()}, IP: {line.lower()}"
                                 block_ip(ip_address, message)
 
-                    if args.print:
-                        messaging("\n\n\n[IP Address Counts]\n")
-                        for ip, count in ip_counts.items():
-                            print(f"{ip}: {count}")
+        # Block IP's over the IP_OCCURRENCE_THRESHOLD
+        for ip, count in ip_counts.items():
+            if count > IP_OCCURRENCE_THRESHOLD:
+                # print(f"{ip_address}: {count}")
+                message = f"Blocked: {ip} with a count oof {count}"
+                block_ip(ip, message)
+                if args.print:
+                    print(f"{ip}: {count}")
 
         messaging(f"Firewall sleeping for: {TIME_FRAME}")
+
         time.sleep(
             TIME_FRAME
         )  # Wait for the specified time frame before processing again
