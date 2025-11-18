@@ -65,6 +65,7 @@ TIER_ONE = {
     "/api/v1/lists",
     "/api/v1/mutes",
     "/api/v1/akkoma/frontend_settings",
+    "/api/pleroma/frontend_configurations",
     "/api/v1/akkoma/translation",
     "/api/v1/media",
     "/contexts/",
