@@ -520,13 +520,13 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split(" ")[7]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split(" ")[6]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
                                     # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                     activity.append(
-                                        f"\t🕵️ {ip_address} {line.lower().split(" ")[8]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                        f"\t🕵️ {ip_address} {line.lower().split(" ")[6]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     )
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")
