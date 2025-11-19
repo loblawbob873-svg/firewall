@@ -511,7 +511,7 @@ def main():
                                     for word in SUBNET_BLOCKS
                                 ):
                                     shorten = line.lower().split(" ")[6]
-                                    shoroten_again = shorten[:20] + '...'
+                                    shoroten_again = shorten[:25] + '...'
                                     BIG_IP = extract_first_three_parts(ip_address)
                                     message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {shoroten_again}\n"
                                     activity.append(message)
@@ -521,13 +521,17 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {line.lower().split(" ")[6]}\n"
+                                    shorten = line.lower().split(" ")[6]
+                                    shoroten_again = shorten[:25] + '...'
+                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {shoroten_again}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
                                     # Prints any Web Traffic that does not fit into any of the filtering arrays above
+                                    shorten = line.lower().split(" ")[6]
+                                    shoroten_again = shorten[:25] + '...'
                                     activity.append(
-                                        f"\t🕵️ {ip_address} {line.lower().split(" ")[6]}\n"
+                                        f"\t🕵️ {ip_address} {shoroten_again}\n"
                                     )
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")
