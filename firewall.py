@@ -564,11 +564,7 @@ def main():
                 if "\t" in line:
                     line.replace("\t", "")
                 if "\n" in line:
-                    line.replace("\n", "<br>")
-                #if "[' ', '" in line:
-                #    line.replace("[' ', '", "")            
-                #if "n'] " in line:
-                #    line.replace("n']", "")                
+                    line.replace("\n", "<br>")          
                 f.write(f"<br>{line}</br>")
 
         time.sleep(
