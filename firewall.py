@@ -151,6 +151,8 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
+    "/source.zip",
+    "/backup.zip",
     "/config/db.sql",
     "/sql/db.sq",
     "\\x00\\x00",
@@ -561,7 +563,7 @@ def main():
                 f.write("\n")
                 if not args.print and "📍" in line:
                     URL_FIX = line.split(" ")
-                    line = f"📍 <a target=\"blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {URL_FIX[1]}"
+                    line = f"📍 <a target=\"blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {URL_FIX[3]}"
                 if not args.print and "🕵️" in line:
                     URL = line.split("🕵️")
                     URL_PARSE = line.split(" ")
