@@ -565,6 +565,10 @@ def main():
                     IP = line.split(":")
                     value = line.split(" ")
                     line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{IP[1]}\">{IP[1].split(" ")[1]}</a>  {value[2]}"
+                if not args.print and "🚨" in line:
+                    IP = line.split(":")
+                    value = line.split(" ")
+                    line = f"🚨 Blocked Subnet: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{IP[1]}\">{IP[1].split(" ")[1]}</a>  {value[2]}"
                 if not args.print and "📍" in line:
                     value = line.split(":")
                     URL_FIX = line.split(" ")
