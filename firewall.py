@@ -11,10 +11,13 @@ import re
 import httpx
 import asyncio
 from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 import json
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
@@ -335,8 +338,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/logo")
+def get_image()``
+    image_bytes: bytes = generate_cat_picture()
+    # media_type here sets the media type of the actual response sent to the client.
+    return Response(content=image_bytes, media_type="image/png")
+
+@app.get("/")
+async def main():
+    DATA = ""
+    with open(f"{WEB_HTML}", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+
 async def main():
     DATA = ""
     with open(f"./posterchan-head.png", "r") as f:
