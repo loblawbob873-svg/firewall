@@ -589,17 +589,20 @@ def main():
             f.write(
             f"<p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p>"
         )
-                                    
+            f.write("<div class=\"split left\"><div class=\"centered\">")
             f.write("<h1><b>🚨 &nbsp; Blocked Traffic</b></h1><br>")
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
+            f.write("</div></div>")                                    
             
+            f.write("<div class=\"split left\"><div class=\"centered\">")
             f.write("<h1><b>🕵️ &nbsp; Queries</b></h1><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
-                    
+            f.write("</div></div>")                                 
+            
             f.write("<h1><b>IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
