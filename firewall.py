@@ -148,6 +148,7 @@ TIER_ONE = {
     "/web-oidc-callback",
     "/dav/spaces",
     "/api/v0/settings/assignments-list",
+    "/api/chat/completions"
 }
 
 IP_BLOCKS = [
