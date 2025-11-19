@@ -514,6 +514,7 @@ def main():
                                     shoroten_again = shorten[:50] + '...'
                                     BIG_IP = extract_first_three_parts(ip_address)
                                     message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {shoroten_again}\n"
+                                    print(f"{shoroten_again}")
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
 
