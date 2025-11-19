@@ -335,14 +335,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/logo")
-async def main():
-    DATA = ""
-    with open(f"./posterchan-head.png", "r") as f:
-        content = f.read()
-    return HTMLResponse(content=content)
-
 @app.get("/")
 async def main():
     DATA = ""
