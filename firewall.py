@@ -520,9 +520,8 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    long_data = line.lower().split(" ")[6]
-                                    shorten_line = textwrap.shorten(long_data, width=20, placeholder="...")
-                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {shorten_line}\n"
+                                    cleaner_data = line.lower().split(" ")[6].textwrap.shorten(long_data, width=20, placeholder="...")
+                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {cleaner_data}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
