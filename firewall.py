@@ -474,7 +474,7 @@ def main():
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
         )
 
-        if not args.print:
+        if args.print:
             activity.append(
             "-------------------------------------------------------------------------------------------------"
         )
