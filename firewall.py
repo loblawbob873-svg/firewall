@@ -512,7 +512,9 @@ def main():
                                 ):
 
                                     BIG_IP = extract_first_three_parts(ip_address)
-                                    message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {line.lower().split(" ")[6]}\n"
+                                    gather_data = line.lower().split(" ")[6]
+                                    clean_data = textwrap.shorten(gather_data, width=20, placeholder="...")
+                                    message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {clean_data}\n"
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
 
