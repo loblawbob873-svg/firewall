@@ -509,9 +509,10 @@ def main():
                                     word.lower() in line.lower()
                                     for word in SUBNET_BLOCKS
                                 ):
-                                    shorten = line.lower().split(" ")[6][:20] + '...'
+                                    shorten = line.lower().split(" ")[6]
+                                    shoroten_again = shorten[:20] + '...'
                                     BIG_IP = extract_first_three_parts(ip_address)
-                                    message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {shorten}\n"
+                                    message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {shoroten_again}\n"
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
 
