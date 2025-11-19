@@ -589,7 +589,7 @@ def main():
             
             f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</p>")
             f.write(
-            f"<p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p></div"
+            f"<p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p></div>"
         )
             f.write("<div class=\"left-half\"><article>")
             f.write("<h1><b>🚨 &nbsp; Blocked Traffic</b></h1><br>")
