@@ -550,6 +550,8 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
+            f.write("<body><h1><span style=\"color: red;\">🔥</span> Poster-Chan's Stats Site 🌸</h1>  <div id=\"stats\">")
+            
             for line in activity:
                 GET_AI_IP = ""
                 print(f"\n{line}")
