@@ -585,17 +585,17 @@ def main():
             f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <br>")
             f.write("<div id=\"stats\">")
             
-            f.write("<p><b>🚨 &nbsp; Blocked Traffic</b><p><br>")
+            f.write("<b>🚨 &nbsp; Blocked Traffic</b><br>")
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
             
-            f.write("<p><b>🕵️ &nbsp; Queries</b><p><br>")
+            f.write("<b>🕵️ &nbsp; Queries</b><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                      f.write(f"<br>{line.replace("🕵️","👉")}</br>")
                     
-            f.write("<p><b>IP Counter</b><p><br>")
+            f.write("<b>IP Counter</b><br>")
             for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
