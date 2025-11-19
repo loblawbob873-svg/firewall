@@ -590,6 +590,7 @@ def main():
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line}</br>")
+            
             f.write("<p><b>🕵️Queries</b><p><br>")
             for line in standard_queries:
                 if "🕵️" in line:
