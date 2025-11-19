@@ -605,12 +605,12 @@ def main():
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
             f.write("</div></div>")                                        
             
-            #f.write("<div> <div class=\"centered\">")
-            #f.write("<h1><b>IP Counter</b></h1><br>")
-            #for line in ip_counters:
-            #    if "📍" in line:
-            #        f.write(f"<br>{line}</br>")
-            #f.write("</div></div>")         
+            f.write("<div> <div class=\"centered\">")
+            f.write("<h1><b>IP Counter</b></h1><br>")
+            for line in ip_counters:
+                if "📍" in line:
+                    f.write(f"<br>{line}</br>")
+            f.write("</div></div>")         
         time.sleep(
             TIME_FRAME
         )  # Wait for the specified time frame before processing again
