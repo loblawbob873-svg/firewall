@@ -479,10 +479,10 @@ def main():
             "-------------------------------------------------------------------------------------------------")
             activity.append("\t\t🔥 Python Firewall 🔥")  
             
-        activity.append("-------------------------------------------------------------------------------------------------")
         activity.append(
             f"{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅"
         )
+        activity.append("-------------------------------------------------------------------------------------------------")
         activity.append(
             f"\t\t\t⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}\n"
         )
