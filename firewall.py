@@ -569,7 +569,7 @@ def main():
                 #    line.replace("[' ', '", "")            
                 #if "n'] " in line:
                 #    line.replace("n']", "")                
-                #f.write(f"<br>{line}</br>")
+                f.write(f"<br>{line}</br>")
 
         time.sleep(
             TIME_FRAME
