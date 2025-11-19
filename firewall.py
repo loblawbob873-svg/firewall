@@ -15,7 +15,6 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 import json
-import textwrap
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
@@ -510,11 +509,9 @@ def main():
                                     word.lower() in line.lower()
                                     for word in SUBNET_BLOCKS
                                 ):
-                                
+                                    shorten = line.lower().split(" ")[6][:20] + '...'
                                     BIG_IP = extract_first_three_parts(ip_address)
-                                    gather_data = line.lower().split(" ")[6]
-                                    wrapped = textwrap.shorten(gather_data, width=20)
-                                    message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {wrapped}\n"
+                                    message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {shorten}\n"
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
 
@@ -522,9 +519,7 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    gather_data = line.lower().split(" ")[6]
-                                    wrapped = textwrap.shorten(gather_data, width=20)
-                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {wrapped }\n"
+                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {line.lower().split(" ")[6]}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
@@ -592,7 +587,7 @@ def main():
             f.write("<body><header>🔥 Python Firewall Web Console 🔥<br> <br>")          
             f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</header")
             f.write(
-            f"<br><p align=center> ↕️ Traffic as of: {one_minute_ago}</p></div>"
+            f"<br><p align=center> ↕️Traffic as of: {one_minute_ago}</p></div>"
         )
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
@@ -603,7 +598,7 @@ def main():
             f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
             for line in standard_queries:
                 if "🕵️" in line:
-                     f.write(f"<br>{line.replace("🕵️","⁉️")}</br>")
+                     f.write(f"<br>{line.replace("🕵️","💩")}</br>")
             f.write("</article>")                                        
             
             f.write("<nav><h2><b>IP Counter</b></h2><br>")
