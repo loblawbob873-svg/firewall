@@ -563,7 +563,7 @@ def main():
                 if not args.print and "🚨" in line:
                     value = line.split(":")
                     URL_FIX = line.split(" ")
-                    line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[3]}\">{URL_FIX[3]}</a>  {value[1]}"
+                    line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[4]}\">{URL_FIX[4]}</a>  {value[1]}"
                 if not args.print and "📍" in line:
                     value = line.split(":")
                     URL_FIX = line.split(" ")
