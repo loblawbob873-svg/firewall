@@ -598,14 +598,14 @@ def main():
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
             f.write("</div></div>")                                    
             
-            f.write("<div class=\"split right\"> <div class=\"centered\">")
+            f.write("<div class=\"split center\"> <div class=\"centered\">")
             f.write("<h1><b>🕵️ &nbsp; Queries</b></h1><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
             f.write("</div></div>")                                        
             
-            f.write("<div> <div class=\"centered\">")
+            f.write("<div> <div class=\"split right\"> <div class=\"centered\">")
             f.write("<h1><b>IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
