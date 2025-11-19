@@ -472,7 +472,6 @@ def main():
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
         )
 
-        messaging(f"Searching logs for Time Stamp: {one_minute_ago}")
         activity.append(
             "-------------------------------------------------------------------------------------------------"
         )
@@ -565,7 +564,6 @@ def main():
                 if "\t" in line:
                     line.replace("\n", "<br>")
                 f.write(f"<br>{line}</br>")
-        messaging(f"Firewall sleeping for: {TIME_FRAME}")
 
         time.sleep(
             TIME_FRAME
