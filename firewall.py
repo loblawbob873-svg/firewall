@@ -553,7 +553,7 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/posterchan-head.png> <br>")
+            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <br>")
             f.write("<div id=\"stats\">")
             
             for line in activity:
