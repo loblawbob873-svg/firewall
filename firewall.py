@@ -513,7 +513,7 @@ def main():
                                 ):
 
                                     BIG_IP = extract_first_three_parts(ip_address)
-                                    message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split(" ")[6]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                    message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split(" ")[6]}\n"
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
 
@@ -521,13 +521,13 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split(" ")[6]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split(" ")[6]}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
                                     # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                     activity.append(
-                                        f"\t🕵️ {ip_address} {line.lower().split(" ")[6]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                        f"\t🕵️ {ip_address} {line.lower().split(" ")[6]}\n"
                                     )
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")
@@ -569,7 +569,7 @@ def main():
                     URL = line.split("🕵️")
                     URL_PARSE = line.split(" ")
                     URL_FIX = line.split(" ")
-                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> {URL_PARSE[3]} <a href=\"https://who.is/whois-ip/ip-address/{URL[1].split("=")[1]}\" target=\"_blank\">🌐</a>"
+                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> {URL_PARSE[3]} <a href=\"https://www.ip-tracker.org/lookup.php?ip=/{URL[1].split("=")[1]}\" target=\"_blank\">🔍 <a href=\"https://who.is/whois-ip/ip-address/{URL[1].split("=")[1]}\" target=\"_blank\">🌐</a>"
                 if "\t" in line:
                     line.replace("\t", "")
                 if "\n" in line:
