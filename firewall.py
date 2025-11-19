@@ -520,7 +520,9 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {line.lower().split(" ")[6]}\n"
+                                    long_data = line.lower().split(" ")[6]
+                                    shorten_line = textwrap.shorten(long_data, width=20, placeholder="...")
+                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {shorten_line}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
@@ -593,9 +595,7 @@ def main():
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
-                    foo = line.replace("🚨","🛑")
-                    shorten = textwrap.shorten(foo, width=20)
-                    f.write(f"<br>{shorten}/br>")
+                    f.write(f"<br>{line.replace("🚨","🛑")}</br>")
             f.write("</aside>")                                    
             
             f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
