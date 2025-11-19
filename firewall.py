@@ -510,7 +510,7 @@ def main():
                                     word.lower() in line.lower()
                                     for word in SUBNET_BLOCKS
                                 ):
-
+                                    wrapper = textwrap.TextWrapper(width=50)
                                     BIG_IP = extract_first_three_parts(ip_address)
                                     gather_data = line.lower().split(" ")[6]
                                     clean_data = textwrap.shorten(gather_data, width=20, placeholder="...")
@@ -522,6 +522,7 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
+                                    wrapper = textwrap.TextWrapper(width=50)
                                     gather_data = line.lower().split(" ")[6]
                                     clean_data = textwrap.shorten(gather_data, width=20, placeholder="...")
                                     print(clean_data)
