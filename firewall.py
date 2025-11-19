@@ -19,7 +19,7 @@ import json
 from fastapi import FastAPI
 from PIL import Image
 import io
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
