@@ -530,7 +530,7 @@ def main():
                                 else:
                                     # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                     shorten = line.lower().split(" ")[6]
-                                    shoroten_again = shorten[50] + '...'
+                                    shoroten_again = shorten[:50] + '...'
                                     activity.append(
                                         f"\t🕵️ {ip_address} {shoroten_again}\n"
                                     )
