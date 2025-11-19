@@ -564,7 +564,7 @@ def main():
                 if not args.print and "🚨 Blocked:" in line:
                     IP = line.split(":")
                     value = line.split(" ")
-                    line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[2]}\">{valaue[2]}</a>  {value[3]}"
+                    line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[1]}\">{valaue[1]}</a>  {value[2]}"
                 if not args.print and "🚨 Blocked Subnet:" in line:
                     IP = line.split(":")
                     value = line.split(" ")
