@@ -519,7 +519,7 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split(" ")[6]}\n"
+                                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {line.lower().split(" ")[6]}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
@@ -561,10 +561,10 @@ def main():
                 print(f"\n{line}")
                 f.write("\n")
                   #🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split(" ")[6]}\n"
-                if not args.print and "🚨 Blocked:" in line:
+                if not args.print and "🚨 Blocked IP:" in line:
                     IP = line.split(":")
                     value = line.split(" ")
-                    line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{IP[1]}\">{IP[1]}</a>  {value[1]}"
+                    line = f"🚨 Blocked Subnet: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]}"
                 if not args.print and "🚨 Blocked Subnet:" in line:
                     IP = line.split(":")
                     value = line.split(" ")
