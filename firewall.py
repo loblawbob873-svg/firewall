@@ -579,38 +579,34 @@ def main():
                     
         with open(WEB_HTML, "w") as f:
             f.write("<html><head><style> p { text-indent: 50px; } body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }")
-            f.write("html { height: 100%; padding: 0; margin: 0; } .column { display:inline-block; width:33.33%; margin-right:-4px; height:500px; }")
+            f.write("body { display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: #f8f9fa; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }")
             f.write("</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><div> <h1><span style=\"color: red;\"></span><p align=center>🔥 Python Firewall Web Console 🔥</h1></p> <br> <br>")
-
-            
-            f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</p>")
+            f.write("<body><header>🔥 Python Firewall Web Console 🔥<br> <br>")          
+            f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</header")
             f.write(
             f"<p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p></div>"
         )
-            f.write("<div class=\"container\"><div class=\"column a\">")
-            f.write("<h1><b>🚨 &nbsp; Blocked Traffic</b></h1><br>")
+            f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
-            f.write("</div>")                                    
+            f.write("</aside>")                                    
             
-            f.write("<div class=\"column b\"> ")
-            f.write("<h1><b>🕵️ &nbsp; Queries</b></h1><br>")
+            f.write("<aside><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
-            f.write("</div>")                                        
+            f.write("</article>")                                        
             
-            f.write("<div> <div class=\"column c\">")
+            f.write("<aside><h2><b>IP Counter</b></h2><br>")
             f.write("<h1><b>IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
-            f.write("</div></div>")         
+            f.write("</article>")      
         time.sleep(
             TIME_FRAME
         )  # Wait for the specified time frame before processing again
