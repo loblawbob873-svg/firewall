@@ -561,11 +561,11 @@ def main():
                 print(f"\n{line}")
                 f.write("\n")
                   #🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split(" ")[6]}\n"
-                if not args.print and "🚨" in line:
+                if not args.print and "🚨 Blocked:" in line:
                     IP = line.split(":")
                     value = line.split(" ")
                     line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{IP[1]}\">{IP[1].split(" ")[1]}</a>  {value[2]}"
-                if not args.print and "🚨" in line:
+                if not args.print and "🚨 Blocked Subnet:" in line:
                     IP = line.split(":")
                     value = line.split(" ")
                     line = f"🚨 Blocked Subnet: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{IP[1]}\">{IP[1].split(" ")[1]}</a>  {value[2]}"
