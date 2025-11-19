@@ -579,7 +579,7 @@ def main():
                     
         with open(WEB_HTML, "w") as f:
             f.write("<html><head><style> p { text-indent: 50px; } body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }")
-            f.write(" <style> body { font-family: Arial; color: white; } .split { height: 90%; width: 50%; position: fixed; z-index: 1; top: 50; overflow-x: hidden; padding-top: 20px; } .left { left: 0; } .right { right: 0; } .centered { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center; } .centered img { width: 150px; border-radius: 50%; }")
+            f.write("html { height: 100%; padding: 0; margin: 0; } .column { display:inline-block; width:33.33%; margin-right:-4px; height:500px; }")
             f.write("</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
@@ -591,21 +591,21 @@ def main():
             f.write(
             f"<p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p></div>"
         )
-            f.write("<div class=\"split left\"> <div class=\"centered\">")
+            f.write("<div class=\"container\"><div class=\"column a\">")
             f.write("<h1><b>🚨 &nbsp; Blocked Traffic</b></h1><br>")
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
-            f.write("</div></div>")                                    
+            f.write("</div>")                                    
             
-            f.write("<div class=\"split center\"> <div class=\"centered\">")
+            f.write("<div class=\"column b\"> ")
             f.write("<h1><b>🕵️ &nbsp; Queries</b></h1><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
-            f.write("</div></div>")                                        
+            f.write("</div>")                                        
             
-            f.write("<div> <div class=\"split right\"> <div class=\"centered\">")
+            f.write("<div> <div class=\"column c\">")
             f.write("<h1><b>IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
