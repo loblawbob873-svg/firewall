@@ -340,21 +340,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def main():
-    DATA = ""
-    with open(f"{WEB_HTML}", "r") as f:
-        content = f.read()
-    return HTMLResponse(content=content)
 
-
-async def main():
-    DATA = ""
-    with open(f"./posterchan-head.png", "r") as f:
-        content = f.read()
-    return HTMLResponse(content=content)
-
-@app.get("/")
+@app.get("/image/{image_name}")
+def read_image(image_name: str):
+    # Assuming images are in a 'images' folder and have .png extension
+    image_path = f"images/{image_name}.png"
+    try:
+        with open(image_path, "rb") as image_file:
+            return {"image": image_file.read()}
+    except FileNotFoundError:
+        return {"detail": "Image not found"}
+    
+app.get("/")
 async def main():
     DATA = ""
     with open(f"{WEB_HTML}", "r") as f:
@@ -573,7 +570,7 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/static/posterchan-head.png> <br>")
+            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/iamges/posterchan-head.png> <br>")
             f.write("<div id=\"stats\">")
             
             for line in activity:
