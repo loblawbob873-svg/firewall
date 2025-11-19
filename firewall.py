@@ -521,7 +521,7 @@ def main():
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
                                     gather_data = line.lower().split(" ")[6]
-                                    clean_data = gather_data.textwrap.shorten(long_data, width=20, placeholder="...")
+                                    clean_data = textwrap.shorten(long_data, width=20, placeholder="...")
                                     print(clean_data)
                                     message = f"\t🚨 Blocked IP: {ip_address} 👉 {clean_data}\n"
                                     activity.append(message)
