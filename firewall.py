@@ -545,7 +545,7 @@ def main():
         # TIER_ONE Traffic does not count    
         for ip, count in ip_counts.items():
             if count > 1:
-                activity.append(f"\t📍 {ip}: {count}")
+                activity.append(f"\t📍 {ip} {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"🚨 Blocked: {ip} with a count of {count}"
                 activity.append(message)
