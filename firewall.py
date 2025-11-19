@@ -359,8 +359,6 @@ logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
 )
 
-app.mount("/site", StaticFiles(directory="site", html = True), name="site")
-
 @app.get("/ai")
 async def main(ip: str):
     openai_headers = {
