@@ -568,7 +568,7 @@ def main():
                     URL = line.split("🕵️")
                     URL_PARSE = line.split(" ")
                     URL_FIX = line.split(" ")
-                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> {URL_PARSE[2]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}\" target=\"_blank\">🔍 <a href=\"https://who.is/whois-ip/ip-address/{URL_PARSE[1]}\" target=\"_blank\">🌐</a>"
+                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> {URL_PARSE[2]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}\" target=\"_blank\">  🔍 <a href=\"https://who.is/whois-ip/ip-address/{URL_PARSE[1]}\" target=\"_blank\">🌐</a>"
                 if "\t" in line:
                     line.replace("\t", "")
                 if "\n" in line:
