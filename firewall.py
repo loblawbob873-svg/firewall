@@ -338,7 +338,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/logo")
+app.get("/logo")
 def get_image():
     image_bytes: bytes = generate_cat_picture()
     # media_type here sets the media type of the actual response sent to the client.
