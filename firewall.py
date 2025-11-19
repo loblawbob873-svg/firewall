@@ -564,7 +564,7 @@ def main():
                     line = f"📍 <a target=\"blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>"
                 if not args.print and "🕵️" in line:
                     URL_FIX = line.split(" ")
-                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a>"
+                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> {URL_FIX[2]}"
                 if not args.print and "🔍" in line:
                     URL = line.split("🔍")
                     URL_FIX = f'<a target="blank" href="{URL[1]}">🔍</a>  <a href="https://who.is/whois-ip/ip-address/{URL[1].split("=")[1]}" target="_blank">🌐</a>'
