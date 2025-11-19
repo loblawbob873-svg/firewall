@@ -338,12 +338,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.get("/logo")
-def get_image():
-    image_bytes: bytes = generate_cat_picture()
-    # media_type here sets the media type of the actual response sent to the client.
-    return Response(content=image_bytes, media_type="image/png")
-
 @app.get("/")
 async def main():
     DATA = ""
@@ -577,7 +571,7 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/logo> <br>")
+            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/static/posterchan-head.png> <br>")
             f.write("<div id=\"stats\">")
             
             for line in activity:
