@@ -579,7 +579,7 @@ def main():
                     
         with open(WEB_HTML, "w") as f:
             f.write("<html><head><style> p { text-indent: 50px; } body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }")
-            f.write("/* Pen-specific styles */* {  box-sizing: border-box;}html, body, div {  height: 75%;}body {   color: #fff;  font-family: sans-serif;  font-size: 1.25rem;  line-height: 150%;  text-shadow: 0 2px 2px #b6701e;}article {  position: relative;  top: 50%;  left: 50%;  text-align: center;  transform: translate(-50%, -50%);}h1 {  font-size: 1.75rem;  margin: 0 0 0.75rem 0;}/* Pattern styles */div {  display: inline-block;  vertical-align: top;  width: 50%;  padding: 1rem;}.left-half {  background: #ff9e2c;}.right-half {  background: #b6701e;}")
+            f.write("/* Pen-specific styles */* {  box-sizing: border-box;}html, body, div {  height: 75%;}body {   color: #fff;  font-family: sans-serif;  font-size: 1.25rem;  line-height: 150%;  text-shadow: 0 2px 2px #b6701e;}article {  position: relative;  top: 50%;  left: 50%;  text-align: center;  transform: translate(-50%, -50%);}h1 {  font-size: 1.75rem;  margin: 0 0 0.75rem 0;}/* Pattern styles */div {  display: inline-block;  vertical-align: top;  width: 50%;  padding: 1rem;}.left-half {  }.right-half {  background: #b6701e;}")
             f.write("</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
