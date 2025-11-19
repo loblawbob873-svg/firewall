@@ -1,6 +1,6 @@
 ## DDOS Protection System
 
-![image](image5.png)
+![image](image6.png)
 
 ### Features
 * Live Reporting 
