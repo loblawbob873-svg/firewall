@@ -589,12 +589,12 @@ def main():
             f.write("<p><b>🚨 Blocked Traffic</b><p><br>")
             for line in blocked_array:
                 if "🚨" in line:
-                    f.write(f"<br>{line}</br>")
+                    f.write(f"<br>{line.replace("🚨","👉")}</br>")
             
             f.write("<p><b>🕵️Queries</b><p><br>")
             for line in standard_queries:
                 if "🕵️" in line:
-                    f.write(f"<br>{line}</br>")
+                     f.write(f"<br>{line.replace("🕵️","👉")}</br>")
                     
             f.write("<p><b>IP Counter</b><p><br>")
             for line in ip_counters:
