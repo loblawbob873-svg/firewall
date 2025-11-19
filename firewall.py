@@ -546,7 +546,7 @@ def main():
         os.system("clear")
 
         with open(WEB_HTML, "w") as f:
-            f.write("<html><head><style> body { font-family: Arial, sans-serif; text-align: center; } #stats { font-size: 1em; margin-top: 50px; }</style></head>")
+            f.write("<html><head><style> body { font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
