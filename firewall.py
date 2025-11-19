@@ -474,15 +474,15 @@ def main():
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
         )
 
-        activity.append(
+        if not args.print:
+            activity.append(
             "-------------------------------------------------------------------------------------------------"
         )
-        activity.append("\t\t🔥 Python Firewall 🔥")
+            activity.append("\t\t🔥 Python Firewall 🔥")
+            activity.append("-------------------------------------------------------------------------------------------------"
+        )
         activity.append(
             f"{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅"
-        )
-        activity.append(
-            "-------------------------------------------------------------------------------------------------"
         )
         activity.append(
             f"\t\t\t⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}\n"
