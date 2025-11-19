@@ -592,9 +592,9 @@ def main():
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
             f.write("<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>")          
-            f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</header")
+            f.write(f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header")
             f.write(
-            f"<br><p align=center> ↕️Traffic as of: {one_minute_ago}</p></div>"
+            f"<br><p align=center><h2> ↕️Traffic as of: {one_minute_ago}</p></h2></div>"
         )
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
