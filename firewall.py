@@ -561,7 +561,7 @@ def main():
                     line = f"{URL[0]} {URL_FIX}"
                 if "\t" in line:
                     line.replace("\t", "")
-                if "\t" in line:
+                if "\n" in line:
                     line.replace("\n", "<br>")
                 f.write(f"<br>{line}</br>")
 
