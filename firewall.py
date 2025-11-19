@@ -557,7 +557,7 @@ def main():
                 f.write("\n")
                 if not args.print and "🔍" in line:
                     URL = line.split("🔍")
-                    URL_FIX = f'<a target="blank" href="{URL[1].strip()}">🔍</a>  <a href="http://107.175.34.92:6767/ai?ip={URL[1].split("=")[1]}" target="_blank">🤖</a>'
+                    URL_FIX = f'<a target="blank" href="{URL[1].strip()}">🔍</a>  <a href="https://who.is/whois-ip/ip-address/{URL[1].split("=")[1]}" target="_blank">🌐</a>'
                     line = f"{URL[0]} {URL_FIX}"
                 if "\t" in line:
                     line.replace("\t", "")
