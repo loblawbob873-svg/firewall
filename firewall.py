@@ -336,6 +336,13 @@ app.add_middleware(
 )
 
 
+@app.get("/logo")
+async def main():
+    DATA = ""
+    with open(f"./posterchan-head.png", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
 @app.get("/")
 async def main():
     DATA = ""
@@ -555,7 +562,8 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1>  <div id=\"stats\">")
+            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/logo> <br>")
+            f.write("<div id=\"stats\">")
             
             for line in activity:
                 GET_AI_IP = ""
