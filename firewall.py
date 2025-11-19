@@ -548,6 +548,36 @@ def main():
         save_nft_rules()
         os.system("clear")
 
+        blocked_array = []
+        standard_queries = []
+        ip_counters = []
+        
+        for line in activity:
+            if not args.print and "🚨 Blocked IP:" in line:
+                value = line.split(" ")
+                line = f"<p>🚨 Blocked IP: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
+                blocked_array.append(line)
+            if not args.print and "🚨 Blocked Subnet:" in line:
+                value = line.split(" ")
+                line = f"<p>🚨 Blocked Subnet: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
+                blocked_array.append(line)
+            if not args.print and "📍" in line:
+                value = line.split(":")
+                URL_FIX = line.split(" ")
+                line = f"<p> 📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {value[1]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_FIX[1]}\" target=\"_blank\">🌐</a></p>"
+                ip_counters.append(line)
+            if not args.print and "🕵️" in line:
+                URL = line.split("🕵️")
+                URL_PARSE = line.split(" ")
+                URL_FIX = line.split(" ")
+                standard_queries.append(line)
+                line = f"<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_PARSE[1]}\" target=\"_blank\">🌐</a>"
+                standard_queries.append(line)
+            if "\t" in line:
+                 line.replace("\t", "")
+            if "\n" in line:
+                    line.replace("\n", "<br>")                 
+                    
         with open(WEB_HTML, "w") as f:
             f.write("<html><head><style> p { text-indent: 50px; } body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }</style></head>")
             f.write(
@@ -556,31 +586,19 @@ def main():
             f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <br>")
             f.write("<div id=\"stats\">")
             
+            f.write("<p><b>Blocked Traffic</b><p><br>")
             for line in activity:
-                GET_AI_IP = ""
-                print(f"\n{line}")
-                f.write("\n")
-                  #🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split(" ")[6]}\n"
-                if not args.print and "🚨 Blocked IP:" in line:
-                    value = line.split(" ")
-                    line = f"<p>🚨 Blocked IP: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
-                if not args.print and "🚨 Blocked Subnet:" in line:
-                    value = line.split(" ")
-                    line = f"<p>🚨 Blocked Subnet: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
-                if not args.print and "📍" in line:
-                    value = line.split(":")
-                    URL_FIX = line.split(" ")
-                    line = f"<p> 📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {value[1]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_FIX[1]}\" target=\"_blank\">🌐</a></p>"
-                if not args.print and "🕵️" in line:
-                    URL = line.split("🕵️")
-                    URL_PARSE = line.split(" ")
-                    URL_FIX = line.split(" ")
-                    line = f"<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_PARSE[1]}\" target=\"_blank\">🌐</a>"
-                if "\t" in line:
-                    line.replace("\t", "")
-                if "\n" in line:
-                    line.replace("\n", "<br>")          
-                f.write(f"<br>{line}</br>")
+                if "🚨" in line:
+                    f.write(f"<br>{line}</br>")
+            f.write("<p><b>Other Queries</b><p><br>")
+            for line in activity:
+                if "🕵️" in line:
+                    f.write(f"<br>{line}</br>")
+                    
+            f.write("<p><b>IP Counter</b><p><br>")
+            for line in activity:
+                if "📍" in line:
+                    f.write(f"<br>{line}</br>")
 
         time.sleep(
             TIME_FRAME
