@@ -561,7 +561,7 @@ def main():
                 f.write("\n")
                 if not args.print and "📍" in line:
                     URL_FIX = line.split(" ")
-                    line = f"📍 <a target=\"blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[4]}</a>  {URL_FIX[2]}"
+                    line = f"📍 <a target=\"blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[3]}</a>  {URL_FIX[2]}"
                 if not args.print and "🕵️" in line:
                     URL_FIX = line.split(" ")
                     line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[3]}</a> {URL_FIX[2]}"
