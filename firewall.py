@@ -607,7 +607,7 @@ def main():
                      f.write(f"<br>{line.replace("🕵️","⁉️")}</br>")
             f.write("</article>")                                        
             
-            f.write("<nav><h2><b>IP Counter</b></h2><br>")
+            f.write("<nav><h2><b>🧮 IP Counter</b></h2><br>")
             for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
