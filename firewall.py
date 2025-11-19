@@ -530,13 +530,13 @@ def main():
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")
 
-        # Block IP's over the IP_OCCURRENCE_THRESHOLD
-        # TIER_ONE Traffic does not count
         if not args.print:
             activity.append(f"\nIP Address Count:\n")
         else:
             activity.append(f"<br><br>IP Address Count:<br>")
-            
+        
+        # Block IP's over the IP_OCCURRENCE_THRESHOLD
+        # TIER_ONE Traffic does not count    
         for ip, count in ip_counts.items():
             if count > 1:
                 activity.append(f"\t📍 {ip}: {count}")
