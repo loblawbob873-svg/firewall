@@ -584,7 +584,7 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><div><h1><span style=\"color: red;\"></span><p align=center>🔥 Python Firewall Web Console 🔥</h1></p> <br> <br>")
+            f.write("<body><div <div class=\"centered\"> <h1><span style=\"color: red;\"></span><p align=center>🔥 Python Firewall Web Console 🔥</h1></p> <br> <br>")
 
             
             f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</p>")
