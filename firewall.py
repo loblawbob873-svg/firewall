@@ -510,7 +510,7 @@ def main():
                                 ):
 
                                     BIG_IP = extract_first_three_parts(ip_address)
-                                    message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1].replace("\"-\" \"-\"","").split("\"-\""[0])}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                    message = f"\t🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     activity.append(message)
                                     block_ip(f"{BIG_IP}.0/24", message)
 
@@ -524,7 +524,7 @@ def main():
                                 else:
                                     # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                     activity.append(
-                                        f"\t🕵️ {ip_address} {line.lower().split("]")[1].replace("\"-\" \"-\"","").split("\"-\""[0])}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                        f"\t🕵️ {ip_address} {line.lower().split("]")[1]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     )
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")
