@@ -152,6 +152,7 @@ TIER_ONE = {
 
 IP_BLOCKS = [
     "/config/db.sql",
+    "/sql/db.sq",
     "\\x00\\x00",
     "/issues?assignee",
     "/.git/config",
