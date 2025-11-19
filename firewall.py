@@ -16,7 +16,9 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 import json
-
+from fastapi import FastAPI
+from PIL import Image
+import io
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Configuration variables
@@ -331,7 +333,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 app.add_middleware(
     CORSMiddleware,
