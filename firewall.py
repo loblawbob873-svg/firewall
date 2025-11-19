@@ -587,8 +587,8 @@ def main():
             f.write("<div id=\"stats\">")
             
             f.write("<p><b>Blocked Traffic</b><p><br>")
-            for line in activity:
-                if "🚨" in blocked_array:
+            for line in blocked_array:
+                if "🚨" in line:
                     f.write(f"<br>{line}</br>")
             f.write("<p><b>Other Queries</b><p><br>")
             for line in standard_queries:
