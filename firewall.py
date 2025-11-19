@@ -579,7 +579,7 @@ def main():
                     
         with open(WEB_HTML, "w") as f:
             f.write("<html><head><style> p { text-indent: 50px; } body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }")
-            f.write("body { display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: #f8f9fa; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }")
+            f.write("body {  background-color: black; font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: #f8f9fa; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }")
             f.write("</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
