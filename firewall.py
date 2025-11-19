@@ -560,10 +560,11 @@ def main():
                 GET_AI_IP = ""
                 print(f"\n{line}")
                 f.write("\n")
+                  #🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split(" ")[6]}\n"
                 if not args.print and "🚨" in line:
-                    value = line.split(":")
-                    URL_FIX = line.split(" ")
-                    line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[4]}\">{URL_FIX[4]}</a>  {value[1]}"
+                    IP = line.split(":")
+                    value = line.split(IP)
+                    line = f"🚨 Blocked: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{IP[1]}\">{IP[4]}</a>  {value[1]}"
                 if not args.print and "📍" in line:
                     value = line.split(":")
                     URL_FIX = line.split(" ")
