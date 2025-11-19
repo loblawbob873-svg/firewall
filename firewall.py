@@ -15,6 +15,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 import json
+import textwrap
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
@@ -592,7 +593,8 @@ def main():
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
-                    f.write(f"<br>{line.replace("🚨","🛑")}</br>")
+                    shorten = textwrap.shorten(line.replace("🚨","🛑"), width=20)
+                    f.write(f"<br>{shorten}/br>")
             f.write("</aside>")                                    
             
             f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
