@@ -588,15 +588,15 @@ def main():
             
             f.write("<p><b>Blocked Traffic</b><p><br>")
             for line in activity:
-                if "🚨" in line:
+                if "🚨" in blocked_array:
                     f.write(f"<br>{line}</br>")
             f.write("<p><b>Other Queries</b><p><br>")
-            for line in activity:
+            for line in standard_queries:
                 if "🕵️" in line:
                     f.write(f"<br>{line}</br>")
                     
             f.write("<p><b>IP Counter</b><p><br>")
-            for line in activity:
+            for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
 
