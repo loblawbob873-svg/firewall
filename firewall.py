@@ -568,7 +568,7 @@ def main():
                 blocked_array.append(line)
             if not args.print and "📍" in line:
                 URL_FIX = line.split(" ")
-                line = f"<p>📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {value[1]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_FIX[1]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p>📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {value[2]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_FIX[1]}\" target=\"_blank\">🌐</a></p>"
                 ip_counters.append(line)
             if not args.print and "🕵️" in line:
                 URL = line.split("🕵️")
