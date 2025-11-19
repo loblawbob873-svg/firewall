@@ -587,7 +587,7 @@ def main():
             f.write("<body><header>🔥 Python Firewall Web Console 🔥<br> <br>")          
             f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</header")
             f.write(
-            f"<p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p></div>"
+            f"<br><p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p></div>"
         )
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
