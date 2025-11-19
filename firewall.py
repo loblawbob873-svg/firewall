@@ -537,7 +537,7 @@ def main():
                                 print(f"Something went wrong: {err}")
 
         if args.print:
-            activity.append(f"\nIP Address Count:\n")s
+            activity.append(f"\nIP Address Count:\n")
         else:
             activity.append(f"<br><br>IP Address Count:<br>")
         
