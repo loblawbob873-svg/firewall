@@ -601,7 +601,7 @@ def main():
             f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
             for line in standard_queries:
                 if "🕵️" in line:
-                     f.write(f"<br>{line.replace("🕵️","💩")}</br>")
+                     f.write(f"<br>{line.replace("🕵️","⁉️")}</br>")
             f.write("</article>")                                        
             
             f.write("<nav><h2><b>IP Counter</b></h2><br>")
