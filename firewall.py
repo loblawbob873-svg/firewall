@@ -596,7 +596,7 @@ def main():
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
-            f.write("</div>)                                    
+            f.write("</div>")                                    
             
             f.write("<div class=\"split left\">")
             f.write("<h1><b>🕵️ &nbsp; Queries</b></h1><br>")
