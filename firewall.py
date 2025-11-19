@@ -569,13 +569,7 @@ def main():
                     URL = line.split("🕵️")
                     URL_PARSE = line.split(" ")
                     URL_FIX = line.split(" ")
-                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> {URL_PARSE[3]}"
-                if not args.print and "🔍" in line:
-                    URL = line.split("🔍")
-                    TEST = line.split(" ")
-                    line = f"{TEST[0]} {TEST[1]}"
-                    URL_FIX = f'<a target="blank" href="{URL[1]}">🔍</a>  <a href="https://who.is/whois-ip/ip-address/{URL[1].split("=")[1]}" target="_blank">🌐</a>'
-                    #line = f"{URL[0]} {URL_FIX}"
+                    line = f"<a target=\"blank\" href=\"https://{URL_FIX[1]}\">🕵️ {URL_FIX[1]}</a> {URL_PARSE[3]} <a href="https://who.is/whois-ip/ip-address/{URL[1].split("=")[1]}" target="_blank">🌐</a>"
                 if "\t" in line:
                     line.replace("\t", "")
                 if "\n" in line:
