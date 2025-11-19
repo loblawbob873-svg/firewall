@@ -11,15 +11,10 @@ import re
 import httpx
 import asyncio
 from fastapi import FastAPI, HTTPException, UploadFile, File
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 import json
-from fastapi import FastAPI
-from PIL import Image
-import io
-
 
 # Configuration variables
 LOG_FILE = "/tmp/access.log"
@@ -333,8 +328,6 @@ app = FastAPI(
     version="1.0.0",
 )
 
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -343,27 +336,24 @@ app.add_middleware(
 )
 
 
-@app.get("/image/{image_name}")
-def read_image(image_name: str):
-    # Assuming images are in a 'images' folder and have .png extension
-    image_path = f"images/{image_name}.png"
-    try:
-        with open(image_path, "rb") as image_file:
-            return {"image": image_file.read()}
-    except FileNotFoundError:
-        return {"detail": "Image not found"}
-    
-app.get("/")
+@app.get("/logo")
+async def main():
+    DATA = ""
+    with open(f"./posterchan-head.png", "r") as f:
+        content = f.read()
+    return HTMLResponse(content=content)
+
+@app.get("/")
 async def main():
     DATA = ""
     with open(f"{WEB_HTML}", "r") as f:
         content = f.read()
     return HTMLResponse(content=content)
 
-# Set up logging
-logging.basicConfig(
-    filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
-)
+
+async def get_html():
+    with open(f"{WEB_HTML}", "r") as f:
+        return f.read()
 
 
 # Set up logging
@@ -371,6 +361,13 @@ logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
 )
 
+
+# Set up logging
+logging.basicConfig(
+    filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
+)
+
+app.mount("/site", StaticFiles(directory="site", html = True), name="site")
 
 @app.get("/ai")
 async def main(ip: str):
@@ -566,7 +563,7 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/iamges/posterchan-head.png> <br>")
+            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <img src=/posterchan-head.png> <br>")
             f.write("<div id=\"stats\">")
             
             for line in activity:
