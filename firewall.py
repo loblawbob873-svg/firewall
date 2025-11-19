@@ -532,8 +532,11 @@ def main():
 
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
-        activity.append(f"\nIP Address Count:\n")
-
+        if not args.print:
+            activity.append(f"\nIP Address Count:\n")
+        else:
+            activity.append(f"<br><br>IP Address Count:<br>")
+            
         for ip, count in ip_counts.items():
             if count > 1:
                 activity.append(f"\t📍 {ip}: {count}")
