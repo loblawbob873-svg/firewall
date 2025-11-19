@@ -546,9 +546,9 @@ def main():
         os.system("clear")
 
         with open(WEB_HTML, "w") as f:
-            f.write("<html>")
+            f.write("<html><style> body { font-family: Arial, sans-serif; text-align: center; } #stats { font-size: 2em; margin-top: 50px; }")
             f.write(
-                "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
+                "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script><body> <div id=\"stats\"></div>"
             )
             for line in activity:
                 GET_AI_IP = ""
