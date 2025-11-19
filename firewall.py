@@ -339,7 +339,7 @@ app.add_middleware(
 )
 
 @app.get("/logo")
-def get_image()``
+def get_image():
     image_bytes: bytes = generate_cat_picture()
     # media_type here sets the media type of the actual response sent to the client.
     return Response(content=image_bytes, media_type="image/png")
