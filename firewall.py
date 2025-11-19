@@ -595,18 +595,18 @@ def main():
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
             f.write("</aside>")                                    
             
-            f.write("<aside><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
+            f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
             f.write("</article>")                                        
             
-            f.write("<aside><h2><b>IP Counter</b></h2><br>")
+            f.write("<nav><h2><b>IP Counter</b></h2><br>")
             f.write("<h1><b>IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
-            f.write("</article>")      
+            f.write("</nav></main></body></html>")      
         time.sleep(
             TIME_FRAME
         )  # Wait for the specified time frame before processing again
