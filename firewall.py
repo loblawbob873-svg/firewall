@@ -579,7 +579,7 @@ def main():
                     
         with open(WEB_HTML, "w") as f:
             f.write("<html><head><style> p { text-indent: 50px; } body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }")
-            f.write(" <style> body { font-family: Arial; color: white; } .split { height: 90%; width: 50%; position: fixed; z-index: 1; top: 10; overflow-x: hidden; padding-top: 20px; } .left { left: 0; } .right { right: 0; } .centered { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center; } .centered img { width: 150px; border-radius: 50%; }")
+            f.write(" <style> body { font-family: Arial; color: white; } .split { height: 90%; width: 10%; position: fixed; z-index: 1; top: 10; overflow-x: hidden; padding-top: 20px; } .left { left: 0; } .right { right: 0; } .centered { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); text-align: center; } .centered img { width: 150px; border-radius: 50%; }")
             f.write("</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
@@ -598,14 +598,14 @@ def main():
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
             f.write("</div></div>")                                    
             
-            f.write("<div class=\"centered\"> <div class=\"centered\">")
+            f.write("<div class=\"split right\"> <div class=\"centered\">")
             f.write("<h1><b>🕵️ &nbsp; Queries</b></h1><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
             f.write("</div></div>")                                        
             
-            f.write("<div class=\"split right\"> <div class=\"centered\">")
+            f.write("<div> <div class=\"centered\">")
             f.write("<h1><b>IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
