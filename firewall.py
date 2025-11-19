@@ -530,7 +530,7 @@ def main():
                             except requests.exceptions.RequestException as err:
                                 print(f"Something went wrong: {err}")
 
-        if not args.print:
+        if args.print:
             activity.append(f"\nIP Address Count:\n")
         else:
             activity.append(f"<br><br>IP Address Count:<br>")
