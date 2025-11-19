@@ -602,7 +602,7 @@ def main():
             f.write("</article>")                                        
             
             f.write("<nav><h2><b>IP Counter</b></h2><br>")
-            f.write("<h1><b>IP Counter</b></h1><br>")
+            f.write("<h1><b>🧮 IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
