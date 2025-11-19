@@ -549,7 +549,7 @@ def main():
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
-            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🌸</h1>  <div id=\"stats\">")
+            f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1>  <div id=\"stats\">")
             
             for line in activity:
                 GET_AI_IP = ""
@@ -563,10 +563,10 @@ def main():
                     line.replace("\t", "")
                 if "\n" in line:
                     line.replace("\n", "<br>")
-                if "[," in line:
-                    line.replace("[,", "")            
-                if "\n]]" in line:
-                    line.replace("\n]]", "")                
+                if "[' ', '" in line:
+                    line.replace("[' ', '", "")            
+                if "n'] " in line:
+                    line.replace("n']", "")                
                 f.write(f"<br>{line}</br>")
 
         time.sleep(
