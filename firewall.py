@@ -549,7 +549,7 @@ def main():
         os.system("clear")
 
         with open(WEB_HTML, "w") as f:
-            f.write("<html><head><style> body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }</style></head>")
+            f.write("<html><head><style> p { text-indent: 50px; body {  background-color: black; font-family: Arial, sans-serif; text-align: left; } #stats { font-size: 1em; margin-top: 50px; }</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
             )
@@ -563,11 +563,7 @@ def main():
                   #🚨 Blocked Subnet: 👉 {ip_address} {line.lower().split(" ")[6]}\n"
                 if not args.print and "🚨 Blocked IP:" in line:
                     value = line.split(" ")
-                    line = f"🚨 Blocked IP: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]}"
-                if not args.print and "🚨 Blocked Subnet:" in line:
-                    value = line.split(" ")
-                    
-                    #line = f"🚨 Blocked Subnet: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]}"
+                    line = f"<p>🚨 Blocked IP: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]}</p>"
                 if not args.print and "📍" in line:
                     value = line.split(":")
                     URL_FIX = line.split(" ")
