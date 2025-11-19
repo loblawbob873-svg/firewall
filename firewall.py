@@ -555,16 +555,16 @@ def main():
         for line in activity:
             if not args.print and "🚨 Blocked IP:" in line:
                 value = line.split(" ")
-                line = f"<p>🚨 Blocked IP: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p><a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
                 blocked_array.append(line)
             if not args.print and "🚨 Blocked Subnet:" in line:
                 value = line.split(" ")
-                line = f"<p>🚨 Blocked Subnet: <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p><a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
                 blocked_array.append(line)
             if not args.print and "📍" in line:
                 value = line.split(":")
                 URL_FIX = line.split(" ")
-                line = f"<p> 📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {value[1]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_FIX[1]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p>📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>  {value[1]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_FIX[1]}\" target=\"_blank\">🌐</a></p>"
                 ip_counters.append(line)
             if not args.print and "🕵️" in line:
                 URL = line.split("🕵️")
@@ -586,11 +586,11 @@ def main():
             f.write("<body><h1><span style=\"color: red;\">🔥</span> Python Firewall Web Console 🔥</h1> <br> <br>")
             f.write("<div id=\"stats\">")
             
-            f.write("<p><b>Blocked Traffic</b><p><br>")
+            f.write("<p><b>🚨 Blocked Traffic</b><p><br>")
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line}</br>")
-            f.write("<p><b>Other Queries</b><p><br>")
+            f.write("<p><b>🕵️Queries</b><p><br>")
             for line in standard_queries:
                 if "🕵️" in line:
                     f.write(f"<br>{line}</br>")
