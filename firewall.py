@@ -605,12 +605,10 @@ def main():
                      f.write(f"<br>{line.replace("🕵️","💩")}</br>")
             f.write("</article></div>")                                    
             
-            f.write("<div class=\"left-half\"><article>")
             f.write("<h1><b>IP Counter</b></h1><br>")
             for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
-            f.write("</article></div>")                                    
             
         time.sleep(
             TIME_FRAME
