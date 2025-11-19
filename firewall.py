@@ -359,13 +359,7 @@ async def main():
     with open(f"{WEB_HTML}", "r") as f:
         content = f.read()
     return HTMLResponse(content=content)
-
-
-async def get_html():
-    with open(f"{WEB_HTML}", "r") as f:
-        return f.read()
-
-
+s
 # Set up logging
 logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
