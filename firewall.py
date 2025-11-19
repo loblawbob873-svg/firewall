@@ -587,7 +587,7 @@ def main():
             f.write("<body><h1><span style=\"color: red;\"></span><p align=center>🔥 Python Firewall Web Console 🔥</h1></p> <br> <br>")
             f.write("<div id=\"stats\">")
             
-            f.write(f"<p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</p>")
+            f.write(f"<div><p align=center>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</p></div>")
             f.write(
             f"<p align=center> ⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}</p>"
         )
