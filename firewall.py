@@ -520,7 +520,7 @@ def main():
                                 elif any(
                                     word.lower() in line.lower() for word in IP_BLOCKS
                                 ):
-                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split(" ")[5].split(" ")[0]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
+                                    message = f"\t🚨 Blocked: {ip_address} 👉 {line.lower().split(" ")[5-6].split(" ")[0]}\n\t\t\t\t\t\t\t🔍 https://www.ip-tracker.org/lookup.php?ip={ip_address}\n"
                                     activity.append(message)
                                     block_ip(ip_address, message)
                                 else:
