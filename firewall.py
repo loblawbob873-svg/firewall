@@ -598,7 +598,7 @@ def main():
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
             f.write("</div>")                                    
             
-            f.write("<div class=\"split left\">")
+            f.write("<div class=\"split right\">")
             f.write("<h1><b>🕵️ &nbsp; Queries</b></h1><br>")
             for line in standard_queries:
                 if "🕵️" in line:
