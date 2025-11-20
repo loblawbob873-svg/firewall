@@ -391,6 +391,7 @@ async def main(ip: str, date: str):
         content += '} }'
         content += f"const myArray = {array};"
         content += "loopThroughArray(myArray);</script>"
+        content += '<div id="output>"'
         return HTMLResponse(content=content)
         #return array
     except Exception as e:
