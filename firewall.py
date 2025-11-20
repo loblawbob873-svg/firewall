@@ -322,7 +322,7 @@ SKIP_ALERTS = [
 ]
 
 def  htmlRELOAD():
-    html = "<script>\nwindow.setTimeout( function() {window.location.reload();}, 35000);</script>"
+    html = "<script>\nwindow.setTimeout( function() {window.location.reload();}, 45000);</script>"
     return  html
 
 def basicHTML(one_minute_ago):   
