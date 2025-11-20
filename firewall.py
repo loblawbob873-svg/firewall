@@ -633,8 +633,7 @@ def main():
                 line.replace("\n", "<br>")
 
         with open(WEB_HTML, "w") as f:
-            f.write(basicHTML(one_minute_ago))
-            f.write(htmlRELOAD())
+            f.write(basicHTML(one_minute_ago) htmlRELOAD())
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
