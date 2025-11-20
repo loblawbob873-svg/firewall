@@ -370,8 +370,9 @@ async def main(ip: str, date: str):
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
                 array.append(line)
-                if ip and date in line:
-                    array.append(line.lower().split(" ")[6])
+                if date in line:
+                    if ip in line:
+                        array.append(line.lower().split(" ")[6])
         # return HTMLResponse(content=array)
         return array
     except Exception as e:
