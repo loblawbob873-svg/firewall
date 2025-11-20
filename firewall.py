@@ -601,7 +601,7 @@ def main():
                 URL = line.split("🕵️")
                 URL_PARSE = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f'<p>🕵️<a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href="/ip?ip={URL_PARSE[1]}&date={one_minute_ago}" style="text-decoration:none">🔍  </p></a>  <a href="https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}" style="text-decoration:none" target="_blank">🌐</a></p>'
+                line = f'<p>🕵️<a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href="/ip?ip={URL_PARSE[1]}&date={one_minute_ago}" target="_blank" style="text-decoration:none">🔍  </p></a>  <a href="https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}" style="text-decoration:none" target="_blank">🌐</a></p>'
                 standard_queries.append(line)
             if "\t" in line:
                 line.replace("\t", "")
