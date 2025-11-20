@@ -22,7 +22,7 @@ IP_OCCURRENCE_THRESHOLD = 50
 
 # NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"
-TIME_FRAME = 10  # 30 Seconds
+TIME_FRAME = 30  # 30 Seconds
 
 # Web Inferface HTML File
 WEB_HTML = "/tmp/python-firewall.html"
@@ -322,7 +322,7 @@ SKIP_ALERTS = [
 ]
 
 def  htmlRELOAD():
-    html = "<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
+    html = "<script>\nwindow.setTimeout( function() {window.location.reload();}, 35000);</script>"
     return  html
 
 def basicHTML(one_minute_ago):   
