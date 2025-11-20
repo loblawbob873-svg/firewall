@@ -372,13 +372,13 @@ logging.basicConfig(
 
 @app.get("/ip")
 async def main(ip: str, date: str):
-    array = [f"{ip}"]
+    array = []
     content = basicHTML(date)
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
                 if date and ip in line:
-                    array.append(line.lower().split(ip)[1])
+                    array.append(line.lower().split(ip)[1].replace(", - - ",""))
 
         content += f'<br><br><p allign=center><h2>🔬 Analyzing Logs for IP: <a style="text-decoration:none" target="_blank" href="https://{ip}"> {ip} </a> </a></p><a href="https://www.ip-tracker.org/lookup.php?ip={ip}" style="text-decoration:none" target="_blank"> &nbsp🌐 Track IP</a></h2></p>'
         content += '<textarea id="logs" readonly></textarea>'
