@@ -350,19 +350,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/")
 async def main():
     DATA = ""
     with open(f"{WEB_HTML}", "r") as f:
         content = f.read()
     return HTMLResponse(content=content)
-
-
-async def get_html():
-    with open(f"{WEB_HTML}", "r") as f:
-        return f.read()
-
 
 # Set up logging
 logging.basicConfig(
@@ -576,6 +569,10 @@ def main():
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
         )
 
+
+        if not args.print:
+            buildWeb(activity,one_minute_ago)
+            
         if args.print:
             activity.append(
                 "-------------------------------------------------------------------------------------------------"
