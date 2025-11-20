@@ -383,7 +383,7 @@ async def main(ip: str, date: str):
                 if date and ip in line:
                     array.append(line)
 
-        content += "<script>{ "
+        content += "<script>"
         content += "function loopThroughArray(arr) {"
         content += "let output = document.getElementById('output');"
         content += "for (let i = 0; i < arr.length; i++) {"
