@@ -387,7 +387,8 @@ async def main(ip: str, date: str):
                 if date and ip in line:
                     array.append(line)
 
-        content += '<div id="logs"></div>'
+        #content += '<div id="logs"></div>'
+        content += '<textarea id="logs" readonly></textarea>'
         content += "<script>"
         content += f"const myArray = [{array}]"
         content += "\nconst logs = document.getElementById('logs');\n"
