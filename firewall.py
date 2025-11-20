@@ -363,18 +363,14 @@ logging.basicConfig(
 
 
 @app.get("/ip")
-async def main(ip: str):
+async def main(ip: str, date: str):
     array = [f"{ip}"]
-    now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
-    one_minute_ago = time.strftime(
-        "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
-    )
 
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
                 array.append(line)
-                if ip and one_minute_ago in line:
+                if ip and date in line:
                     array.append(line.lower().split(" ")[6])
         # return HTMLResponse(content=array)
         return array
@@ -591,16 +587,16 @@ def main():
         for line in activity:
             if not args.print and "🚨 Blocked IP:" in line:
                 value = line.split(" ")
-                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
+                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
                 blocked_array.append(line)
             if not args.print and "🚨 Blocked Subnet:" in line:
                 value = line.split(" ")
-                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}" style="text-decoration:none">🔍 </a> </a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp;🌐</a></p>'
+                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none">🔍 </a> </a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp;🌐</a></p>'
                 blocked_array.append(line)
             if not args.print and "📍" in line:
                 value = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
+                line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
                 ip_counters.append(line)
             if not args.print and "🕵️" in line:
                 URL = line.split("🕵️")
