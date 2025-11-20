@@ -321,7 +321,7 @@ SKIP_ALERTS = [
     "bot",
 ]
 
-def basicHTML():   
+def basicHTML(one_minute_ago):   
     html = "<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"
     html += "body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }"
     html +="</style></head>" 
@@ -376,7 +376,7 @@ logging.basicConfig(
 @app.get("/ip")
 async def main(ip: str, date: str):
     array = [f"{ip}"]
-    content = basicHTML()
+    content = basicHTML(date)
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
@@ -627,7 +627,7 @@ def main():
                 line.replace("\n", "<br>")
 
         with open(WEB_HTML, "w") as f:
-            f.write(basicHTML())
+            f.write(basicHTML(one_minute_ago))
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
