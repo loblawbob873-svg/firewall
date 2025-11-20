@@ -327,7 +327,7 @@ def  htmlRELOAD():
 
 def basicHTML(one_minute_ago):   
     html = "<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"
-    html += "body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }"
+    html += "body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; } #logs { white-space: pre-wrap; width: 300px; height: 200px; }"
     html +="</style></head>" 
     #html +="<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
     html +="<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>"
