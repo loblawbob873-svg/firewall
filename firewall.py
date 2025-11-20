@@ -329,7 +329,7 @@ def basicHTML():
     html +="<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>"
     html += f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header"
     html += f"<br><p align=center><h2> ↕️Traffic as of: {one_minute_ago}</p></h2></div>"
-return html
+    return html
 
 # ------------------------------------------------------------------
 # FastAPI app
