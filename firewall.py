@@ -512,7 +512,7 @@ def buildCLI(activity):
      for line in activity:
         print(line)
 
-def buildWeb(activity):
+def buildWeb(activity,one_minute_ago):
     blocked_array = []
     standard_queries = []
     ip_counters = []
@@ -661,7 +661,7 @@ def main():
         if args.print:
             buildCLI(activity)
         else: 
-            buildWeb(activity)
+            buildWeb(activity,one_minute_ago)
 
         time.sleep(
             TIME_FRAME
