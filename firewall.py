@@ -152,6 +152,7 @@ TIER_ONE = {
 }
 
 IP_BLOCKS = [
+    "dataaccessd",
     "/source.zip",
     "/backup.zip",
     "/config/db.sql",
