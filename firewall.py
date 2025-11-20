@@ -22,7 +22,7 @@ IP_OCCURRENCE_THRESHOLD = 50
 
 # NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"
-TIME_FRAME = 30  # 30 Seconds
+TIME_FRAME = 10  # 30 Seconds
 
 # Web Inferface HTML File
 WEB_HTML = "/tmp/python-firewall.html"
@@ -360,6 +360,22 @@ logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
 )
 
+@app.get("/ip")
+async def main(ip: str):
+   array = [f"{ip}"]
+   
+   try:
+        with open(f"{LOG_FILE}", "r") as f:
+            for line in f:
+                array.append(line)
+                if ip in line:
+                   array.append(line.lower().split(" ")[6])  
+        #return HTMLResponse(content=array)
+        return array
+   except Exception as e: 
+       return(f"Error: {ip} was not found or other error")
+
+
 @app.get("/ai")
 async def main(ip: str):
     openai_headers = {
@@ -560,22 +576,22 @@ def main():
         for line in activity:
             if not args.print and "🚨 Blocked IP:" in line:
                 value = line.split(" ")
-                line = f"<p>🚨<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p>🚨<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a target=\"_blank\" href=\"/ip?ip={value[3]}\" style=\"text-decoration:none\"> 🔍</a> <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp🌐</a></p>"
                 blocked_array.append(line)
             if not args.print and "🚨 Blocked Subnet:" in line:
                 value = line.split(" ")
-                line = f"<p>🚨<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{value[3]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p>🚨<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a target=\"_blank\" href=\"/ip?ip={value[3]}\" style=\"text-decoration:none\">🔍 </a> </a> <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🌐</a></p>"
                 blocked_array.append(line)
             if not args.print and "📍" in line:
                 value = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f"<p>📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>&nbsp;{value[2]} <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_FIX[1]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p>📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target=\"_blank\" href=\"/ip?ip={URL_FIX[1]}\" style=\"text-decoration:none\"> 🔍</a> <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp🌐</a></p>"
                 ip_counters.append(line)
             if not args.print and "🕵️" in line:
                 URL = line.split("🕵️")
                 URL_PARSE = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f"<p>🕵️<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🔍 <a style=\"text-decoration:none\" href=\"https://who.is/whois-ip/ip-address/{URL_PARSE[1]}\" target=\"_blank\">🌐</a></p>"
+                line = f"<p>🕵️<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href=\"/ip?ip={URL_PARSE[1]}\" style=\"text-decoration:none\">🔍  </p></a>  <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}\" style=\"text-decoration:none\" target=\"_blank\">🌐</a></p>"
                 standard_queries.append(line)
             if "\t" in line:
                  line.replace("\t", "")
@@ -587,7 +603,7 @@ def main():
             f.write("body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }")
             f.write("</style></head>")
             f.write(
-                "<script>\nwindow.setTimeout( function() {window.location.reload();}, 32000);</script>"
+                "<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
             )
             f.write("<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>")          
             f.write(f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header")
