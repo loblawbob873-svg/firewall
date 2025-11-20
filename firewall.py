@@ -611,22 +611,22 @@ def main():
         for line in activity:
             if not args.print and "🚨 Blocked IP:" in line:
                 value = line.split(" ")
-                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
+                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a></p>'
                 blocked_array.append(line)
             if not args.print and "🚨 Blocked Subnet:" in line:
                 value = line.split(" ")
-                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none">🔍 </a> </a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp;🌐</a></p>'
+                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none">🔍 </a> </a> </p>'
                 blocked_array.append(line)
             if not args.print and "📍" in line:
                 value = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
+                line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a></p>'
                 ip_counters.append(line)
             if not args.print and "🕵️" in line:
                 URL = line.split("🕵️")
                 URL_PARSE = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f'<p>🕵️<a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href="/ip?ip={URL_PARSE[1]}&date={one_minute_ago}" target="_blank" style="text-decoration:none">🔍  </p></a>  <a href="https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}" style="text-decoration:none" target="_blank">🌐</a></p>'
+                line = f'<p>🕵️<a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href="/ip?ip={URL_PARSE[1]}&date={one_minute_ago}" target="_blank" style="text-decoration:none">🔍  </p></a></p>'
                 standard_queries.append(line)
             if "\t" in line:
                 line.replace("\t", "")
