@@ -508,6 +508,60 @@ def block_ip(ip, message):
         os.system(command)
         #messaging(f"{message}")
 
+def buildCLI(activity):
+     for line in activity:
+        print(line)
+
+def buildWeb(activity):
+    blocked_array = []
+    standard_queries = []
+    ip_counters = []
+
+    for line in activity:
+        if not args.print and "🚨 Blocked IP:" in line:
+            value = line.split(" ")
+            line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a></p>'
+            blocked_array.append(line)
+        if not args.print and "🚨 Blocked Subnet:" in line:
+            value = line.split(" ")
+            line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none">🔍 </a> </a> </p>'
+            blocked_array.append(line)
+        if not args.print and "📍" in line:
+            value = line.split(" ")
+            URL_FIX = line.split(" ")
+            line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a></p>'
+            ip_counters.append(line)
+        if not args.print and "🕵️" in line:
+            URL = line.split("🕵️")
+            URL_PARSE = line.split(" ")
+            URL_FIX = line.split(" ")
+            line = f'<p>🕵️<a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href="/ip?ip={URL_PARSE[1]}&date={one_minute_ago}" target="_blank" style="text-decoration:none">🔍  </p></a></p>'
+            standard_queries.append(line)
+        if "\t" in line:
+            line.replace("\t", "")
+        if "\n" in line:
+            line.replace("\n", "<br>")
+
+        with open(WEB_HTML, "w") as f:
+            f.write(basicHTML(one_minute_ago))
+            f.write(htmlRELOAD())
+            f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
+            for line in blocked_array:
+                if "🚨" in line:
+                    f.write(f"<br>{line.replace("🚨","🛑")}</br>")
+            f.write("</aside>")
+
+            f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
+            for line in standard_queries:
+                if "🕵️" in line:
+                    f.write(f"<br>{line.replace("🕵️","⁉️")}</br>")
+            f.write("</article>")
+
+            f.write("<nav><h2><b>🧮 IP Counter</b></h2><br>")
+            for line in ip_counters:
+                if "📍" in line:
+                    f.write(f"<br>{line}</br>")
+            f.write("</nav></main></body></html>")
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -604,55 +658,11 @@ def main():
         save_nft_rules()
         os.system("clear")
 
-        blocked_array = []
-        standard_queries = []
-        ip_counters = []
+        if args.print:
+            buildCLI(activity)
+        else: 
+            buildWeb(activity)
 
-        for line in activity:
-            if not args.print and "🚨 Blocked IP:" in line:
-                value = line.split(" ")
-                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a></p>'
-                blocked_array.append(line)
-            if not args.print and "🚨 Blocked Subnet:" in line:
-                value = line.split(" ")
-                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}&date={one_minute_ago}" style="text-decoration:none">🔍 </a> </a> </p>'
-                blocked_array.append(line)
-            if not args.print and "📍" in line:
-                value = line.split(" ")
-                URL_FIX = line.split(" ")
-                line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}&date={one_minute_ago}" style="text-decoration:none"> 🔍</a></p>'
-                ip_counters.append(line)
-            if not args.print and "🕵️" in line:
-                URL = line.split("🕵️")
-                URL_PARSE = line.split(" ")
-                URL_FIX = line.split(" ")
-                line = f'<p>🕵️<a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href="/ip?ip={URL_PARSE[1]}&date={one_minute_ago}" target="_blank" style="text-decoration:none">🔍  </p></a></p>'
-                standard_queries.append(line)
-            if "\t" in line:
-                line.replace("\t", "")
-            if "\n" in line:
-                line.replace("\n", "<br>")
-
-        with open(WEB_HTML, "w") as f:
-            f.write(basicHTML(one_minute_ago))
-            f.write(htmlRELOAD())
-            f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
-            for line in blocked_array:
-                if "🚨" in line:
-                    f.write(f"<br>{line.replace("🚨","🛑")}</br>")
-            f.write("</aside>")
-
-            f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
-            for line in standard_queries:
-                if "🕵️" in line:
-                    f.write(f"<br>{line.replace("🕵️","⁉️")}</br>")
-            f.write("</article>")
-
-            f.write("<nav><h2><b>🧮 IP Counter</b></h2><br>")
-            for line in ip_counters:
-                if "📍" in line:
-                    f.write(f"<br>{line}</br>")
-            f.write("</nav></main></body></html>")
         time.sleep(
             TIME_FRAME
         )  # Wait for the specified time frame before processing again
