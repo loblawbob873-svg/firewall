@@ -385,9 +385,9 @@ async def main(ip: str, date: str):
 
         content += '<div id="logs"></div>'
         content += "<script>"
-        content += f"const myArray = {array}"
+        content += f"const myArray = [{array}]"
         content += "const logs = document.getElementById('logs');"
-        content += "    for (const line of myArray) {  logs.innerHTML += `${line}\n`; }"
+        content += "    for (line of myArray) {  logs.innerHTML += `${line}\n`; }"
         content += "</script>"
         return HTMLResponse(content=content)
         #return array
