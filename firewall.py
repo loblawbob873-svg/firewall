@@ -392,7 +392,7 @@ async def main(ip: str, date: str):
         return HTMLResponse(content=conent)
         #return array
     except Exception as e:
-        return f"Error: {ip} was not found or other error"
+        return HTMLResponse(content=conent)
 
 
 @app.get("/ai")
