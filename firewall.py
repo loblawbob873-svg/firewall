@@ -386,7 +386,7 @@ async def main(ip: str, date: str):
         content += "let output = document.getElementById('output');"
         content += "for (let i = 0; i < arr.length; i++) {"
         #content += "output.innerHTML += `${arr[i]\}n`;"
-        content += "}}"
+        #content += "}}"
         content += f"const myArray = {array};"
         content += "loopThroughArray(myArray);"
         return HTMLResponse(content=conent)
