@@ -321,11 +321,15 @@ SKIP_ALERTS = [
     "bot",
 ]
 
+def  htmlRELOAD():
+    html +="<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
+    return  html
+
 def basicHTML(one_minute_ago):   
     html = "<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"
     html += "body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }"
     html +="</style></head>" 
-    html +="<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
+    #html +="<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
     html +="<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>"
     html += f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header"
     html += f"<br><p align=center><h2> ↕️Traffic as of: {one_minute_ago}</p></h2></div>"
@@ -387,7 +391,7 @@ async def main(ip: str, date: str):
         content += "<script>"
         content += f"const myArray = [{array}]"
         content += "\nconst logs = document.getElementById('logs');\n"
-        content += "for (line of myArray) {   logs.innerHTML += `<br>${line}</br>`; }"
+        content += "for (line of myArray) {   logs.innerHTML += `${line}<br>`; }"
         content += "</script>"
         return HTMLResponse(content=content)
         #return array
@@ -500,7 +504,7 @@ def block_ip(ip, message):
             f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
         )
         os.system(command)
-        messaging(f"{message}")
+        #messaging(f"{message}")
 
 
 def main():
@@ -629,6 +633,7 @@ def main():
 
         with open(WEB_HTML, "w") as f:
             f.write(basicHTML(one_minute_ago))
+            f.write(htmlRELOAD)
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
