@@ -1,6 +1,2 @@
-function loopThroughArray(arr) {
-  let output = document.getElementById('output');
-  for (let i = 0; i < arr.length; i++) {
-    output.innerHTML += `${arr[i]}\n`;
-  }
-}
+function loopThroughArray(arr) { function loopThroughArray(arr) {let output = document.getElementById('output');for (let i = 0; i < arr.length; i++) {output.innerHTML += `${arr[i]}
+`;} }const myArray = ['190.238.57.1', '190.238.57.1 - - [20/Nov/2025:12:08:02 -0500] "GET /rottenwheel/revuo-weekly/blame/commit/4b2e56262b55e6bba280cc9bc7772c30267f48ef/content/weekly/issue-93/_index.md HTTP/1.1" 200 16394 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.6063.1052 Mobile Safari/537.36"\n'];loopThroughArray(myArray);
