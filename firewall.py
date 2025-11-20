@@ -392,6 +392,7 @@ async def main(ip: str, date: str):
         return HTMLResponse(content=content)
         #return array
     except Exception as e:
+        content += "<h2><p> Error finding data</p></h2>"
         return HTMLResponse(content=content)
 
 
