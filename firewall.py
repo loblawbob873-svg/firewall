@@ -148,7 +148,7 @@ TIER_ONE = {
     "/web-oidc-callback",
     "/dav/spaces",
     "/api/v0/settings/assignments-list",
-    "/api/chat/completions"
+    "/api/chat/completions",
 }
 
 IP_BLOCKS = [
@@ -336,6 +336,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def main():
     DATA = ""
@@ -360,20 +361,25 @@ logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
 )
 
+
 @app.get("/ip")
 async def main(ip: str):
-   array = [f"{ip}"]
-   
-   try:
+    array = [f"{ip}"]
+    now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
+    one_minute_ago = time.strftime(
+        "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
+    )
+
+    try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
                 array.append(line)
-                if ip in line:
-                   array.append(line.lower().split(" ")[6])  
-        #return HTMLResponse(content=array)
+                if ip and one_minute_ago in line:
+                    array.append(line.lower().split(" ")[6])
+        # return HTMLResponse(content=array)
         return array
-   except Exception as e: 
-       return(f"Error: {ip} was not found or other error")
+    except Exception as e:
+        return f"Error: {ip} was not found or other error"
 
 
 @app.get("/ai")
@@ -385,11 +391,15 @@ async def main(ip: str):
 
     messages = []
     messages.append(
-        {"role": "user", "web_search": True, "content": f"Tell me information about this IP address such as the owner, abuse details, and location: {ip}. Find as much information as y ou can."}
+        {
+            "role": "user",
+            "web_search": True,
+            "content": f"Tell me information about this IP address such as the owner, abuse details, and location: {ip}. Find as much information as y ou can.",
+        }
     )
 
     payload = {"model": MODEL, "messages": messages}
-    if(OPENAI_API_KEY):
+    if OPENAI_API_KEY:
         try:
             r = requests.post(
                 OPENAI_ENDPOINT,
@@ -399,7 +409,9 @@ async def main(ip: str):
             )
             result = r.json()
             return result["choices"][0]["message"]["content"].strip()
-        except Exception as e: return(e)
+        except Exception as e:
+            return e
+
 
 # Data structures to store IP addresses and their request counts
 ip_requests = defaultdict(int)
@@ -493,13 +505,16 @@ def main():
 
         if args.print:
             activity.append(
-            "-------------------------------------------------------------------------------------------------")
-            activity.append("\t\t🔥 Python Firewall 🔥")  
-            
+                "-------------------------------------------------------------------------------------------------"
+            )
+            activity.append("\t\t🔥 Python Firewall 🔥")
+
         activity.append(
             f"{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅"
         )
-        activity.append("-------------------------------------------------------------------------------------------------")
+        activity.append(
+            "-------------------------------------------------------------------------------------------------"
+        )
         activity.append(
             f"\t\t\t⚠️ Unfiltered and Blocked Traffic as of: {one_minute_ago}\n"
         )
@@ -556,9 +571,9 @@ def main():
             activity.append(f"\nIP Address Count:\n")
         else:
             activity.append(f"<br><br>IP Address Count:<br>")
-        
+
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
-        # TIER_ONE Traffic does not count    
+        # TIER_ONE Traffic does not count
         for ip, count in ip_counts.items():
             activity.append(f"\t📍 {ip} {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
@@ -572,61 +587,67 @@ def main():
         blocked_array = []
         standard_queries = []
         ip_counters = []
-        
+
         for line in activity:
             if not args.print and "🚨 Blocked IP:" in line:
                 value = line.split(" ")
-                line = f"<p>🚨<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a target=\"_blank\" href=\"/ip?ip={value[3]}\" style=\"text-decoration:none\"> 🔍</a> <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp🌐</a></p>"
+                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
                 blocked_array.append(line)
             if not args.print and "🚨 Blocked Subnet:" in line:
                 value = line.split(" ")
-                line = f"<p>🚨<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{value[3]}\">{value[3]}</a>  {value[4]} {value[5]} <a target=\"_blank\" href=\"/ip?ip={value[3]}\" style=\"text-decoration:none\">🔍 </a> </a> <a href=\"https://www.ip-tracker.org/lookup.php?ip={value[3]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp;🌐</a></p>"
+                line = f'<p>🚨<a style="text-decoration:none" target="_blank" href="https://{value[3]}">{value[3]}</a>  {value[4]} {value[5]} <a target="_blank" href="/ip?ip={value[3]}" style="text-decoration:none">🔍 </a> </a> <a href="https://www.ip-tracker.org/lookup.php?ip={value[3]}" style="text-decoration:none" target="_blank"> &nbsp;🌐</a></p>'
                 blocked_array.append(line)
             if not args.print and "📍" in line:
                 value = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f"<p>📍 <a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target=\"_blank\" href=\"/ip?ip={URL_FIX[1]}\" style=\"text-decoration:none\"> 🔍</a> <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}\" style=\"text-decoration:none\" target=\"_blank\"> &nbsp🌐</a></p>"
+                line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}" style="text-decoration:none"> 🔍</a> <a href="https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
                 ip_counters.append(line)
             if not args.print and "🕵️" in line:
                 URL = line.split("🕵️")
                 URL_PARSE = line.split(" ")
                 URL_FIX = line.split(" ")
-                line = f"<p>🕵️<a style=\"text-decoration:none\" target=\"_blank\" href=\"https://{URL_FIX[1]}\">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href=\"/ip?ip={URL_PARSE[1]}\" style=\"text-decoration:none\">🔍  </p></a>  <a href=\"https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}\" style=\"text-decoration:none\" target=\"_blank\">🌐</a></p>"
+                line = f'<p>🕵️<a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> &nbsp;👉 &nbsp;{URL_PARSE[2]} &nbsp; <a href="/ip?ip={URL_PARSE[1]}" style="text-decoration:none">🔍  </p></a>  <a href="https://www.ip-tracker.org/lookup.php?ip={URL_PARSE[1]}" style="text-decoration:none" target="_blank">🌐</a></p>'
                 standard_queries.append(line)
             if "\t" in line:
-                 line.replace("\t", "")
+                line.replace("\t", "")
             if "\n" in line:
-                    line.replace("\n", "<br>")                 
-                    
+                line.replace("\n", "<br>")
+
         with open(WEB_HTML, "w") as f:
-            f.write("<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }")
-            f.write("body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }")
+            f.write(
+                "<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"
+            )
+            f.write(
+                "body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }"
+            )
             f.write("</style></head>")
             f.write(
                 "<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
             )
-            f.write("<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>")          
-            f.write(f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header")
+            f.write("<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>")
             f.write(
-            f"<br><p align=center><h2> ↕️Traffic as of: {one_minute_ago}</p></h2></div>"
-        )
+                f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header"
+            )
+            f.write(
+                f"<br><p align=center><h2> ↕️Traffic as of: {one_minute_ago}</p></h2></div>"
+            )
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
                     f.write(f"<br>{line.replace("🚨","🛑")}</br>")
-            f.write("</aside>")                                    
-            
+            f.write("</aside>")
+
             f.write("<article><h2><b>🕵️ &nbsp; Queries</b></h2><br>")
             for line in standard_queries:
                 if "🕵️" in line:
-                     f.write(f"<br>{line.replace("🕵️","⁉️")}</br>")
-            f.write("</article>")                                        
-            
+                    f.write(f"<br>{line.replace("🕵️","⁉️")}</br>")
+            f.write("</article>")
+
             f.write("<nav><h2><b>🧮 IP Counter</b></h2><br>")
             for line in ip_counters:
                 if "📍" in line:
                     f.write(f"<br>{line}</br>")
-            f.write("</nav></main></body></html>")      
+            f.write("</nav></main></body></html>")
         time.sleep(
             TIME_FRAME
         )  # Wait for the specified time frame before processing again
