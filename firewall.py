@@ -388,7 +388,7 @@ async def main(ip: str, date: str):
                     array.append(line)
 
         #content += '<div id="logs"></div>'
-        content += f"<p allign=center><h2>🔬 Analyzing Logs for IP: {ip}</h2></p>"
+        content += f'<p allign=center><h2>🔬 Analyzing Logs for IP: {ip}</h2><a href="https://www.ip-tracker.org/lookup.php?ip={URL_FIX[1]}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p><a href="https://www.ip-tracker.org/lookup.php?ip={ip}" style="text-decoration:none" target="_blank"> &nbsp🌐</a></p>'
         content += '<textarea id="logs" readonly></textarea>'
         content += "<script>"
         content += f"const myArray = [{array}]"
