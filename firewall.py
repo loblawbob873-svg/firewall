@@ -321,6 +321,16 @@ SKIP_ALERTS = [
     "bot",
 ]
 
+def basicHTML():   
+    html = "<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"
+    html += "body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }"
+    html +="</style></head>" 
+    html +="<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
+    html +="<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>"
+    html += f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header"
+    html += f"<br><p align=center><h2> ↕️Traffic as of: {one_minute_ago}</p></h2></div>"
+return html
+
 # ------------------------------------------------------------------
 # FastAPI app
 # ------------------------------------------------------------------
@@ -366,14 +376,21 @@ logging.basicConfig(
 @app.get("/ip")
 async def main(ip: str, date: str):
     array = [f"{ip}"]
-
+    content = basicHTML()
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
                 if date and ip in line:
                     array.append(line)
-        # return HTMLResponse(content=array)
-        return array
+        content += "<script>function loopThroughArray(arr) { "
+        content += "let output = document.getElementById('output');"
+        content += "for (let i = 0; i < arr.length; i++) {"
+        content += "output.innerHTML += `${arr[i]\}n`;"
+        content += "}}"
+        content += f"const myArray = {array}";
+        content += loopThroughArray(myArray);
+        return HTMLResponse(content=conent)
+        #return array
     except Exception as e:
         return f"Error: {ip} was not found or other error"
 
@@ -610,23 +627,7 @@ def main():
                 line.replace("\n", "<br>")
 
         with open(WEB_HTML, "w") as f:
-            f.write(
-                "<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"
-            )
-            f.write(
-                "body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; }"
-            )
-            f.write("</style></head>")
-            f.write(
-                "<script>\nwindow.setTimeout( function() {window.location.reload();}, 15000);</script>"
-            )
-            f.write("<body><header><h2>🔥 Python Firewall Web Console 🔥</h2><br> <br>")
-            f.write(
-                f"<p align=center><h2>{get_cpu_usage()}\tBlocked IP's: {get_block_count().strip()} ✅</h2></header"
-            )
-            f.write(
-                f"<br><p align=center><h2> ↕️Traffic as of: {one_minute_ago}</p></h2></div>"
-            )
+            f.write(basicHTML())
             f.write("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
             for line in blocked_array:
                 if "🚨" in line:
