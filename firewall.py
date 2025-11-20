@@ -568,9 +568,6 @@ def main():
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
         )
 
-        if not args.print:
-            buildWeb(activity,one_minute_ago)
-
         if args.print:
             activity.append(
                 "-------------------------------------------------------------------------------------------------"
