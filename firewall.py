@@ -379,13 +379,13 @@ async def main(ip: str, date: str):
             for line in f:
                 if date and ip in line:
                     array.append(line.lower().split(" ")[6])
-                    
+
         content += f'<br><br><p allign=center><h2>🔬 Analyzing Logs for IP: <a style="text-decoration:none" target="_blank" href="https://{ip}"> {ip} </a> </a></p><a href="https://www.ip-tracker.org/lookup.php?ip={ip}" style="text-decoration:none" target="_blank"> &nbsp🌐 Track IP</a></h2></p>'
         content += '<textarea id="logs" readonly></textarea>'
         content += "<script>"
         content += f"const myArray = [{array}]"
         content += "\nconst logs = document.getElementById('logs');\n"
-        content += "for (line of myArray) {   logs.innerHTML += `${line}<br>`; }"
+        content += "for (line of myArray) {   logs.innerHTML += `${line}`; }"
         content += "</script>"
         return HTMLResponse(content=content)
         #return array
