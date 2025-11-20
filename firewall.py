@@ -560,6 +560,10 @@ def main():
     parser.add_argument("--print", action="store_true", help="Print IP address counts")
     args = parser.parse_args()
 
+
+    if not args.print:
+        buildWeb(activity,one_minute_ago)
+        
     while True:
         # Get the current time and the time one minute ago
         ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
@@ -569,10 +573,6 @@ def main():
             "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
         )
 
-
-        if not args.print:
-            buildWeb(activity,one_minute_ago)
-            
         if args.print:
             activity.append(
                 "-------------------------------------------------------------------------------------------------"
