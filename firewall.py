@@ -382,11 +382,13 @@ async def main(ip: str, date: str):
             for line in f:
                 if date and ip in line:
                     array.append(line)
+
         content += "<script>function loopThroughArray(arr) { "
+        content += "function loopThroughArray(arr) {"
         content += "let output = document.getElementById('output');"
         content += "for (let i = 0; i < arr.length; i++) {"
-        content += "output.innerHTML += `${arr[i]\}n`;"
-        content += '}}</script>'
+        content += 'output.innerHTML += `${arr[i]}\n`;'
+        content += '} }</script>'
        # content += f"<script>const myArray = {array};"
         #content += "loopThroughArray(myArray);</script>"
         return HTMLResponse(content=content)
