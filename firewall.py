@@ -383,15 +383,12 @@ async def main(ip: str, date: str):
                 if date and ip in line:
                     array.append(line)
 
+        content += '<div id="logs"></div>'
         content += "<script>"
-        content += "function loopThroughArray(arr) {"
-        content += "let output = document.getElementById('output');"
-        content += "for (let i = 0; i < arr.length; i++) {"
-        content += "output.innerHTML += `${arr[i]}\n`;"
-        content += '} }'
-        content += f"const myArray = {array};"
-        content += "loopThroughArray(myArray);</script>"
-        content += '<div id="output>"'
+        content += f"const myArray = {array}"
+        content += "const logs = document.getElementById('logs');"
+        content += "    for (const line of myArray) {  logs.innerHTML += `${line}\n`; }"
+        content += "</script>"
         return HTMLResponse(content=content)
         #return array
     except Exception as e:
