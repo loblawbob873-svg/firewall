@@ -19,6 +19,7 @@ LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5", "107.175.34.92"]
 
 # SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = [
+    "Daemon Mode",
     "already",
     "searching",
     "sleeping",
@@ -30,7 +31,7 @@ SKIP_ALERTS = [
     "php",
 ]
 
-#OPTIONAL NTFY URL for Push Notificiations
+#OPTIONALNTFY URL for Push Notificiations
 #NTFY_URL = ""
 NTFY_URL = "https://push.poster.place/logs"
 
