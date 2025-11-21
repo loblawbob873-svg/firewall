@@ -3,6 +3,7 @@ import requests
 import asyncio
 import time
 from config import NTFY_URL
+from config import SKIP_ALERTS
 
 def send_to_ntfy(message):
     time.sleep(10)
