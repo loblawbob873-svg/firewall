@@ -8,6 +8,7 @@ from cli import buildCLI
 from process import process_log
 from db import activity
 from db import getActivity
+from config import TIME_FRAME
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
