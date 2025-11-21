@@ -20,4 +20,5 @@ def send_message(message):
     if check_message(message):
         if NTFY_URL:
             send_to_ntfy(message)
+        print(message)
         logging.info(message)
