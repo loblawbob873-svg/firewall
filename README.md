@@ -30,7 +30,14 @@ python -m venv venv
 pip install requests logging psutil httpx fastapi asyncio uvicorn
 ```
 
-### Run the app with Protection and Live Results
+### Run the app in the foroeground in the terminal
+```
+python firewall.py --print
+```
+A web interface will automatically start on ```http://0.0.0.0:6767```
+
+
+### Run the app in the background in the terminal
 ```
 python firewall.py --print
 ```
