@@ -7,7 +7,7 @@ IP_OCCURRENCE_THRESHOLD = 50
 # Scan NGINX log file LOG_FILE this ofter
 TIME_FRAME = 30  # 30 Seconds
 
-# Automatically blocks these 
+# Automatically blocks these
 SUBNET_BLOCKS = [
     "rottenwheel",
     "47.82.",
@@ -27,13 +27,14 @@ SKIP_ALERTS = [
     "rottenwheel",
     "/commit",
     "bot",
+    "php",
 ]
 
 # NTFY_URL=""
-NTFY_URL = "https://push.poster.place/logs"
+# NTFY_URL = "https://push.poster.place/logs"
 
 # Web Inferface HTML File
 WEB_HTML = "/tmp/python-firewall.html"
 
-# Save the NFT rules 
+# Save the NFT rules
 NFT_SAVED_RULES = "/etc/firewall.nft"
