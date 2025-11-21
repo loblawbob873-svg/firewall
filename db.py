@@ -7,7 +7,7 @@ def addIPCOUNTS(data):
     global ip_counts
     ip_counts.append(data)
 
-def clearIPCOUNTS(data):
+def clearIPCOUNTS():
     global ip_counts
     ip_counts = []
     
