@@ -1,5 +1,6 @@
 import psutil
 import subprocess
+import os
 from message import send_message
 # Where to save the firewall rules
 NFT_SAVED_RULES = "/etc/firewall.nft"
