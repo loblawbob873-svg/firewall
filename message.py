@@ -6,7 +6,6 @@ def check_message(message):
     Proceed = True
     for word in SKIP_ALERTS:
         if word in message:
-            print  (f"Debug: {word} {message}")
             Proceed = False
 
     return Proceed
