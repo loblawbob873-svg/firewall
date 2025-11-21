@@ -165,6 +165,7 @@ IP_BLOCKS = [
     "deno",
     "Deno/",
     "/commits/",
+    "/commit",
     "/pulls",
     "/commits/commit/",
     "/blame/commit",
