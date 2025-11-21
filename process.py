@@ -4,6 +4,8 @@ from config import IP_OCCURRENCE_THRESHOLD
 from db import activity
 from db import ip_counts
 from commands import block_ip
+from tier_one import TIER_ONE
+from ip_blocks import IP_BLOCKS
 
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
