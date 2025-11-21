@@ -47,7 +47,7 @@ def main():
         if args.print:
             buildCLI(getActivity(), timestamp)
         else: 
-            buildWeb(activity,timestamp)
+            buildWeb(getActivity(),timestamp)
 
         time.sleep(
             TIME_FRAME
