@@ -5,6 +5,7 @@ from fastapi.responses import HTMLResponse
 from html import WEB_HTML
 from html import basicHTML
 from ai import generate_reply
+from firewall import LOG_FILE
 # ------------------------------------------------------------------
 # FastAPI app
 # ------------------------------------------------------------------
