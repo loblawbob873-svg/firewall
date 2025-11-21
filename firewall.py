@@ -1,7 +1,6 @@
 import time
 import os
 import subprocess
-from collections import defaultdict
 import argparse
 from commands import save_nft_rules
 from cli import buildCLI
