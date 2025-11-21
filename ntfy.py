@@ -1,7 +1,6 @@
 
 import requests
 import time
-from message import logging
 from config import NTFY_URL
 from config import SKIP_ALERTS
 
