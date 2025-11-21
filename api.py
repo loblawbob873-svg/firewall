@@ -37,7 +37,7 @@ async def main():
 async def main(ip: str, date: str):
     array = []
     content = ""
-    content += test
+    content += test()
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
