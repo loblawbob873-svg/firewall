@@ -1,7 +1,7 @@
-from ntfy import send_to_ntfy
-from config import NTFY_URL
 import logging
 from config import SKIP_ALERTS
+from config import NTFY_URL
+from ntfy import send_to_ntfy
 
 # Set up logging
 logging.basicConfig(
