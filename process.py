@@ -1,5 +1,6 @@
 import json
 from config import LOG_FILE
+from config import IP_OCCURRENCE_THRESHOLD
 from db import activity
 from db import ip_counts
 from commands import block_ip
