@@ -19,13 +19,24 @@ python -m venv venv
 pip install requests logging psutil httpx fastapi asyncio uvicorn
 ```
 
+### Setup Configurations in ```config.py```
+* Configure ```LOG_FILE``` to point to your NGINX access file. I recommend having NGINX store it in TMPFS
+* Adjust ```TIME_FRAME``` and ```IP_OCCURENCE_THRESHOLD``` to your needs 
+* ```SUBNET_BLOCKS``` in config. Any subnet here will automatically be blocked
+* Configure NFTables Firewall. See sample file at the bottom of this ```README.md```
+
+### Block Lists and Allowed lists
+* ```tier_one.py``` - An array of Traffic to allow and not block. Remove/Comment out a line to have it rate limited to ```IP_OCCURENCE_THRESHOLD```
+* ```ip_blocks.py``` - Terms/Bots/Crawlers/etc to automatically block
+
+
 ### Run the app with Protection and Live Reporting
 ```
 python firewall.py --print
 ```
 
 ### NTFY Notifications for Mobile or Desktop
-Modify ```firewall.py``` and change this to your desired NTFY server/Topic:
+Modify ```config.py``` and change this to your desired NTFY server/Topic:
 ```
 NTFY_URL = "https://push.poster.place/logs"
 ```
