@@ -30,12 +30,12 @@ python -m venv venv
 pip install requests logging psutil httpx fastapi asyncio uvicorn
 ```
 
-### Run the app with Protection and Live Reporting
+### Run the app with Protection and Live Results
 ```
 python firewall.py --print
 ```
 
-### Web Interface for Reporting
+### Web Interface
 ```
 ./venv/bin/uvicorn firewall:app  --reload --port 8000 --host 0.0.0.0
 ```
