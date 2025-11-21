@@ -149,5 +149,6 @@ IP_BLOCKS = [
     "gptbot",
     "damus",
     "/archive/",
-    "\x03"
+    "\x03",
+    "\x01"
 ]
