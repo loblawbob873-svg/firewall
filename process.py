@@ -9,7 +9,7 @@ from tier_one import TIER_ONE
 from ip_blocks import IP_BLOCKS
 from config import SUBNET_BLOCKS
 from config import LOCAL_NETWORK
-from config import SKIP_ALERTS
+
 
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
