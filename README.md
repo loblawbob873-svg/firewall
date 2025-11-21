@@ -34,11 +34,8 @@ pip install requests logging psutil httpx fastapi asyncio uvicorn
 ```
 python firewall.py --print
 ```
+A web interface will automatically start on ```http://0.0.0.0:6767```
 
-### Web Interface
-```
-./venv/bin/uvicorn firewall:app  --reload --port 8000 --host 0.0.0.0
-```
 
 ### NTFY Notifications for Mobile or Desktop
 Modify ```config.py``` and change this to your desired NTFY server/Topic:

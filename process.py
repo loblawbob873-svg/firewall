@@ -5,13 +5,15 @@ from config import LOG_FILE
 from config import IP_OCCURRENCE_THRESHOLD
 from db import activity
 from db import addActivity
-from db import ip_counts
+from db import getIPCOUNTS
+from db import clearIPCOUNTS
+from db import addIPCOUNTS
 from commands import block_ip
 from tier_one import TIER_ONE
 from ip_blocks import IP_BLOCKS
 from config import SUBNET_BLOCKS
 from config import LOCAL_NETWORK
-
+from db import ip_counts
 
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
@@ -19,6 +21,7 @@ def extract_first_three_parts(ip):
 def process_log(timestamp):
     
     with open(LOG_FILE, "r") as f:
+        clearIPCOUNTS()
         for line in f:
             # Increment the occurrence count for the IP address
             # Excludes TIER_ONE Traffic
@@ -70,7 +73,7 @@ def process_log(timestamp):
         addActivity(f"\nIP Address Count:\n")
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
-        for ip, count in ip_counts.items():
+        for ip, count in ip_counts().items():
             addActivity(f"\t📍 {ip} {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"🚨 Blocked: {ip} with a count of {count}"
