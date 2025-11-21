@@ -2,33 +2,33 @@
 
 ![image](image6.png)
 
-### Features
+## Features
 * Live Reporting 
 * Automatic Blocking
 * Customizable 
 * Send Alerts to NTFY
 * Web Interface for Reporting
 
-### Requirements
+## Requirements
 * Python
 * NFT Firewall
-
-```
-python -m venv venv
-. venv/bin/activate
-pip install requests logging psutil httpx fastapi asyncio uvicorn
-```
 
 ### Setup Configurations in ```config.py```
 * Configure ```LOG_FILE``` to point to your NGINX access file. I recommend having NGINX store it in TMPFS
 * Adjust ```TIME_FRAME``` and ```IP_OCCURENCE_THRESHOLD``` to your needs 
 * ```SUBNET_BLOCKS``` in config. Any subnet here will automatically be blocked
-* Configure NFTables Firewall. See sample file at the bottom of this ```README.md```
+* Configure the NFTables Firewall. See sample file at the bottom of this ```README.md```
 
 ### Block Lists and Allowed lists
 * ```tier_one.py``` - An array of Traffic to allow and not block. Remove/Comment out a line to have it rate limited to ```IP_OCCURENCE_THRESHOLD```
 * ```ip_blocks.py``` - Terms/Bots/Crawlers/etc to automatically block
 
+## Installing the required libraries and Running  Python Firewall
+```
+python -m venv venv
+. venv/bin/activate
+pip install requests logging psutil httpx fastapi asyncio uvicorn
+```
 
 ### Run the app with Protection and Live Reporting
 ```
