@@ -26,7 +26,6 @@ class BackgroundTasks(threading.Thread):
         
         while True:
             clearDB()
-            clearIPCOUNTS()
             now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
             timestamp = time.strftime(
                 "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
