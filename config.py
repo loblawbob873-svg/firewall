@@ -30,7 +30,7 @@ SKIP_ALERTS = [
     "php",
 ]
 
-# NTFY_URL=""
+#OPTIONAL NTFY URL for Push Notificiations
 #NTFY_URL = ""
 NTFY_URL = "https://push.poster.place/logs"
 

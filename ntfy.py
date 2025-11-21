@@ -8,16 +8,12 @@ from config import SKIP_ALERTS
 def send_to_ntfy(message):
     time.sleep(10)
     try:
-
-        if message in SKIP_ALERTS:
-            logging.info(f"Skipping NTFY Message")
-        else:
-            response = requests.post(
-                NTFY_URL,
-                data=message.encode("utf-8"),
-                timeout=5,  # Add a timeout to prevent the function from hanging indefinitely
-            )
-            response.raise_for_status()  # Raise an exception for bad status codes (4xx, 5xx)
+        response = requests.post(
+            NTFY_URL,
+            data=message.encode("utf-8"),
+            timeout=5,  # Add a timeout to prevent the function from hanging indefinitely
+        )
+        response.raise_for_status()  # Raise an exception for bad status codes (4xx, 5xx)
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
