@@ -67,4 +67,3 @@ def buildWeb(activity,timestamp):
         if "📍" in line:
             addHTML(f"<br>{line}</br>")
     addHTML("</nav></main></body></html>")
-    print(html)  
