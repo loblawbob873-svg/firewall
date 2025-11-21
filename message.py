@@ -6,6 +6,7 @@ def check_message(message):
     Proceed = True
     for word in SKIP_ALERTS:
         if word.lower() in message.lower():
+            print  (f"Debug: {word.lower} {message.lower}")
             Proceed = False
 
     return Proceed
@@ -16,6 +17,4 @@ def send_message(message):
             send_to_ntfy(message)
         else:
             print("Not sending to NTFY")
-    else:
-        print(f"CHeck MEssage False: {check_message}")
     print(message)
