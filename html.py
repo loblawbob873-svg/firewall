@@ -1,8 +1,6 @@
 from commands import get_cpu_usage
 from commands import get_block_count
-
-# Web Inferface HTML File
-WEB_HTML = "/tmp/python-firewall.html"
+from config import WEB_HTML
 
 def basicHTML(timestamp):   
     html = "<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"

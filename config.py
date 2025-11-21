@@ -27,3 +27,6 @@ SKIP_ALERTS = [
     "/commit",
     "bot",
 ]
+
+# Web Inferface HTML File
+WEB_HTML = "/tmp/python-firewall.html"
