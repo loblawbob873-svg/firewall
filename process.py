@@ -75,6 +75,7 @@ def process_log(timestamp):
         # TIER_ONE Traffic does not count
         for ip, count in ip_counts.items():
             addActivity(f"\t📍 {ip} {count}")
+            print(f"{ip}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"🚨 Blocked: {ip} with a count of {count}"
                 addActivity(message)
