@@ -22,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/html")
+@app.get("/api/html")
 async def main():
         return getHTML()
 
