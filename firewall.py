@@ -19,38 +19,15 @@ from ntfy import send_to_ntfy
 from api import app
 from commands import save_nft_rules
 from cli import buildCLI
-
-# Configuration variables
-LOG_FILE = "/tmp/access.log"
-
-# Block IP's after this many connections
-IP_OCCURRENCE_THRESHOLD = 50
-
-# Scan NGINX log file LOG_FILE this ofter
-TIME_FRAME = 30  # 30 Seconds
+from config import LOG_FILE
+from config import IP_OCCURRENCE_THRESHOLD
+from config import TIME_FRAME
+from config import SUBNET_BLOCKS
+from config import LOCAL_NETWORK
+from config import SKIP_ALERTS
 
 ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
 activity = []
-
-SUBNET_BLOCKS = [
-    "rottenwheel",
-    "47.82.",
-    "47.79.",
-    "43.74.",
-]
-LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5", "107.175.34.92"]
-
-# SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = [
-    "already",
-    "searching",
-    "sleeping",
-    "IP Address Counts",
-    "Amethyst",
-    "rottenwheel",
-    "/commit",
-    "bot",
-]
 
 # Set up logging
 logging.basicConfig(
