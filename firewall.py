@@ -146,7 +146,7 @@ def main():
                                     activity.append(
                                          f"\t🕵️ {ip_address} {shoroten_again}\n"
                                     )
-                            except requests.exceptions.RequestException as err:
+                            except Exception as err:
                                 print(f"Something went wrong: {err}")
 
                 activity.append(f"<br><br>IP Address Count:<br>")
