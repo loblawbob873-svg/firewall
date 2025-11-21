@@ -36,7 +36,7 @@ async def main():
 @app.get("/ip")
 async def main(ip: str, date: str):
     array = []
-    content = basicHTML()
+    content = basicHTML(date)
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
