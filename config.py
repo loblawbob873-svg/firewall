@@ -18,7 +18,16 @@ SUBNET_BLOCKS = [
 LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5", "107.175.34.92"]
 
 # SKIP NTFY Alerts if a word is on this list
-SKIP_ALERTS = []
+SKIP_ALERTS = [
+    "already",
+    "searching",
+    "sleeping",
+    "IP Address Counts",
+    "Amethyst",
+    "rottenwheel",
+    "/commit",
+    "bot",
+]
 
 # NTFY_URL=""
 NTFY_URL = "https://push.poster.place/logs"

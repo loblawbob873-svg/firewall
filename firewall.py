@@ -26,9 +26,9 @@ def main():
 
         process_log(timestamp)
         save_nft_rules()
-        os.system("clear")
- 
+
         if args.print:
+            os.system("clear")
             buildCLI(getActivity(), timestamp)
         else: 
             buildWeb(getActivity(),timestamp)
