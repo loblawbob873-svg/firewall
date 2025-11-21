@@ -5,6 +5,6 @@ def addActivity(data):
     global activity
     activity.append(data)
 
-def getActivity(data):
+def getActivity():
     global activity
-    return data
+    return activity
