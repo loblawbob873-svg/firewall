@@ -126,7 +126,7 @@ def main():
                             except Exception as err:
                                 print(f"Something went wrong: {err}")
 
-            activity.append(f"<br><br>IP Address Count:<br>")
+            activity.append(f"\nIP Address Count:\n")
             # Block IP's over the IP_OCCURRENCE_THRESHOLD
             # TIER_ONE Traffic does not count
             for ip, count in ip_counts.items():
