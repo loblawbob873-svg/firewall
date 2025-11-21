@@ -77,5 +77,5 @@ def process_log(timestamp):
             addActivity(f"\t📍 {ip} {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"🚨 Blocked: {ip} with a count of {count}"
-                #addActivity(message)
+                addActivity(message)
                 block_ip(ip, message)
