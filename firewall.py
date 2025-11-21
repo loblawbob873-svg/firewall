@@ -3,27 +3,11 @@ import os
 import subprocess
 from collections import defaultdict
 import argparse
-import psutil
-import re
-import httpx
-import asyncio
-import json
-from ip_blocks import IP_BLOCKS
-from tier_one import TIER_ONE
-from html import basicHTML
-from html import htmlRELOAD
-from html import buildWeb
-from ntfy import send_to_ntfy
-from api import app
 from commands import save_nft_rules
 from cli import buildCLI
-from config import LOG_FILE
-from config import IP_OCCURRENCE_THRESHOLD
-from config import TIME_FRAME
 from process import process_log
 from db import activity
 from db import getActivity
-from db import ip_counts
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
