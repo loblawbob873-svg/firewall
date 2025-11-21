@@ -20,8 +20,6 @@ from cli import buildCLI
 from config import LOG_FILE
 from config import IP_OCCURRENCE_THRESHOLD
 from config import TIME_FRAME
-from config import SUBNET_BLOCKS
-from config import LOCAL_NETWORK
 from config import SKIP_ALERTS
 from process import process_log
 from db import activity
