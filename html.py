@@ -5,7 +5,6 @@ from db import clearHTML
 from db import getHTML
 
 def basicHTML(timestamp):
-    clearHTML()   
     addHTML("<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }")
     addHTML("body {  background-color: black; color: white;font-family: Arial, sans-serif; text-align: left; display: flex; flex-direction: column; height: 100vh; margin: 0; } header { background-color: black; padding: 20px; text-align: center; } main { display: flex; flex: 1; } aside, article, nav { flex: 1; border: 1px solid #ddd; box-sizing: border-box; } #logs { white-space: pre-wrap; width: 1000px; height: 1000px; }")
     addHTML('@import "compass/css3"; * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; } html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } textarea { background-image: linear-gradient(#F1F1F1 50%, #F9F9F9 50%); background-size: 100% 4rem; border: 1px solid #CCC; width: 100%; height: 400px; line-height: 2rem; margin: 0 auto; padding: 4px 8px; }')
@@ -47,6 +46,7 @@ def buildWeb(activity,timestamp):
         if "\n" in line:
             line.replace("\n", "<br>")
     
+    clearHTML()  
     basicHTML(timestamp)
     htmlRELOAD()
     addHTML("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
