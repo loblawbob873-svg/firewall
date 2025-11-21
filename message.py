@@ -1,12 +1,6 @@
-import logging
 from config import SKIP_ALERTS
 from config import NTFY_URL
 from ntfy import send_to_ntfy
-
-# Set up logging
-logging.basicConfig(
-    filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
-)
 
 def check_message(message):
     Proceed = True
@@ -23,4 +17,3 @@ def send_message(message):
         else:
             print("Not sending to NTFY")
     print(message)
-    logging.info(message)
