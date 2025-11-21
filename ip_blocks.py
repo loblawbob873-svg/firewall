@@ -148,5 +148,6 @@ IP_BLOCKS = [
     "adsbot-google",
     "gptbot",
     "damus",
-    "/archive/"
+    "/archive/",
+    "\x03"
 ]
