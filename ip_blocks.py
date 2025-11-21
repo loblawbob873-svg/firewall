@@ -157,4 +157,5 @@ IP_BLOCKS = [
     "/ads.txt",
     "/api/v3/",
     "/boaform/",
+    "/api/sonicos",
 ]
