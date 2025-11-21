@@ -22,6 +22,9 @@ from config import IP_OCCURRENCE_THRESHOLD
 from config import TIME_FRAME
 from process import process_log
 from db import activity
+from db import activity
+from db import getActivity
+from db import ip_counts
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -42,7 +45,7 @@ def main():
         os.system("clear")
  
         if args.print:
-            buildCLI(activity, timestamp)
+            buildCLI(getActivity(), timestamp)
         else: 
             buildWeb(activity,timestamp)
 

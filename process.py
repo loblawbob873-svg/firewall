@@ -4,6 +4,7 @@ import re
 from config import LOG_FILE
 from config import IP_OCCURRENCE_THRESHOLD
 from db import activity
+from db import addActivity
 from db import ip_counts
 from commands import block_ip
 from tier_one import TIER_ONE
@@ -45,7 +46,7 @@ def process_log(timestamp):
                                 shoroten_again = shorten[:30]
                                 BIG_IP = extract_first_three_parts(ip_address)
                                 message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {shoroten_again}\n"
-                                activity.append(message)
+                                addActivity(message)
                                 block_ip(f"{BIG_IP}.0/24", message)
                                 
                                 # BLocks anything in IP_BLOCKS
@@ -56,23 +57,23 @@ def process_log(timestamp):
                                 shorten = line.lower().split(" ")[6]
                                 shoroten_again = shorten[:30]
                                 message = f"\t🚨 Blocked IP: {ip_address} 👉 {shoroten_again}\n"
-                                activity.append(message)
+                                addActivity(message)
                                 block_ip(ip_address, message)
                             else:
                                 # Prints any Web Traffic that does not fit into any of the filtering arrays above
                                 shorten = line.lower().split(" ")[6]
                                 shoroten_again = shorten[:30]
-                                activity.append(
+                                addActivity(
                                 f"\t🕵️ {ip_address} {shoroten_again}\n")
                         except Exception as err:
                             print(f"Something went wrong: {err}")
 
-        activity.append(f"\nIP Address Count:\n")
+        addActivity(f"\nIP Address Count:\n")
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         for ip, count in ip_counts.items():
-            activity.append(f"\t📍 {ip} {count}")
+            addActivity(f"\t📍 {ip} {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"🚨 Blocked: {ip} with a count of {count}"
-                activity.append(message)
+                addActivity(message)
                 block_ip(ip, message)
