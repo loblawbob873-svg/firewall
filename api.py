@@ -28,7 +28,7 @@ async def main():
     for line in getHTML():
         DATA+= line
     if not DATA:
-        content = (f" {basicHTML} Web Interface not ready yet.")
+        content = (f" {basicHTML()} Web Interface not ready yet.")
         return HTMLResponse(content=content)
     else:
         return HTMLResponse(content=DATA)
@@ -36,8 +36,7 @@ async def main():
 @app.get("/ip")
 async def main(ip: str, date: str):
     array = []
-    content = ""
-    content += basicHTML
+    content += basicHTML()
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
