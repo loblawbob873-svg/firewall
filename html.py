@@ -33,7 +33,7 @@ def buildWeb(activity,timestamp):
         if "📍" in line:
             value = line.split(" ")
             URL_FIX = line.split(" ")
-            line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}&date={timestamp}" style="text-decoration:none"> 🔍</a></p>'
+            line = f'<p>📍 <a style="text-decoration:none" target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a>&nbsp;&nbsp;{value[2]} <a target="_blank" href="/ip?ip={URL_FIX[1]}&date={timestamp}" style="text-decoration:none"> 🔍</a></p>'
             ip_counters.append(line)
         if "🕵️" in line:
             URL = line.split("🕵️")
