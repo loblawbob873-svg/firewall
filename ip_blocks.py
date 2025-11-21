@@ -16,6 +16,7 @@ IP_BLOCKS = [
     "/pulls",
     "/commits/commit/",
     "/blame/commit",
+    "AliyunSecBot",
     "/src/commit/",
     "/raw/commit/",
     "/rss/commit",
