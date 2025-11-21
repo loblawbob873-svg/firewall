@@ -11,6 +11,7 @@ from db import clearDB
 from config import TIME_FRAME
 from html import buildWeb
 from api import app
+from message import send_message
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
@@ -31,7 +32,7 @@ def main():
             os.system("clear")
             buildCLI(getActivity(), timestamp)
         else: 
-            print("Python Firewall running in Daemon Mode")
+            send_message("Python Firewall running in Daemon Mode")
             buildWeb(getActivity(),timestamp)
 
         time.sleep(
