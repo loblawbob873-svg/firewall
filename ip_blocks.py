@@ -156,4 +156,5 @@ IP_BLOCKS = [
     "/humans.txt",
     "/ads.txt",
     "/api/v3/",
+    "/boaform/",
 ]
