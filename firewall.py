@@ -17,7 +17,11 @@ def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
     parser.add_argument("--print", action="store_true", help="Print IP address counts")
     args = parser.parse_args()
-
+    if(args.print):
+        send_message("Python Firewall running in Foreground Mode")
+    else:
+        send_message("Python Firewall running in Daemon Mode")
+        
     while True:
         clearDB()
         now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
@@ -32,7 +36,6 @@ def main():
             os.system("clear")
             buildCLI(getActivity(), timestamp)
         else: 
-            send_message("Python Firewall running in Daemon Mode")
             buildWeb(getActivity(),timestamp)
 
         time.sleep(
