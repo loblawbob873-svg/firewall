@@ -11,7 +11,6 @@ from tier_one import TIER_ONE
 from ip_blocks import IP_BLOCKS
 from config import SUBNET_BLOCKS
 from config import LOCAL_NETWORK
-from db import ip_counts
 
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
@@ -19,6 +18,7 @@ def extract_first_three_parts(ip):
 def process_log(timestamp):
     
     with open(LOG_FILE, "r") as f:
+        ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
         
         for line in f:
             # Increment the occurrence count for the IP address
