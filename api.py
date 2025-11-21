@@ -29,7 +29,7 @@ async def main():
         DATA+= line
         print(f"Debug: {line}")
     if not DATA:
-        content = (f" {basicHTML("")} <br><br><h2>Web Interface not ready yet, please wait.</h2>")
+        content = (f" {basicHTML("")} <br><br><h2>Web Interface not ready yet, please wait.</h2> {DATA}")
         return HTMLResponse(content=content)
     else:
         return HTMLResponse(content=DATA)
