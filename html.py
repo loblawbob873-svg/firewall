@@ -3,6 +3,7 @@ from commands import get_block_count
 from db import addHTML 
 from db import clearHTML
 from db import getHTML
+from db import html
 
 def basicHTML(timestamp):
     HTML = ("<html><head><style> p { text-indent: 50px; } #stats { font-size: 2em; margin-top: 50px; }"
@@ -66,4 +67,4 @@ def buildWeb(activity,timestamp):
         if "📍" in line:
             addHTML(f"<br>{line}</br>")
     addHTML("</nav></main></body></html>")
-  
+    print(html)  
