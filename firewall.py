@@ -126,15 +126,15 @@ def main():
                             except Exception as err:
                                 print(f"Something went wrong: {err}")
 
-                activity.append(f"<br><br>IP Address Count:<br>")
-                # Block IP's over the IP_OCCURRENCE_THRESHOLD
-                # TIER_ONE Traffic does not count
-                for ip, count in ip_counts.items():
-                    activity.append(f"\t📍 {ip} {count}")
-                    if count > IP_OCCURRENCE_THRESHOLD:
-                        message = f"🚨 Blocked: {ip} with a count of {count}"
-                        activity.append(message)
-                        block_ip(ip, message)
+            activity.append(f"<br><br>IP Address Count:<br>")
+            # Block IP's over the IP_OCCURRENCE_THRESHOLD
+            # TIER_ONE Traffic does not count
+            for ip, count in ip_counts.items():
+                activity.append(f"\t📍 {ip} {count}")
+                if count > IP_OCCURRENCE_THRESHOLD:
+                    message = f"🚨 Blocked: {ip} with a count of {count}"
+                    activity.append(message)
+                    block_ip(ip, message)
 
             save_nft_rules()
             os.system("clear")
