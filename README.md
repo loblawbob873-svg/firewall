@@ -40,7 +40,7 @@ python firewall.py --print
 python firewall.py
 ```
 
-A web interface will automatically start on ```http://0.0.0.0:6767```
+### A web interface will automatically start on ```http://0.0.0.0:6767```
 
 
 ### NTFY Notifications for Mobile or Desktop
