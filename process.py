@@ -5,9 +5,7 @@ from config import LOG_FILE
 from config import IP_OCCURRENCE_THRESHOLD
 from db import activity
 from db import addActivity
-from db import getIPCOUNTS
 from db import clearIPCOUNTS
-from db import addIPCOUNTS
 from commands import block_ip
 from tier_one import TIER_ONE
 from ip_blocks import IP_BLOCKS
