@@ -2,6 +2,7 @@ import json
 from config import LOG_FILE
 from db import activity
 from db import ip_counts
+from commands import block_ip
 
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
