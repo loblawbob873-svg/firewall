@@ -35,15 +35,15 @@ pip install requests logging psutil httpx fastapi asyncio uvicorn
 python firewall.py --print
 ```
 
+### Web Interface for Reporting
+```
+./venv/bin/uvicorn firewall:app  --reload --port 8000 --host 0.0.0.0
+```
+
 ### NTFY Notifications for Mobile or Desktop
 Modify ```config.py``` and change this to your desired NTFY server/Topic:
 ```
 NTFY_URL = "https://push.poster.place/logs"
-```
-
-### Web Interface for Reporting
-```
-./venv/bin/uvicorn firewall:app  --reload --port 8000 --host 0.0.0.0
 ```
 
 ### Sample NFT firewall
