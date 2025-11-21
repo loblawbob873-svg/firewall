@@ -31,6 +31,7 @@ SKIP_ALERTS = [
 ]
 
 # NTFY_URL=""
+NTFY_URL = ""
 # NTFY_URL = "https://push.poster.place/logs"
 
 # Web Inferface HTML File
