@@ -20,6 +20,7 @@ def process_log(timestamp):
     
     with open(LOG_FILE, "r") as f:
         clearIPCOUNTS()
+        clearDB()
         for line in f:
             # Increment the occurrence count for the IP address
             # Excludes TIER_ONE Traffic
