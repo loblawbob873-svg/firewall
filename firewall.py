@@ -22,7 +22,6 @@ from config import IP_OCCURRENCE_THRESHOLD
 from config import TIME_FRAME
 from process import process_log
 from db import activity
-from db import activity
 from db import getActivity
 from db import ip_counts
 
@@ -32,8 +31,6 @@ def main():
     args = parser.parse_args()
 
     while True:
-        # Get the current time and the time one minute ago
-        ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
         activity = []
         now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
         timestamp = time.strftime(
