@@ -22,5 +22,5 @@ def send_message(message):
             send_to_ntfy(message)
         else:
             print("Not sending to NTFY")
-        print(message)
-        logging.info(message)
+    print(message)
+    logging.info(message)
