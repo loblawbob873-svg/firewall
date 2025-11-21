@@ -30,3 +30,6 @@ SKIP_ALERTS = [
 
 # Web Inferface HTML File
 WEB_HTML = "/tmp/python-firewall.html"
+
+# Save the NFT rules 
+NFT_SAVED_RULES = "/etc/firewall.nft"
