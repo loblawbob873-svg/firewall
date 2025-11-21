@@ -27,6 +27,7 @@ async def main():
     DATA = ""
     for line in getHTML():
         DATA+= line
+        print(f"Debug: {line}")
     if not DATA:
         content = (f" {basicHTML("")} <br><br><h2>Web Interface not ready yet, please wait.</h2>")
         return HTMLResponse(content=content)
