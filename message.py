@@ -5,8 +5,8 @@ from ntfy import send_to_ntfy
 def check_message(message):
     Proceed = True
     for word in SKIP_ALERTS:
-        if word.lower() in message.lower():
-            print  (f"Debug: {word.lower} {message.lower}")
+        if word in message:
+            print  (f"Debug: {word} {message}")
             Proceed = False
 
     return Proceed
