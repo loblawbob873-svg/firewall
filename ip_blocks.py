@@ -154,4 +154,5 @@ IP_BLOCKS = [
     "/security.txt",
     "/humans.txt",
     "/ads.txt",
+    "/api/v3/",
 ]
