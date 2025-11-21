@@ -20,9 +20,8 @@ def process_log(timestamp):
     
     with open(LOG_FILE, "r") as f:
         for line in f:
-        # Increment the occurrence count for the IP address
-        # Excludes TIER_ONE Traffic
-        
+            # Increment the occurrence count for the IP address
+            # Excludes TIER_ONE Traffic
             if  timestamp.lower() in line.lower() and not any(
                 term.lower() in line.lower() for term in TIER_ONE
             ):
@@ -68,12 +67,12 @@ def process_log(timestamp):
                         except Exception as err:
                             print(f"Something went wrong: {err}")
 
-        addActivity(f"\nIP Address Count:\n")
+        a4ddActivity(f"\nIP Address Count:\n")
         # Block IP's over the IP_OCCURRENCE_THRESHOLD
         # TIER_ONE Traffic does not count
         for ip, count in ip_counts.items():
             addActivity(f"\t📍 {ip} {count}")
             if count > IP_OCCURRENCE_THRESHOLD:
                 message = f"🚨 Blocked: {ip} with a count of {count}"
-                addActivity(message)
+                #addActivity(message)
                 block_ip(ip, message)
