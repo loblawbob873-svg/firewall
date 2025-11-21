@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from html import WEB_HTML
+from html import basicHTML
 from ai import generate_reply
 # ------------------------------------------------------------------
 # FastAPI app
