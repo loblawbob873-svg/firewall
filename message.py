@@ -1,5 +1,5 @@
 from ntfy import send_to_ntfy
-from ntfy import NTFY_URL
+from config import NTFY_URL
 import logging
 from config import SKIP_ALERTS
 
