@@ -31,6 +31,7 @@ def main():
             os.system("clear")
             buildCLI(getActivity(), timestamp)
         else: 
+            print("Python Firewall running in Daemon Mode")
             buildWeb(getActivity(),timestamp)
 
         time.sleep(
