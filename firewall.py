@@ -9,6 +9,7 @@ from process import process_log
 from db import activity
 from db import getActivity
 from db import clearDB
+from db import clearIPCOUNTS
 from config import TIME_FRAME
 from html import buildWeb
 from api import app
@@ -26,6 +27,7 @@ class BackgroundTasks(threading.Thread):
         
         while True:
             clearDB()
+            clearIPCOUNTS()
             now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
             timestamp = time.strftime(
                 "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
