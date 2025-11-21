@@ -150,5 +150,8 @@ IP_BLOCKS = [
     "damus",
     "/archive/",
     "\\x03",
-    "\\x01"
+    "\\x01",
+    "/security.txt",
+    "/humans.txt",
+    "/ads.txt",
 ]
