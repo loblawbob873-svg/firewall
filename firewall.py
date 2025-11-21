@@ -9,6 +9,7 @@ from process import process_log
 from db import activity
 from db import getActivity
 from config import TIME_FRAME
+from html import buildWeb
 
 def main():
     parser = argparse.ArgumentParser(description="Firewall Script")
