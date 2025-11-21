@@ -8,3 +8,7 @@ def addActivity(data):
 def getActivity():
     global activity
     return activity
+
+def clearDB():
+    global activity
+    activity = []
