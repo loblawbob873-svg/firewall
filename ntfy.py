@@ -2,8 +2,7 @@
 import requests
 import asyncio
 import time
-# NTFY_URL=""
-NTFY_URL = "https://push.poster.place/logs"
+from config import NTFY_URL
 
 def send_to_ntfy(message):
     time.sleep(10)
