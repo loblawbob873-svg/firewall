@@ -6,7 +6,6 @@ from html import basicHTML
 from ai import generate_reply
 from config import LOG_FILE
 from db import getHTML
-from html import test
 # ------------------------------------------------------------------
 # FastAPI app
 # ------------------------------------------------------------------
