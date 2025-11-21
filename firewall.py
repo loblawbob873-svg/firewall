@@ -18,9 +18,9 @@ def main():
     parser.add_argument("--print", action="store_true", help="Print IP address counts")
     args = parser.parse_args()
     if(args.print):
-        send_message("Python Firewall running in Foreground Mode")
+        send_message("[Python Firewall running in Foreground Mode]")
     else:
-        send_message("Python Firewall running in Daemon Mode")
+        send_message("[Python Firewall running in Daemon Mode]")
         
     while True:
         clearDB()
