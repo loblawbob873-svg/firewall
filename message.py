@@ -8,11 +8,6 @@ logging.basicConfig(
     filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
 )
 
-# Set up logging
-logging.basicConfig(
-    filename="firewall.log", level=logging.INFO, format="%(asctime)s - %(message)s"
-)
-
 def check_message(message):
     Proceed = True
     for word in SKIP_ALERTS:
