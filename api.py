@@ -6,6 +6,7 @@ from html import basicHTML
 from ai import generate_reply
 from config import LOG_FILE
 from db import getHTML
+from html import test
 # ------------------------------------------------------------------
 # FastAPI app
 # ------------------------------------------------------------------
@@ -36,7 +37,7 @@ async def main():
 async def main(ip: str, date: str):
     array = []
     content = ""
-    content += basicHTML(date)
+    content += test
     try:
         with open(f"{LOG_FILE}", "r") as f:
             for line in f:
