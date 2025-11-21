@@ -2,10 +2,10 @@ from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
-from html import WEB_HTML
 from html import basicHTML
 from ai import generate_reply
 from config import LOG_FILE
+from db import getHTML
 # ------------------------------------------------------------------
 # FastAPI app
 # ------------------------------------------------------------------
@@ -25,9 +25,12 @@ app.add_middleware(
 @app.get("/")
 async def main():
     DATA = ""
-    with open(f"{WEB_HTML}", "r") as f:
-        content = f.read()
-    return HTMLResponse(content=content)
+    for line in getHTML():
+        DATA+= line
+    if not DATA:
+        return HTMLResponse(content="Web Interface not ready yet")
+    else:
+        return HTMLResponse(content=DATA)
 
 @app.get("/ip")
 async def main(ip: str, date: str):

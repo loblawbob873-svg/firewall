@@ -35,8 +35,5 @@ SKIP_ALERTS = [
 NTFY_URL = ""
 #NTFY_URL = "https://push.poster.place/logs"
 
-# Web Inferface HTML File
-WEB_HTML = "/tmp/python-firewall.html"
-
 # Save the NFT rules
 NFT_SAVED_RULES = "/etc/firewall.nft"
