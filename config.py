@@ -32,8 +32,8 @@ SKIP_ALERTS = [
 ]
 
 #OPTIONALNTFY URL for Push Notificiations
-NTFY_URL = ""
-#NTFY_URL = "https://push.poster.place/logs"
+#NTFY_URL = ""
+NTFY_URL = "https://push.poster.place/logs"
 
 # Web Inferface HTML File
 WEB_HTML = "/tmp/python-firewall.html"

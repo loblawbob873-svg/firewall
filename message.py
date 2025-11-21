@@ -16,4 +16,6 @@ def send_message(message):
             send_to_ntfy(message)
         else:
             print("Not sending to NTFY")
+    else:
+        print(f"CHeck MEssage False: {check_message}")
     print(message)
