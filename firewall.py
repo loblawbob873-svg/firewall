@@ -301,6 +301,7 @@ IP_BLOCKS = [
     "adsbot-google",
     "gptbot",
     "damus",
+    "/archive/"
 ]
 
 SUBNET_BLOCKS = [
