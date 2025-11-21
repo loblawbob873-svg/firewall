@@ -52,13 +52,6 @@ def check_message(message):
 
     return Proceed
 
-
-def messaging(message):
-    if check_message(message):
-        if NTFY_URL:
-            send_to_ntfy(message)
-
-
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
 

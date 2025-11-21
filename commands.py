@@ -1,6 +1,6 @@
 import psutil
 import subprocess
-from firewall import messaging
+from message import send_message
 # Where to save the firewall rules
 NFT_SAVED_RULES = "/etc/firewall.nft"
 
@@ -29,4 +29,4 @@ def block_ip(ip, message):
             f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
         )
         os.system(command)
-        #messaging(f"{message}")
+        send_message(f"{message}")
