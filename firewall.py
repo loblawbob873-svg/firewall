@@ -38,7 +38,7 @@ class BackgroundTasks(threading.Thread):
                 os.system("clear")
                 buildCLI(getActivity(), timestamp)
             else: 
-                buildWeb(getActivity(),timestamp)
+                buildWeb(getActivity(), timestamp)
 
             time.sleep(
                 TIME_FRAME
