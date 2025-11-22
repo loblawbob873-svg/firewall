@@ -15,6 +15,10 @@ SUBNET_BLOCKS = [
     "43.74.",
 ]
 
+# Front Page Title Redirect Path 
+REDIRECT='/'
+#REDIRECT='/status'
+
 LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5", "107.175.34.92"]
 
 # SKIP NTFY Alerts if a word is on this list
