@@ -9,6 +9,9 @@
 * Send Alerts to NTFY
 * Web Interface for Reporting
 
+## License
+GPL v3
+
 ## Requirements
 * Python
 * NFT Firewall
