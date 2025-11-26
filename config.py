@@ -1,4 +1,9 @@
 # Configuration variables
+LISTEN_ADDRESS = "0.0.0.0"
+#LISTEN_ADDRESS =  "192.168.7.1"
+
+LISTEN_PORT = "6767"
+
 LOG_FILE = "/tmp/access.log"
 
 # Block IP's after this many connections

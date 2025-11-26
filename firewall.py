@@ -25,6 +25,8 @@ from db import activity
 from db import getActivity
 from db import clearDB
 from config import TIME_FRAME
+from config import LISTEN_ADDRESS
+from config import LISTEN_PORT
 from html import buildWeb
 from api import app
 from message import send_message
@@ -64,5 +66,5 @@ if __name__ == "__main__":
     import uvicorn
     t = BackgroundTasks()
     t.start()
-    uvicorn.run(app, host="0.0.0.0", port=6767)
+    uvicorn.run(app, host=LISTEN_ADDRESS, port=LISTEN_PORT)
     
