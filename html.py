@@ -18,7 +18,8 @@ def basicHTML(timestamp):
     return HTML
 
 def htmlRELOAD():
-    addHTML("<script>\nwindow.setTimeout( function() {window.location.reload();}, 60000);</script>")
+    code = "<script>\nwindow.setTimeout( function() {window.location.reload();}, 5000);</script>"
+    return code
 
 def buildWeb(activity,timestamp):
     blocked_array = []
@@ -52,7 +53,7 @@ def buildWeb(activity,timestamp):
     
     clearHTML() 
     addHTML(basicHTML(timestamp))
-    htmlRELOAD()
+    addHTML(htmlRELOAD())
     addHTML("<main><aside><h2><b>🚨 &nbsp; Blocked Traffic</b></h1><br></h2>")
     for line in blocked_array:
           if "🚨" in line:

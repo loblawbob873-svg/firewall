@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from html import basicHTML
+from html import htmlRELOAD
 from ai import generate_reply
 from config import LOG_FILE
 from db import getHTML
@@ -28,7 +29,7 @@ async def main():
     for line in getHTML():
         DATA+= line
     if not DATA:
-        content = (f" {basicHTML("")} <br><br><h2>Web Interface not ready yet, please wait.</h2>")
+        content = (f" {basicHTML("")} {htmlRELOAD()} <br><br><h2>Web Interface not ready yet, please wait.</h2>")
         return HTMLResponse(content=content)
     else:
         return HTMLResponse(content=DATA)
