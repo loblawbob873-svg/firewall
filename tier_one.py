@@ -19,6 +19,7 @@ TIER_ONE = {
     ".json",
     ".html",
     ".web",
+    "sw.js",
     "/notes",
     "/api/ap",
     "/api/users",
