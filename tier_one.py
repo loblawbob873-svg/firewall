@@ -90,6 +90,8 @@ TIER_ONE = {
     "/files",
     "/graph",
     "/api/v0",
+    "/twemoji", 
+    "/proxy",
     "/ocs",
     "/app",
     "/app/list",
