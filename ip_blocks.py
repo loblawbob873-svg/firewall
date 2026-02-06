@@ -1,4 +1,9 @@
 IP_BLOCKS = [
+    "/kubernetes.yml",
+    "/config/database.ym",
+    "/.secrets",
+    "/.api_keys",
+    "rottenwheel",
     "dataaccessd",
     "/source.zip",
     "/backup.zip",
