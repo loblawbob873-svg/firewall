@@ -42,6 +42,7 @@ TIER_ONE = {
     "/api/v1/polls/",
     "/api/v1/tools",
     "/api/v1/directory",
+    "/streaming",
     "/api/v1/streaming",
     "/api/v1/profile",
     "/api/v1/auths",
