@@ -10,14 +10,10 @@ LOG_FILE = "/tmp/access.log"
 IP_OCCURRENCE_THRESHOLD = 50
 
 # Scan NGINX log file LOG_FILE this ofter
-TIME_FRAME = 30  # 30 Seconds
+TIME_FRAME = 10 # 30 Seconds
 
 # Automatically blocks these
 SUBNET_BLOCKS = [
-    "rottenwheel",
-    "47.82.",
-    "47.79.",
-    "43.74.",
 ]
 
 # Front Page Title Redirect Path 
