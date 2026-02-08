@@ -1,3 +1,4 @@
+import re
 import psutil
 import subprocess
 import os
@@ -21,9 +22,21 @@ def save_nft_rules():
 
 
 def get_block_count():
-    command = f"/usr/sbin/nft list ruleset | grep -i drop | wc -l"
-    data = subprocess.check_output(command, shell=True, text=True)
-    return data
+    """Count elements in the blackhole set."""
+    try:
+        output = subprocess.check_output(
+            ["/usr/sbin/nft", "list", "set", "ip", "filter", "blackhole"],
+            stderr=subprocess.DEVNULL,
+            text=True,
+        )
+        m = re.search(r"elements\s*=\s*\{\s*([^}]*)\}", output)
+        if m:
+            elem_str = m.group(1).strip()
+            count = len([e.strip() for e in elem_str.split(",") if e.strip()]) if elem_str else 0
+            return str(count)
+        return "0"
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "0"
 
 def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
