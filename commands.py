@@ -28,8 +28,7 @@ def get_block_count():
 def block_ip(ip, message):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
-        command = (
-            f"/usr/sbin/nft insert rule ip filter input position 0 ip saddr {ip} drop"
-        )
+        # Add to blackhole set only (single IPs and CIDR; blackhole set needs "flags interval" for CIDR)
+        command = f"/usr/sbin/nft add element ip filter blackhole {{ {ip} }}"
         os.system(command)
         send_message(f"{message}")
