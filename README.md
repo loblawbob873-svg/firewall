@@ -54,7 +54,7 @@ NTFY_URL = "https://push.poster.place/logs"
 
 ### Sample NFT firewall
 
-Save it as ```/etc/firewall.nft``` and load it with ```nft -f /etc/firewall.nft```
+Save it as ```/etc/firewall.nft``` and load it with ```nft -f /etc/firewall.nft```. The ```blackhole``` set is required: the app adds all blocked IPs and CIDRs (e.g. single IPs and subnets like 1.2.3.0/24) to this set. Use ```flags dynamic, interval``` so the set accepts both addresses and prefixes.
 ```
 table ip filter {
 	set http_ratelimit {
@@ -65,8 +65,14 @@ table ip filter {
 		elements = { }
 	}
 
+	set blackhole {
+		type ipv4_addr
+		flags interval
+	}
+
 	chain input {
 		type filter hook input priority filter; policy drop;
+		ip saddr @blackhole drop
 		udp sport 68 udp dport 67 ip saddr 0.0.0.0 ip daddr 255.255.255.255 accept
 		ct state new tcp dport 443 update @http_ratelimit { ip saddr limit rate 50/second burst 1 packets } accept
 		ct state new tcp dport 80 update @http_ratelimit { ip saddr limit rate 25/second burst 1 packets } accept
