@@ -1,5 +1,5 @@
 IP_BLOCKS = [
-    "/verita84/aikey/compare/",
+    "/compare/",
     "/kubernetes.yml",
     "/config/database.ym",
     "/.secrets",
