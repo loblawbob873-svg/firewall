@@ -12,6 +12,8 @@ IP_BLOCKS = [
     "/sql/db.sq",
     "\\x00\\x00",
     "/issues?assignee",
+    "/issues/",
+    "/cgi-bin/",
     "/.git/config",
     "wp-content",
     "wp-includes",
