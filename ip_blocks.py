@@ -1,4 +1,6 @@
 IP_BLOCKS = [
+    "wp-admin",
+    "/.trash",
     "/compare/",
     "/kubernetes.yml",
     "/config/database.ym",
