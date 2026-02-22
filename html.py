@@ -18,7 +18,7 @@ def basicHTML(timestamp):
     return HTML
 
 def htmlRELOAD():
-    code = "<script>\nwindow.setTimeout( function() {window.location.reload();}, 5000);</script>"
+    code = "<script>\nwindow.setTimeout( function() {window.location.reload();}, 40000);</script>"
     return code
 
 def buildWeb(activity,timestamp):
