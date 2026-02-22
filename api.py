@@ -29,7 +29,7 @@ async def main():
     for line in getHTML():
         DATA+= line
     if not DATA:
-        content = (f" {basicHTML("")} {htmlRELOAD()} <br><br><h2>Web Interface not ready yet, please wait.</h2>")
+        content = (f" {basicHTML("")} {htmlRELOAD()} <br><br><h2>Please wait...........</h2>")
         return HTMLResponse(content=content)
     else:
         return HTMLResponse(content=DATA)
