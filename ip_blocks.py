@@ -1,4 +1,5 @@
 IP_BLOCKS = [
+    "/.well-known/security.txt",
     "wp-admin",
     "/.trash",
     "/compare/",
