@@ -1,4 +1,9 @@
 IP_BLOCKS = [
+    ".env",
+    "config.json",
+    "wp-admin",
+    ".aws",
+    "/.trash",
     "/.well-known/security.txt",
     "wp-admin",
     "/.trash",
