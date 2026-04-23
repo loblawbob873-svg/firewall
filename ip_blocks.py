@@ -1,4 +1,5 @@
 IP_BLOCKS = [
+    "visionheight.com",
     ".env",
     "config.json",
     "wp-admin",
