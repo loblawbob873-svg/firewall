@@ -38,20 +38,15 @@ def get_block_count():
     except (subprocess.CalledProcessError, FileNotFoundError):
         return "0"
 
-def block_ip(ip, message):
+def block_ip(ip, message, country=None):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
-        # Add to blackhole set only (single IPs and CIDR; blackhole set needs "flags interval" for CIDR)
-        command = f"/usr/sbin/nft add element ip filter blackhole {{ {ip} }}"
-        os.system(command)
-        send_message(f"{message}")
+        if country is None:
+            command = f"/usr/sbin/nft add element ip filter blackhole {{ {ip} }}"
+        else:
+            country_code = os.path.basename(country).split('-')[0]
+            command = f"/usr/sbin/nft add element ip filter {country_code} {{ {ip} }}"
 
-def block_country_ip(ip, message, country):
-    nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
-    if ip not in nft_output:
-        # Extract country code from filename (e.g., "in-aggregated.zone" -> "in")
-        country_code = os.path.basename(country).split('-')[0]
-        command = f"/usr/sbin/nft add element ip filter {country_code} {{ {ip} }}"
         os.system(command)
         send_message(f"{message}")
 
@@ -61,4 +56,4 @@ def block_country():
             for line in file:
                 ip = line.strip()
                 if ip:
-                    block_country_ip(ip, f"{ip}", filename)
+                    block_ip(ip, f"{ip}", filename)
