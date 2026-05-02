@@ -119,4 +119,11 @@ TIER_ONE = {
     "/dav/spaces",
     "/api/v0/settings/assignments-list",
     "/api/chat/completions",
+    "/dashboard",
+    "/cart",
+    "/admin",
+    "/inventory",
+    "/api",
+    "/status",
+    "/financials"
 }

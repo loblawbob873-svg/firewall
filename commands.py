@@ -4,9 +4,9 @@ import subprocess
 import os
 from message import send_message
 from config import NFT_SAVED_RULES
+from config import COUNTRY_BLOCKLIST
 
-# Where to save the firewall rules
-NFT_SAVED_RULES = "/etc/firewall.nft"
+# Where to save the firewall rules NFT_SAVED_RULES = "/etc/firewall.nft"
 
 def get_cpu_usage():
     cpu_percent = psutil.cpu_percent(interval=1)
@@ -45,3 +45,18 @@ def block_ip(ip, message):
         command = f"/usr/sbin/nft add element ip filter blackhole {{ {ip} }}"
         os.system(command)
         send_message(f"{message}")
+
+def block_country_ip(ip, message):
+    nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
+    if ip not in nft_output:
+        command = f"/usr/sbin/nft add element ip filter country {{ {ip} }}"
+        os.system(command)
+        send_message(f"{message}")
+
+def block_country():
+    for filename in COUNTRY_BLOCKLIST:
+        with open(filename, 'r') as file:
+            for line in file:
+                ip = line.strip()
+                if ip:
+                    block_country_ip(ip, f"{ip}")
