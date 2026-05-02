@@ -33,43 +33,51 @@ from html import buildWeb
 from api import app
 from message import send_message
 
+class CountryBlock(threading.Thread):
+    def run(self):
+        if COUNTRY_BLOCKLIST:
+            block_country()
+
 class BackgroundTasks(threading.Thread):
-    def run (self,*args,**kwargs):
-        parser = argparse.ArgumentParser(description="Firewall Script")
-        parser.add_argument("--print", action="store_true", help="Print IP address counts")
-        args = parser.parse_args()
-        if(args.print):
-            send_message("[Python Firewall running in Foreground Mode]")
-        else:
-            send_message("[Python Firewall running in Daemon Mode]")
+    def run(self):
+        try:
+            parser = argparse.ArgumentParser(description="Firewall Script")
+            parser.add_argument("--print", action="store_true", help="Print IP address counts")
+            args = parser.parse_args()
+            if(args.print):
+                send_message("[Python Firewall running in Foreground Mode]")
+            else:
+                send_message("[Python Firewall running in Daemon Mode]")
 
-        while True:
-            clearDB()
-            now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
-            timestamp = time.strftime(
-                "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
-            )
+            while True:
+                clearDB()
+                now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
+                timestamp = time.strftime(
+                    "%d/%b/%Y:%H:%M", time.localtime(time.time() - TIME_FRAME)
+                )
 
-            process_log(timestamp)
-            #save_nft_rules()
+                process_log(timestamp)
+                #save_nft_rules()
 
-            if args.print:
-                os.system("clear")
-                buildCLI(getActivity(), timestamp)
-            else: 
-                buildWeb(getActivity(), timestamp)
+                if args.print:
+                    os.system("clear")
+                    buildCLI(getActivity(), timestamp)
+                else: 
+                    buildWeb(getActivity(), timestamp)
 
-            time.sleep(
-                TIME_FRAME
-            )  # Wait for the specified time frame before processing again
+                time.sleep(
+                    TIME_FRAME
+                )  # Wait for the specified time frame before processing again
+        except Exception as e:
+            send_message(f"[BackgroundTasks error: {e}]")
+            raise
 
 
 if __name__ == "__main__":
     import uvicorn
-    if COUNTRY_BLOCKLIST:
-        block_country()
-
     t = BackgroundTasks()
     t.start()
+    b = CountryBlock()
+    b.start()
     uvicorn.run(app, host=LISTEN_ADDRESS, port=LISTEN_PORT)
     
