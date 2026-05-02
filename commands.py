@@ -46,10 +46,12 @@ def block_ip(ip, message):
         os.system(command)
         send_message(f"{message}")
 
-def block_country_ip(ip, message):
+def block_country_ip(ip, message, country):
     nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
     if ip not in nft_output:
-        command = f"/usr/sbin/nft add element ip filter country {{ {ip} }}"
+        # Extract country code from filename (e.g., "in-aggregated.zone" -> "in")
+        country_code = os.path.basename(country).split('-')[0]
+        command = f"/usr/sbin/nft add element ip filter {country_code} {{ {ip} }}"
         os.system(command)
         send_message(f"{message}")
 
@@ -59,4 +61,4 @@ def block_country():
             for line in file:
                 ip = line.strip()
                 if ip:
-                    block_country_ip(ip, f"{ip}")
+                    block_country_ip(ip, f"{ip}", filename)

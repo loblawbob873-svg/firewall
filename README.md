@@ -69,10 +69,27 @@ table ip filter {
 		type ipv4_addr
 		flags interval
 	}
+    set il {
+        type ipv4_addr
+        flags interval
+    }
+    set in {
+        type ipv4_addr
+        flags interval
+    }
+    set cn {
+        type ipv4_addr
+        flags interval
+    }
+
 
 	chain input {
 		type filter hook input priority filter; policy drop;
 		ip saddr @blackhole drop
+        ip saddr @il log prefix "Blocked-Israel" drop
+        ip saddr @cn log prefix "Blocked-China:" drop
+        ip saddr @in log prefix "Blocked-India:" drop
+
 		udp sport 68 udp dport 67 ip saddr 0.0.0.0 ip daddr 255.255.255.255 accept
 		ct state new tcp dport 443 update @http_ratelimit { ip saddr limit rate 50/second burst 1 packets } accept
 		ct state new tcp dport 80 update @http_ratelimit { ip saddr limit rate 25/second burst 1 packets } accept
