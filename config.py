@@ -50,6 +50,6 @@ COUNTRY_BLOCKLIST = [
         os.path.join(BASE_DIR, "il-aggregated.zone"),
         os.path.join(BASE_DIR, "in-aggregated.zone"),
         os.path.join(BASE_DIR, "cn-aggregated.zone"),
-        os.path.join(BASE_DIR, "sn-aggregated.zone"),
-        os.path.join(BASE_DIR, "id-aggregated.zone"),
+        os.path.join(BASE_DIR, "sg-aggregated.zone"),
+        os.path.join(BASE_DIR, "id-aggregated.zone")
 ]
