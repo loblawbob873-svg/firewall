@@ -10,7 +10,7 @@ LOG_FILE = "/tmp/access.log"
 IP_OCCURRENCE_THRESHOLD = 50
 
 # Scan NGINX log file LOG_FILE this ofter
-TIME_FRAME = 10 # 30 Seconds
+TIME_FRAME = 30 # 30 Seconds
 
 # Automatically blocks these
 SUBNET_BLOCKS = [
@@ -20,7 +20,7 @@ SUBNET_BLOCKS = [
 REDIRECT='/'
 #REDIRECT='/status'
 
-LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5", "107.175.34.92"]
+LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5", "107.175.34.92", "69.145.1.133"]
 
 # SKIP NTFY Alerts if a word is on this list
 SKIP_ALERTS = [
@@ -42,3 +42,12 @@ NTFY_URL = ""
 
 # Save the NFT rules
 NFT_SAVED_RULES = "/etc/firewall.nft"
+
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+COUNTRY_BLOCKLIST = [
+        os.path.join(BASE_DIR, "il-aggregated.zone"),
+        os.path.join(BASE_DIR, "in-aggregated.zone"),
+        os.path.join(BASE_DIR, "cn-aggregated.zone")
+]

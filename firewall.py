@@ -19,6 +19,7 @@ import subprocess
 import argparse
 import threading
 from commands import save_nft_rules
+from commands import block_country
 from cli import buildCLI
 from process import process_log
 from db import activity
@@ -27,6 +28,7 @@ from db import clearDB
 from config import TIME_FRAME
 from config import LISTEN_ADDRESS
 from config import LISTEN_PORT
+from config import COUNTRY_BLOCKLIST
 from html import buildWeb
 from api import app
 from message import send_message
@@ -40,7 +42,7 @@ class BackgroundTasks(threading.Thread):
             send_message("[Python Firewall running in Foreground Mode]")
         else:
             send_message("[Python Firewall running in Daemon Mode]")
-        
+
         while True:
             clearDB()
             now = time.strftime("%d/%b/%Y:%H:%M:%S", time.localtime(time.time()))
@@ -49,7 +51,7 @@ class BackgroundTasks(threading.Thread):
             )
 
             process_log(timestamp)
-            save_nft_rules()
+            #save_nft_rules()
 
             if args.print:
                 os.system("clear")
@@ -64,6 +66,9 @@ class BackgroundTasks(threading.Thread):
 
 if __name__ == "__main__":
     import uvicorn
+    if COUNTRY_BLOCKLIST:
+        block_country()
+
     t = BackgroundTasks()
     t.start()
     uvicorn.run(app, host=LISTEN_ADDRESS, port=LISTEN_PORT)
