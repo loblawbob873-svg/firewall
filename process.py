@@ -1,9 +1,9 @@
-import json
 import time
 import re
-from config import LOG_FILE
+import subprocess
+from config import LOG_FILE, USE_JOURNALD, JOURNALD_UNIT
 from config import IP_OCCURRENCE_THRESHOLD
-from db import activity
+from config import TIME_FRAME
 from db import addActivity
 from commands import block_ip
 from tier_one import TIER_ONE
@@ -14,65 +14,57 @@ from config import LOCAL_NETWORK
 def extract_first_three_parts(ip):
     return ".".join(ip.split(".")[:3])
 
+def extract_url(line):
+    m = re.search(r'"[A-Z]+\s+(\S+)', line)
+    return m.group(1)[:30] if m else "?"
+
+def get_log_lines(timestamp):
+    if USE_JOURNALD:
+        since = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time() - TIME_FRAME))
+        result = subprocess.run(
+            ["journalctl", "-u", JOURNALD_UNIT, f"--since={since}", "--no-pager", "-o", "cat"],
+            capture_output=True, text=True
+        )
+        if result.returncode != 0:
+            print(f"journalctl error: {result.stderr.strip()}")
+        return result.stdout.splitlines()
+    else:
+        with open(LOG_FILE, "r") as f:
+            return [line for line in f if timestamp.lower() in line.lower()]
+
 def process_log(timestamp):
-    
-    with open(LOG_FILE, "r") as f:
-        ip_counts = {}  # Dictionary to store IP addresses and their occurrence counts
-        
-        for line in f:
-            # Increment the occurrence count for the IP address
-            # Excludes TIER_ONE Traffic
-            if  timestamp.lower() in line.lower() and not any(
-                term.lower() in line.lower() for term in TIER_ONE
-            ):
-                ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
-                if ip_match:
-                    # Don't Count the Local Network Against you
-                    if not any(
-                        lan.lower() in line.lower() for lan in LOCAL_NETWORK
-                    ):
+    lines = get_log_lines(timestamp)
 
-                        ip_address = ip_match.group()
-                        ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
-                        
-                        try:
-                            # Blocks anything in SUBNET_BLOCKS
-                            if any(
-                            word.lower() in line.lower()
-                            for word in SUBNET_BLOCKS
-                            ):
-                                shorten = line.lower().split(" ")[6]
-                                shoroten_again = shorten[:30]
-                                BIG_IP = extract_first_three_parts(ip_address)
-                                message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {shoroten_again}\n"
-                                addActivity(message)
-                                block_ip(f"{BIG_IP}.0/24", message)
-                                
-                                # BLocks anything in IP_BLOCKS
-                            elif any(
-                                word.lower() in line.lower() for word in IP_BLOCKS
-                            ):
-                               
-                                shorten = line.lower().split(" ")[6]
-                                shoroten_again = shorten[:30]
-                                message = f"\t🚨 Blocked IP: {ip_address} 👉 {shoroten_again}\n"
-                                addActivity(message)
-                                block_ip(ip_address, message)
-                            else:
-                                # Prints any Web Traffic that does not fit into any of the filtering arrays above
-                                shorten = line.lower().split(" ")[6]
-                                shoroten_again = shorten[:30]
-                                addActivity(
-                                f"\t🕵️ {ip_address} {shoroten_again}\n")
-                        except Exception as err:
-                            print(f"Something went wrong: {err}")
+    ip_counts = {}
 
-        addActivity(f"\nIP Address Count:\n")
-        # Block IP's over the IP_OCCURRENCE_THRESHOLD
-        # TIER_ONE Traffic does not count
-        for ip, count in ip_counts.items():
-            addActivity(f"\t📍 {ip} {count}")
-            if count > IP_OCCURRENCE_THRESHOLD:
-                message = f"🚨 Blocked: {ip} with a count of {count}"
-                addActivity(message)
-                block_ip(ip, message)
+    for line in lines:
+        if not any(term.lower() in line.lower() for term in TIER_ONE):
+            ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
+            if ip_match:
+                if not any(lan.lower() in line.lower() for lan in LOCAL_NETWORK):
+                    ip_address = ip_match.group()
+                    ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
+
+                    try:
+                        url = extract_url(line)
+                        if any(word.lower() in line.lower() for word in SUBNET_BLOCKS):
+                            BIG_IP = extract_first_three_parts(ip_address)
+                            message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {url}\n"
+                            addActivity(message)
+                            block_ip(f"{BIG_IP}.0/24", message)
+                        elif any(word.lower() in line.lower() for word in IP_BLOCKS):
+                            message = f"\t🚨 Blocked IP: {ip_address} 👉 {url}\n"
+                            addActivity(message)
+                            block_ip(ip_address, message)
+                        else:
+                            addActivity(f"\t🕵️ {ip_address} {url}\n")
+                    except Exception as err:
+                        print(f"Something went wrong: {err}")
+
+    addActivity(f"\nIP Address Count:\n")
+    for ip, count in ip_counts.items():
+        addActivity(f"\t📍 {ip} {count}")
+        if count > IP_OCCURRENCE_THRESHOLD:
+            message = f"🚨 Blocked: {ip} with a count of {count}"
+            addActivity(message)
+            block_ip(ip, message)

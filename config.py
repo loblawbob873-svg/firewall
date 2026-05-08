@@ -2,9 +2,12 @@
 LISTEN_ADDRESS = "0.0.0.0"
 #LISTEN_ADDRESS =  "192.168.7.1"
 
-LISTEN_PORT = "6767"
+LISTEN_PORT = 6767
 
 LOG_FILE = "/tmp/access.log"
+
+USE_JOURNALD = True 
+JOURNALD_UNIT = "nginx"
 
 # Block IP's after this many connections
 IP_OCCURRENCE_THRESHOLD = 50
@@ -47,9 +50,10 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 COUNTRY_BLOCKLIST = [
-        os.path.join(BASE_DIR, "il-aggregated.zone"),
-        os.path.join(BASE_DIR, "in-aggregated.zone"),
-        os.path.join(BASE_DIR, "cn-aggregated.zone"),
-        os.path.join(BASE_DIR, "sg-aggregated.zone"),
-        os.path.join(BASE_DIR, "id-aggregated.zone")
+    os.path.join(BASE_DIR, "cloudflare-aggregated.zone"),
+    os.path.join(BASE_DIR, "il-aggregated.zone"),
+    os.path.join(BASE_DIR, "in-aggregated.zone"),
+    os.path.join(BASE_DIR, "cn-aggregated.zone"),
+    os.path.join(BASE_DIR, "sg-aggregated.zone"),
+    os.path.join(BASE_DIR, "id-aggregated.zone"),
 ]

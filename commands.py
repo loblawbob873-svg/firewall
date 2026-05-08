@@ -17,8 +17,8 @@ def get_cpu_usage():
     return f"{final}"
 
 def save_nft_rules():
-    command = f"/usr/sbin/nft list ruleset > {NFT_SAVED_RULES}"
-    subprocess.check_output(command, shell=True, text=True)
+    with open(NFT_SAVED_RULES, "w") as f:
+        subprocess.run(["/usr/sbin/nft", "list", "ruleset"], stdout=f, check=True)
 
 
 def get_block_count():
@@ -39,16 +39,17 @@ def get_block_count():
         return "0"
 
 def block_ip(ip, message, country=None):
-    nft_output = subprocess.check_output("nft list ruleset", shell=True).decode()
+    nft_output = subprocess.check_output(["/usr/sbin/nft", "list", "ruleset"], text=True)
     if ip not in nft_output:
         if country is None:
-            command = f"/usr/sbin/nft add element ip filter blackhole {{ {ip} }}"
+            set_name = "blackhole"
         else:
-            country_code = os.path.basename(country).split('-')[0]
-            command = f"/usr/sbin/nft add element ip filter {country_code} {{ {ip} }}"
-
-        os.system(command)
-        send_message(f"{message}")
+            set_name = os.path.basename(country).split('-')[0]
+        subprocess.run(
+            ["/usr/sbin/nft", "add", "element", "ip", "filter", set_name, "{", ip, "}"],
+            check=True
+        )
+        send_message(message)
 
 def block_country():
     for filename in COUNTRY_BLOCKLIST:
