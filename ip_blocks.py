@@ -1,5 +1,10 @@
 IP_BLOCKS = [
     "visionheight.com",
+    "mysqldump",
+    "archives.tar",
+    "backend.tar",
+    "pg_dump",
+    "exports.zip",
     ".env",
     "config.json",
     "wp-admin",

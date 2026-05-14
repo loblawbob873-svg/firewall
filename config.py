@@ -50,7 +50,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 COUNTRY_BLOCKLIST = [
-    os.path.join(BASE_DIR, "cloudflare-aggregated.zone"),
+#    os.path.join(BASE_DIR, "cloudflare-aggregated.zone"),
     os.path.join(BASE_DIR, "il-aggregated.zone"),
     os.path.join(BASE_DIR, "in-aggregated.zone"),
     os.path.join(BASE_DIR, "cn-aggregated.zone"),
