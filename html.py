@@ -85,7 +85,7 @@ header {{
 .header-timestamp {{
   text-align: center;
   padding: 0.5rem 0 0.25rem 0;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--text-secondary);
   border-top: 1px solid var(--border-color);
   margin-top: 0.5rem;
