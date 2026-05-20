@@ -20,8 +20,8 @@ SUBNET_BLOCKS = [
 ]
 
 # Front Page Title Redirect Path 
-REDIRECT='/'
-#REDIRECT='/status'
+#REDIRECT='/'
+REDIRECT='/status'
 
 LOCAL_NETWORK = ["192.168.0", "47.5.68.214", "192.168.5", "107.175.34.92", "69.145.1.133"]
 

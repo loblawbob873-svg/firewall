@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse
 from html import basicHTML
 from html import htmlRELOAD
 from ai import generate_reply
-from config import LOG_FILE, USE_JOURNALD, JOURNALD_UNIT
+from config import LOG_FILE, USE_JOURNALD, JOURNALD_UNIT, REDIRECT
 from db import getHTML
 import subprocess
 import time
@@ -77,8 +77,60 @@ async def main(ip: str, date: str):
                         if ip in line:
                             array.append(line)
 
-        content += f'<br><br><p allign=center><h2>🔬 Analyzing Logs for IP: <a style="text-decoration:none" target="_blank" href="https://{ip}"> {ip} </a> </a></p><a href="https://www.ip-tracker.org/lookup.php?ip={ip}" style="text-decoration:none" target="_blank"> &nbsp🌐 Track IP</a></h2></p>'
-        content += '<textarea id="logs" readonly></textarea>'
+        content += '''<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0f172a; color: #f1f5f9;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh; padding: 2rem;
+}
+.ip-header {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid #334155; border-radius: 0.75rem;
+  padding: 1.5rem 2rem; margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+}
+.ip-header h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+.ip-header .ip-link { color: #3b82f6; text-decoration: none; font-weight: 600; }
+.ip-header .ip-link:hover { color: #60a5fa; text-decoration: underline; }
+.ip-header .track-link {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  margin-top: 0.5rem; padding: 0.375rem 1rem;
+  background: rgba(59,130,246,0.15); color: #3b82f6;
+  border-radius: 9999px; font-size: 0.875rem; font-weight: 500;
+  text-decoration: none; transition: background 0.2s;
+}
+.ip-header .track-link:hover { background: rgba(59,130,246,0.25); }
+.log-card {
+  background: #1e293b; border: 1px solid #334155;
+  border-radius: 0.75rem; overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+}
+.log-card-header {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; border-bottom: 1px solid #334155;
+  color: #eab308; display: flex; align-items: center; gap: 0.5rem;
+}
+#logs {
+  width: 100%; height: 500px; padding: 1rem;
+  background: #0f172a; color: #e2e8f0;
+  border: none; font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.8125rem; line-height: 1.6; resize: vertical;
+}
+#logs:focus { outline: none; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 1rem; padding: 0.5rem 1rem;
+  color: #94a3b8; text-decoration: none; font-size: 0.875rem;
+  border-radius: 0.5rem; transition: all 0.15s;
+}
+.back-link:hover { background: #1e293b; color: #f1f5f9; }
+</style>'''
+        content += f'<a class="back-link" href="{REDIRECT}">← Back to Dashboard</a>'
+        content += f'<div class="ip-header"><h2>🔬 Analyzing Logs for IP: <a class="ip-link" target="_blank" href="https://{ip}">{ip}</a></h2><a class="track-link" target="_blank" href="https://www.ip-tracker.org/lookup.php?ip={ip}">🌐 Track IP Location</a></div>'
+        content += '<div class="log-card"><div class="log-card-header">📋 Log Entries</div>'
+        content += '<textarea id="logs" readonly></textarea></div>'
         content += "<script>"
         content += f"const myArray = {json.dumps(array)}"
         content += "\nconst logs = document.getElementById('logs');\n"
