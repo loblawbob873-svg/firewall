@@ -74,10 +74,14 @@ class BackgroundTasks(threading.Thread):
 
 
 if __name__ == "__main__":
+    import sys
     import uvicorn
-    t = BackgroundTasks()
-    t.start()
-    b = CountryBlock()
-    b.start()
-    uvicorn.run(app, host=LISTEN_ADDRESS, port=LISTEN_PORT)
+    if "--print" in sys.argv:
+        # CLI display mode: run loop directly, no web server
+        BackgroundTasks().run()
+    else:
+        t = BackgroundTasks()
+        t.daemon = True
+        t.start()
+        uvicorn.run(app, host=LISTEN_ADDRESS, port=LISTEN_PORT)
     

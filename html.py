@@ -14,10 +14,13 @@ def basicHTML(timestamp):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 :root {{
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-card: #1e293b;
-  --bg-card-hover: #334155;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #0a0a0a;
+  --cyber-bg: #0d0a14;
+  --cyber-glow: rgba(0, 255, 255, 0.1);
+  --neon-blue: #00ffff;
+  --bg-card: #0a0a0a;
+  --bg-card-hover: #1a1a2e;
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --accent-blue: #3b82f6;
@@ -56,6 +59,8 @@ header {{
 .header-title {{
   font-size: 1.5rem;
   font-weight: 700;
+  text-shadow: 0 0 20px var(--neon-blue), 0 0 40px rgba(0, 255, 255, 0.3);
+  background: linear-gradient(90deg, #6ee7ff 0%, #a855f7 100%);
   letter-spacing: -0.025em;
 }}
 .header-title a {{
