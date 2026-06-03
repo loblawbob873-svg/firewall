@@ -143,6 +143,45 @@ body {
         return HTMLResponse(content=content)
 
 
+@app.get("/ip/data")
+async def ip_data(ip: str, date: str):
+    array = []
+    try:
+        if USE_JOURNALD:
+            month_map = {"Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06",
+                        "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"}
+            if ":" in date:
+                date_part, time_part = date.split(":", 1)
+                day, month, year = date_part.split("/")
+                month_num = month_map.get(month, month)
+                if ":" in time_part:
+                    since = f"{year}-{month_num}-{day} {time_part}:00"
+                    until = f"{year}-{month_num}-{day} {time_part}:59"
+                else:
+                    since = f"{year}-{month_num}-{day} {time_part}:00:00"
+                    until = f"{year}-{month_num}-{day} {time_part}:59:59"
+            else:
+                day, month, year = date.split("/")
+                month_num = month_map.get(month, month)
+                since = f"{year}-{month_num}-{day} 00:00:00"
+                until = f"{year}-{month_num}-{day} 23:59:59"
+            result = subprocess.run(
+                ["journalctl", "-u", JOURNALD_UNIT, f"--since={since}", f"--until={until}", "--no-pager", "-o", "cat"],
+                capture_output=True, text=True
+            )
+            for line in result.stdout.splitlines():
+                if ip in line:
+                    array.append(line)
+        else:
+            with open(f"{LOG_FILE}", "r") as f:
+                for line in f:
+                    if date in line and ip in line:
+                        array.append(line.rstrip())
+        return JSONResponse({"ip": ip, "date": date, "logs": array})
+    except Exception as e:
+        return JSONResponse({"ip": ip, "date": date, "logs": [], "error": str(e)})
+
+
 @app.get("/ai")
 async def main(ip: str):
     return generate_reply(ip)

@@ -189,13 +189,51 @@ main {{
   border-radius: 0.375rem;
   font-size: 0.75rem;
   color: var(--text-secondary);
-  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
   transition: all 0.15s;
   flex-shrink: 0;
 }}
 .entry .lookup-btn:hover {{
   background: rgba(59,130,246,0.15);
   color: var(--accent-blue);
+}}
+.modal-overlay {{
+  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 1rem;
+}}
+.modal-box {{
+  background: #0f172a; border: 1px solid #334155;
+  border-radius: 0.75rem; width: 100%; max-width: 860px;
+  max-height: 85vh; display: flex; flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.75);
+}}
+.modal-header {{
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem; border-bottom: 1px solid #334155;
+}}
+.modal-header-title {{ font-size: 0.95rem; font-weight: 700; color: #f1f5f9; }}
+.modal-close {{
+  background: none; border: none; color: #94a3b8;
+  cursor: pointer; font-size: 1.1rem; padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem; transition: all 0.15s;
+}}
+.modal-close:hover {{ background: #1e293b; color: #f1f5f9; }}
+.modal-body {{
+  flex: 1; overflow: hidden; display: flex; flex-direction: column;
+  padding: 1rem; gap: 0.75rem; min-height: 0;
+}}
+.modal-ip-info {{ display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; font-size: 0.875rem; }}
+.modal-ip-info a {{ color: #3b82f6; text-decoration: none; font-weight: 500; }}
+.modal-ip-info a:hover {{ color: #60a5fa; text-decoration: underline; }}
+#modal-logs {{
+  flex: 1; min-height: 0; background: #0a0a0a; color: #e2e8f0;
+  border: 1px solid #334155; border-radius: 0.5rem;
+  padding: 0.75rem; font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.8rem; line-height: 1.6; resize: none; overflow-y: auto;
+  white-space: pre; height: 400px;
 }}
 @media (max-width: 768px) {{
   main {{ flex-direction: column; }}
@@ -245,6 +283,41 @@ def htmlRELOAD():
 })();
 </script>"""
 
+def htmlModal():
+    return """<div id="ip-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-header-title">🔬 <span id="modal-ip-title">IP Analysis</span></span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-ip-info" id="modal-ip-info"></div>
+      <textarea id="modal-logs" readonly>Loading...</textarea>
+    </div>
+  </div>
+</div>
+<script>
+function openIPModal(ip, date) {
+  document.getElementById('modal-ip-title').textContent = ip;
+  var info = document.getElementById('modal-ip-info');
+  info.innerHTML = '<a href="https://' + ip + '" target="_blank">🔗 ' + ip + '</a>' +
+    '<a href="https://www.ip-tracker.org/lookup.php?ip=' + encodeURIComponent(ip) + '" target="_blank">🌐 Track Location</a>';
+  var logs = document.getElementById('modal-logs');
+  logs.value = 'Loading...';
+  document.getElementById('ip-modal').style.display = 'flex';
+  fetch('/ip/data?ip=' + encodeURIComponent(ip) + '&date=' + encodeURIComponent(date))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      logs.value = data.logs.length ? data.logs.join('\\n') : 'No log entries found.';
+    })
+    .catch(function() { logs.value = 'Error fetching data.'; });
+}
+function closeModal() {
+  document.getElementById('ip-modal').style.display = 'none';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+</script>"""
+
 def buildWeb(activity, timestamp):
     blocked_array = []
     standard_queries = []
@@ -253,22 +326,30 @@ def buildWeb(activity, timestamp):
     for line in activity:
         if "🚨 Blocked IP:" in line:
             value = line.split(" ")
-            line = f'<div class="entry"><span class="badge-icon blocked">🛑</span><a target="_blank" href="https://{value[3]}">{value[3]}</a> <span class="meta">{value[4]} {value[5]}</span><a class="lookup-btn" target="_blank" href="/ip?ip={value[3]}&date={timestamp}">🔍</a></div>'
-            blocked_array.append(line)
+            ip_val = value[3]
+            line = f'<div class="entry"><span class="badge-icon blocked">🛑</span><a target="_blank" href="https://{ip_val}">{ip_val}</a> <span class="meta">{value[4]} {value[5]}</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
+            if line not in blocked_array:
+                blocked_array.append(line)
         if "🚨 Blocked Subnet:" in line:
             value = line.split(" ")
-            line = f'<div class="entry"><span class="badge-icon blocked">🛑</span><a target="_blank" href="https://{value[3]}">{value[3]}</a> <span class="meta">{value[4]} {value[5]}</span><a class="lookup-btn" target="_blank" href="/ip?ip={value[3]}&date={timestamp}">🔍</a></div>'
-            blocked_array.append(line)
+            ip_val = value[3]
+            line = f'<div class="entry"><span class="badge-icon blocked">🛑</span><a target="_blank" href="https://{ip_val}">{ip_val}</a> <span class="meta">{value[4]} {value[5]}</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
+            if line not in blocked_array:
+                blocked_array.append(line)
         if "📍" in line:
             URL_FIX = line.split(" ")
             value = line.split(" ")
-            line = f'<div class="entry"><span class="badge-icon counter">📍</span><a target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a><span class="count">{value[2]} hits</span><a class="lookup-btn" target="_blank" href="/ip?ip={URL_FIX[1]}&date={timestamp}">🔍</a></div>'
-            ip_counters.append(line)
+            ip_val = URL_FIX[1]
+            line = f'<div class="entry"><span class="badge-icon counter">📍</span><a target="_blank" href="https://{ip_val}">{ip_val}</a><span class="count">{value[2]} hits</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
+            if line not in ip_counters:
+                ip_counters.append(line)
         if "🕵️" in line:
             URL_FIX = line.split(" ")
             URL_PARSE = line.split(" ")
-            line = f'<div class="entry"><span class="badge-icon query">⁉️</span><a target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> <span class="meta">👉 {URL_PARSE[2]}</span><a class="lookup-btn" target="_blank" href="/ip?ip={URL_PARSE[1]}&date={timestamp}">🔍</a></div>'
-            standard_queries.append(line)
+            ip_val = URL_PARSE[1]
+            line = f'<div class="entry"><span class="badge-icon query">⁉️</span><a target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> <span class="meta">👉 {URL_PARSE[2]}</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
+            if line not in standard_queries:
+                standard_queries.append(line)
     
     clearHTML() 
     addHTML(basicHTML(timestamp))
@@ -291,5 +372,6 @@ def buildWeb(activity, timestamp):
     addHTML('</div></div>')
     
     addHTML('</main>')
+    addHTML(htmlModal())
     addHTML(htmlRELOAD())
     addHTML('</body></html>')
