@@ -95,7 +95,10 @@ header {{
   margin-top: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;
 }}
 main {{
-  display: flex; flex: 1; gap: 1rem; padding: 1rem; min-height: 0;
+  display: flex; flex-direction: column; flex: 1; gap: 1rem; padding: 1rem; min-height: 0;
+}}
+.top-row {{
+  display: flex; gap: 1rem; flex: 2; min-height: 0;
 }}
 .column {{
   flex: 1; background: var(--bg-card);
@@ -133,6 +136,14 @@ main {{
   border-color: rgba(197,0,255,0.25);
   box-shadow: var(--shadow), 0 0 20px rgba(197,0,255,0.06);
 }}
+.column:has(.column-header.allowed)::before {{
+  background: linear-gradient(90deg, transparent 0%, var(--neon-green) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--neon-green);
+}}
+.column:has(.column-header.allowed):hover {{
+  border-color: rgba(0,255,159,0.25);
+  box-shadow: var(--shadow), 0 0 20px rgba(0,255,159,0.06);
+}}
 .column-header {{
   padding: 0.7rem 1rem; font-size: 0.72rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.12em;
@@ -150,6 +161,10 @@ main {{
 .column-header.counters {{
   color: var(--neon-purple); border-bottom-color: rgba(197,0,255,0.18);
   text-shadow: 0 0 8px rgba(197,0,255,0.55);
+}}
+.column-header.allowed {{
+  color: var(--neon-green); border-bottom-color: rgba(0,255,159,0.18);
+  text-shadow: 0 0 8px rgba(0,255,159,0.55);
 }}
 .column-body {{
   flex: 1; overflow-y: auto; padding: 0.4rem;
@@ -181,6 +196,7 @@ main {{
 .entry .badge-icon.blocked {{ background: rgba(255,45,120,0.12); }}
 .entry .badge-icon.query  {{ background: rgba(240,192,0,0.12); }}
 .entry .badge-icon.counter {{ background: rgba(197,0,255,0.12); }}
+.entry .badge-icon.allowed {{ background: rgba(0,255,159,0.12); }}
 .entry .count {{
   background: rgba(0,180,220,0.08); color: #00c8ef;
   border: 1px solid rgba(0,180,220,0.2);
@@ -257,7 +273,7 @@ main {{
   text-shadow: 0 0 4px rgba(57,255,154,0.3);
 }}
 @media (max-width: 768px) {{
-  main {{ flex-direction: column; }}
+  .top-row {{ flex-direction: column; }}
   .column {{ max-height: 40vh; }}
   header {{ padding: 0.75rem 1rem; }}
   .header-top {{ flex-direction: column; align-items: flex-start; }}
@@ -345,6 +361,7 @@ def buildWeb(activity, timestamp):
     blocked_array = []
     standard_queries = []
     ip_counters = []
+    allowed_array = []
 
     for line in activity:
         if "🚨 Blocked IP:" in line:
@@ -373,27 +390,42 @@ def buildWeb(activity, timestamp):
             line = f'<div class="entry"><span class="badge-icon query">⁉️</span><a target="_blank" href="https://{URL_FIX[1]}">{URL_FIX[1]}</a> <span class="meta">👉 {URL_PARSE[2]}</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
             if line not in standard_queries:
                 standard_queries.append(line)
-    
-    clearHTML() 
+        if "✅" in line:
+            URL_FIX = line.split(" ")
+            ip_val = URL_FIX[1]
+            url_val = URL_FIX[2] if len(URL_FIX) > 2 else ""
+            entry = f'<div class="entry"><span class="badge-icon allowed">✅</span><a target="_blank" href="https://{ip_val}">{ip_val}</a> <span class="meta">{url_val}</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
+            if entry not in allowed_array:
+                allowed_array.append(entry)
+
+    clearHTML()
     addHTML(basicHTML(timestamp))
     
     addHTML('<main>')
-    
+    addHTML('<div class="top-row">')
+
     addHTML('<div class="column"><div class="column-header blocked">🛑 Blocked Traffic</div><div class="column-body">')
     for line in blocked_array:
         addHTML(line)
     addHTML('</div></div>')
-    
+
     addHTML('<div class="column"><div class="column-header queries">⁉️ Queries</div><div class="column-body">')
     for line in standard_queries:
         addHTML(line)
     addHTML('</div></div>')
-    
+
     addHTML('<div class="column"><div class="column-header counters">📍 IP Counters</div><div class="column-body">')
     for line in ip_counters:
         addHTML(line)
     addHTML('</div></div>')
-    
+
+    addHTML('</div>')
+
+    addHTML('<div class="column"><div class="column-header allowed">✅ Allowed Traffic</div><div class="column-body">')
+    for line in allowed_array:
+        addHTML(line)
+    addHTML('</div></div>')
+
     addHTML('</main>')
     addHTML(htmlModal())
     addHTML(htmlRELOAD())

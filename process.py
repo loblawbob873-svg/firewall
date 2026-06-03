@@ -38,28 +38,36 @@ def process_log(timestamp):
     ip_counts = {}
 
     for line in lines:
-        if not any(term.lower() in line.lower() for term in TIER_ONE):
-            ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
-            if ip_match:
-                if not any(lan.lower() in line.lower() for lan in LOCAL_NETWORK):
-                    ip_address = ip_match.group()
-                    ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
+        ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
+        if not ip_match:
+            continue
+        ip_address = ip_match.group()
+        if any(lan.lower() in line.lower() for lan in LOCAL_NETWORK):
+            continue
 
-                    try:
-                        url = extract_url(line)
-                        if any(word.lower() in line.lower() for word in SUBNET_BLOCKS):
-                            BIG_IP = extract_first_three_parts(ip_address)
-                            message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {url}\n"
-                            addActivity(message)
-                            block_ip(f"{BIG_IP}.0/24", message)
-                        elif any(word.lower() in line.lower() for word in IP_BLOCKS):
-                            message = f"\t🚨 Blocked IP: {ip_address} 👉 {url}\n"
-                            addActivity(message)
-                            block_ip(ip_address, message)
-                        else:
-                            addActivity(f"\t🕵️ {ip_address} {url}\n")
-                    except Exception as err:
-                        print(f"Something went wrong: {err}")
+        if not any(term.lower() in line.lower() for term in TIER_ONE):
+            ip_counts[ip_address] = ip_counts.get(ip_address, 0) + 1
+            try:
+                url = extract_url(line)
+                if any(word.lower() in line.lower() for word in SUBNET_BLOCKS):
+                    BIG_IP = extract_first_three_parts(ip_address)
+                    message = f"\t🚨 Blocked Subnet: {ip_address} 👉 {url}\n"
+                    addActivity(message)
+                    block_ip(f"{BIG_IP}.0/24", message)
+                elif any(word.lower() in line.lower() for word in IP_BLOCKS):
+                    message = f"\t🚨 Blocked IP: {ip_address} 👉 {url}\n"
+                    addActivity(message)
+                    block_ip(ip_address, message)
+                else:
+                    addActivity(f"\t🕵️ {ip_address} {url}\n")
+            except Exception as err:
+                print(f"Something went wrong: {err}")
+        else:
+            try:
+                url = extract_url(line)
+                addActivity(f"\t✅ {ip_address} {url}\n")
+            except Exception:
+                pass
 
     addActivity(f"\nIP Address Count:\n")
     for ip, count in ip_counts.items():
