@@ -202,12 +202,12 @@ main {{
 .modal-overlay {{
   position: fixed; inset: 0; background: rgba(0,0,0,0.75);
   display: flex; align-items: center; justify-content: center;
-  z-index: 1000; padding: 1rem;
+  z-index: 1000; padding: 0.5rem;
 }}
 .modal-box {{
   background: #0f172a; border: 1px solid #334155;
-  border-radius: 0.75rem; width: 100%; max-width: 860px;
-  height: 85vh; display: flex; flex-direction: column;
+  border-radius: 0.75rem; width: 95vw; max-width: 1100px;
+  height: 90vh; display: flex; flex-direction: column;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.75);
 }}
 .modal-header {{
@@ -240,6 +240,8 @@ main {{
   .column {{ max-height: 40vh; }}
   header {{ padding: 0.75rem 1rem; }}
   .header-top {{ flex-direction: column; align-items: flex-start; }}
+  .modal-overlay {{ padding: 0; }}
+  .modal-box {{ width: 100vw; height: 100vh; border-radius: 0; }}
 }}
 </style>
 </head><body>
