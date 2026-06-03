@@ -1,4 +1,5 @@
 IP_BLOCKS = [
+    "Claude-SearchBot",
     "visionheight.com",
     "TLM-Audit-Scanner",
     "mysqldump",
