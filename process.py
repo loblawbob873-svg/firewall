@@ -36,7 +36,6 @@ def process_log(timestamp):
     lines = get_log_lines(timestamp)
 
     ip_counts = {}
-    allowed_counts = {}
 
     for line in lines:
         ip_match = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
@@ -64,14 +63,15 @@ def process_log(timestamp):
             except Exception as err:
                 print(f"Something went wrong: {err}")
         else:
-            allowed_counts[ip_address] = allowed_counts.get(ip_address, 0) + 1
+            try:
+                url = extract_url(line)
+                addActivity(f"\t✅ {ip_address} {url}\n")
+            except Exception:
+                pass
 
     addActivity(f"\nIP Address Count:\n")
     for ip, count in ip_counts.items():
         addActivity(f"\t📍 {ip} {count}")
-
-    for ip, count in allowed_counts.items():
-        addActivity(f"\t✅ {ip} {count}")
         if count > IP_OCCURRENCE_THRESHOLD:
             message = f"🚨 Blocked: {ip} with a count of {count}"
             addActivity(message)

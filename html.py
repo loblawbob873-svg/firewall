@@ -6,7 +6,7 @@ from db import getHTML
 from db import html
 from config import REDIRECT
 
-def basicHTML(timestamp):
+def basicHTML(timestamp, allowed=0):
     cpu = get_cpu_usage()
     blocked = get_block_count().strip()
     HTML = f"""<html lang="en"><head>
@@ -87,6 +87,11 @@ header {{
   background: rgba(255,45,120,0.07); color: var(--neon-pink);
   border-color: rgba(255,45,120,0.28);
   box-shadow: 0 0 10px rgba(255,45,120,0.12), inset 0 0 8px rgba(255,45,120,0.04);
+}}
+.stat-badge.allowed {{
+  background: rgba(0,255,159,0.07); color: var(--neon-green);
+  border-color: rgba(0,255,159,0.28);
+  box-shadow: 0 0 10px rgba(0,255,159,0.12), inset 0 0 8px rgba(0,255,159,0.04);
 }}
 .header-timestamp {{
   text-align: center; padding: 0.4rem 0 0.1rem 0;
@@ -288,6 +293,7 @@ main {{
     <div class="header-stats">
       <span class="stat-badge cpu">⚡ {cpu}</span>
       <span class="stat-badge blocked">🚫 {blocked} blocked</span>
+      <span class="stat-badge allowed">✅ {allowed} allowed</span>
     </div>
   </div>
   <div class="header-timestamp">📡 traffic as of: {timestamp}</div>
@@ -393,13 +399,13 @@ def buildWeb(activity, timestamp):
         if "✅" in line:
             URL_FIX = line.split(" ")
             ip_val = URL_FIX[1]
-            count_val = URL_FIX[2].strip() if len(URL_FIX) > 2 else ""
-            entry = f'<div class="entry"><span class="badge-icon allowed">✅</span><a target="_blank" href="https://{ip_val}">{ip_val}</a><span class="count">{count_val} hits</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
+            url_val = URL_FIX[2].strip() if len(URL_FIX) > 2 else ""
+            entry = f'<div class="entry"><span class="badge-icon allowed">✅</span><a target="_blank" href="https://{ip_val}">{ip_val}</a> <span class="meta">{url_val}</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
             if entry not in allowed_array:
                 allowed_array.append(entry)
 
     clearHTML()
-    addHTML(basicHTML(timestamp))
+    addHTML(basicHTML(timestamp, len(allowed_array)))
     
     addHTML('<main>')
     addHTML('<div class="top-row">')
