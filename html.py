@@ -393,8 +393,8 @@ def buildWeb(activity, timestamp):
         if "✅" in line:
             URL_FIX = line.split(" ")
             ip_val = URL_FIX[1]
-            url_val = URL_FIX[2] if len(URL_FIX) > 2 else ""
-            entry = f'<div class="entry"><span class="badge-icon allowed">✅</span><a target="_blank" href="https://{ip_val}">{ip_val}</a> <span class="meta">{url_val}</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
+            count_val = URL_FIX[2].strip() if len(URL_FIX) > 2 else ""
+            entry = f'<div class="entry"><span class="badge-icon allowed">✅</span><a target="_blank" href="https://{ip_val}">{ip_val}</a><span class="count">{count_val} hits</span><button class="lookup-btn" onclick="openIPModal(\'{ip_val}\', \'{timestamp}\')">🔍</button></div>'
             if entry not in allowed_array:
                 allowed_array.append(entry)
 
