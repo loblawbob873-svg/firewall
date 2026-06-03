@@ -13,234 +13,255 @@ def basicHTML(timestamp):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 :root {{
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #0a0a0a;
-  --cyber-bg: #0d0a14;
-  --cyber-glow: rgba(0, 255, 255, 0.1);
-  --neon-blue: #00ffff;
-  --bg-card: #0a0a0a;
-  --bg-card-hover: #1a1a2e;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --accent-blue: #3b82f6;
-  --accent-green: #22c55e;
-  --accent-red: #ef4444;
-  --accent-yellow: #eab308;
-  --accent-purple: #a855f7;
-  --border-color: #334155;
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+  --bg-primary: #05060f;
+  --bg-card: #080a18;
+  --bg-card-hover: #0e1028;
+  --text-primary: #cbd5e1;
+  --text-secondary: #4a5568;
+  --neon-cyan: #00f0ff;
+  --neon-pink: #ff2d78;
+  --neon-purple: #c500ff;
+  --neon-yellow: #f0c000;
+  --neon-green: #00ff9f;
+  --border-dim: #111827;
+  --shadow: 0 4px 24px rgba(0,0,0,0.7);
 }}
 * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-html {{ -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }}
+html {{ -webkit-font-smoothing: antialiased; }}
 body {{
-  background: var(--bg-primary);
+  background-color: var(--bg-primary);
+  background-image:
+    linear-gradient(rgba(0,240,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.022) 1px, transparent 1px);
+  background-size: 44px 44px;
   color: var(--text-primary);
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }}
+body::after {{
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
+}}
 header {{
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(180deg, #0a0c20 0%, #05060f 100%);
+  border-bottom: 1px solid rgba(0,240,255,0.2);
   padding: 1rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 0 40px rgba(0,240,255,0.07), 0 4px 20px rgba(0,0,0,0.6);
 }}
 .header-top {{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
 }}
 .header-title {{
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-shadow: 0 0 20px var(--neon-blue), 0 0 40px rgba(0, 255, 255, 0.3);
-  background: linear-gradient(90deg, #6ee7ff 0%, #a855f7 100%);
-  letter-spacing: -0.025em;
+  font-size: 1.5rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.15em;
 }}
 .header-title a {{
-  color: var(--text-primary);
+  color: var(--neon-cyan);
   text-decoration: none;
-  transition: color 0.2s;
+  text-shadow: 0 0 8px var(--neon-cyan), 0 0 24px rgba(0,240,255,0.45), 0 0 48px rgba(0,240,255,0.18);
+  transition: text-shadow 0.3s;
 }}
-.header-title a:hover {{ color: var(--accent-blue); }}
-.header-stats {{
-  display: flex;
-  gap: 1rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+.header-title a:hover {{
+  text-shadow: 0 0 12px var(--neon-cyan), 0 0 36px rgba(0,240,255,0.65), 0 0 72px rgba(0,240,255,0.3);
 }}
+.header-stats {{ display: flex; gap: 1rem; }}
 .stat-badge {{
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.2rem 0.8rem; border-radius: 2px;
+  font-size: 0.72rem; font-weight: 700;
+  white-space: nowrap; text-transform: uppercase; letter-spacing: 0.07em;
+  border: 1px solid;
 }}
-.stat-badge.cpu {{ background: rgba(59,130,246,0.15); color: var(--accent-blue); }}
-.stat-badge.blocked {{ background: rgba(239,68,68,0.15); color: var(--accent-red); }}
+.stat-badge.cpu {{
+  background: rgba(0,180,220,0.07); color: #00c8ef;
+  border-color: rgba(0,200,240,0.25);
+  box-shadow: 0 0 10px rgba(0,200,240,0.1), inset 0 0 8px rgba(0,200,240,0.04);
+}}
+.stat-badge.blocked {{
+  background: rgba(255,45,120,0.07); color: var(--neon-pink);
+  border-color: rgba(255,45,120,0.28);
+  box-shadow: 0 0 10px rgba(255,45,120,0.12), inset 0 0 8px rgba(255,45,120,0.04);
+}}
 .header-timestamp {{
-  text-align: center;
-  padding: 0.5rem 0 0.25rem 0;
-  font-size: 1rem;
-  color: var(--text-secondary);
-  border-top: 1px solid var(--border-color);
-  margin-top: 0.5rem;
+  text-align: center; padding: 0.4rem 0 0.1rem 0;
+  font-size: 0.72rem; color: var(--text-secondary);
+  border-top: 1px solid rgba(0,240,255,0.08);
+  margin-top: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;
 }}
 main {{
-  display: flex;
-  flex: 1;
-  gap: 1rem;
-  padding: 1rem;
-  min-height: 0;
+  display: flex; flex: 1; gap: 1rem; padding: 1rem; min-height: 0;
 }}
 .column {{
-  flex: 1;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 0.75rem;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  flex: 1; background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: 3px; overflow: hidden;
+  display: flex; flex-direction: column;
   box-shadow: var(--shadow);
-  transition: border-color 0.2s;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative;
 }}
-.column:hover {{ border-color: #475569; }}
+.column::before {{
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}}
+.column:has(.column-header.blocked)::before {{
+  background: linear-gradient(90deg, transparent 0%, var(--neon-pink) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--neon-pink);
+}}
+.column:has(.column-header.queries)::before {{
+  background: linear-gradient(90deg, transparent 0%, var(--neon-yellow) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--neon-yellow);
+}}
+.column:has(.column-header.counters)::before {{
+  background: linear-gradient(90deg, transparent 0%, var(--neon-purple) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--neon-purple);
+}}
+.column:has(.column-header.blocked):hover {{
+  border-color: rgba(255,45,120,0.25);
+  box-shadow: var(--shadow), 0 0 20px rgba(255,45,120,0.06);
+}}
+.column:has(.column-header.queries):hover {{
+  border-color: rgba(240,192,0,0.25);
+  box-shadow: var(--shadow), 0 0 20px rgba(240,192,0,0.06);
+}}
+.column:has(.column-header.counters):hover {{
+  border-color: rgba(197,0,255,0.25);
+  box-shadow: var(--shadow), 0 0 20px rgba(197,0,255,0.06);
+}}
 .column-header {{
-  padding: 0.75rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  padding: 0.7rem 1rem; font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  border-bottom: 1px solid var(--border-dim);
+  display: flex; align-items: center; gap: 0.5rem;
 }}
-.column-header.blocked {{ color: var(--accent-red); border-bottom-color: rgba(239,68,68,0.3); }}
-.column-header.queries {{ color: var(--accent-yellow); border-bottom-color: rgba(234,179,8,0.3); }}
-.column-header.counters {{ color: var(--accent-purple); border-bottom-color: rgba(168,85,247,0.3); }}
+.column-header.blocked {{
+  color: var(--neon-pink); border-bottom-color: rgba(255,45,120,0.18);
+  text-shadow: 0 0 8px rgba(255,45,120,0.55);
+}}
+.column-header.queries {{
+  color: var(--neon-yellow); border-bottom-color: rgba(240,192,0,0.18);
+  text-shadow: 0 0 8px rgba(240,192,0,0.55);
+}}
+.column-header.counters {{
+  color: var(--neon-purple); border-bottom-color: rgba(197,0,255,0.18);
+  text-shadow: 0 0 8px rgba(197,0,255,0.55);
+}}
 .column-body {{
-  flex: 1;
-  overflow-y: auto;
-  padding: 0.5rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
+  flex: 1; overflow-y: auto; padding: 0.4rem;
+  scrollbar-width: thin; scrollbar-color: rgba(0,240,255,0.25) transparent;
 }}
-.column-body::-webkit-scrollbar {{ width: 4px; }}
+.column-body::-webkit-scrollbar {{ width: 3px; }}
 .column-body::-webkit-scrollbar-track {{ background: transparent; }}
-.column-body::-webkit-scrollbar-thumb {{ background: var(--border-color); border-radius: 2px; }}
+.column-body::-webkit-scrollbar-thumb {{ background: rgba(0,240,255,0.25); border-radius: 2px; }}
 .entry {{
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.625rem;
-  margin-bottom: 0.25rem;
-  border-radius: 0.5rem;
-  font-size: 0.8125rem;
-  transition: background 0.15s;
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.5rem; margin-bottom: 0.15rem;
+  border-radius: 2px; font-size: 0.78rem;
+  transition: background 0.12s, border-color 0.12s;
   word-break: break-all;
+  border-left: 2px solid transparent;
 }}
-.entry:hover {{ background: var(--bg-card-hover); }}
+.entry:hover {{ background: var(--bg-card-hover); border-left-color: var(--neon-cyan); }}
 .entry a {{
-  color: var(--accent-blue);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.15s;
+  color: var(--neon-cyan); text-decoration: none; font-weight: 500;
+  transition: text-shadow 0.15s;
 }}
-.entry a:hover {{ color: #60a5fa; text-decoration: underline; }}
-.entry .meta {{
-  color: var(--text-secondary);
-  font-size: 0.75rem;
-}}
+.entry a:hover {{ text-shadow: 0 0 8px var(--neon-cyan); }}
+.entry .meta {{ color: var(--text-secondary); font-size: 0.7rem; letter-spacing: 0.02em; }}
 .entry .badge-icon {{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.4rem; height: 1.4rem; border-radius: 2px;
+  font-size: 0.72rem; flex-shrink: 0;
 }}
-.entry .badge-icon.blocked {{ background: rgba(239,68,68,0.15); }}
-.entry .badge-icon.query {{ background: rgba(234,179,8,0.15); }}
-.entry .badge-icon.counter {{ background: rgba(168,85,247,0.15); }}
+.entry .badge-icon.blocked {{ background: rgba(255,45,120,0.12); }}
+.entry .badge-icon.query  {{ background: rgba(240,192,0,0.12); }}
+.entry .badge-icon.counter {{ background: rgba(197,0,255,0.12); }}
 .entry .count {{
-  background: rgba(59,130,246,0.15);
-  color: var(--accent-blue);
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  white-space: nowrap;
-  margin-left: auto;
+  background: rgba(0,180,220,0.08); color: #00c8ef;
+  border: 1px solid rgba(0,180,220,0.2);
+  padding: 0.1rem 0.45rem; border-radius: 2px;
+  font-size: 0.65rem; font-weight: 700;
+  white-space: nowrap; margin-left: auto; letter-spacing: 0.05em;
 }}
 .entry .lookup-btn {{
-  padding: 0.125rem 0.5rem;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s;
-  flex-shrink: 0;
+  padding: 0.15rem 0.45rem; border-radius: 2px; font-size: 0.72rem;
+  color: var(--text-secondary); background: none;
+  border: 1px solid transparent; cursor: pointer;
+  transition: all 0.15s; flex-shrink: 0;
 }}
 .entry .lookup-btn:hover {{
-  background: rgba(59,130,246,0.15);
-  color: var(--accent-blue);
+  background: rgba(0,240,255,0.07); color: var(--neon-cyan);
+  border-color: rgba(0,240,255,0.28);
+  box-shadow: 0 0 8px rgba(0,240,255,0.1);
 }}
 .modal-overlay {{
-  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  position: fixed; inset: 0; background: rgba(0,0,0,0.88);
   display: flex; align-items: center; justify-content: center;
   z-index: 1000; padding: 0.5rem;
+  backdrop-filter: blur(6px);
 }}
 .modal-box {{
-  background: #0f172a; border: 1px solid #334155;
-  border-radius: 0.75rem; width: 95vw; max-width: 1100px;
+  background: #070918; border: 1px solid rgba(0,240,255,0.28);
+  border-radius: 3px; width: 95vw; max-width: 1100px;
   height: 90vh; display: flex; flex-direction: column;
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.75);
+  box-shadow: 0 0 50px rgba(0,240,255,0.08), 0 0 100px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,240,255,0.015);
 }}
 .modal-header {{
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 1.25rem; border-bottom: 1px solid #334155;
+  padding: 0.875rem 1.25rem; border-bottom: 1px solid rgba(0,240,255,0.12);
+  background: linear-gradient(90deg, rgba(0,240,255,0.04), transparent 60%);
 }}
-.modal-header-title {{ font-size: 0.95rem; font-weight: 700; color: #f1f5f9; }}
+.modal-header-title {{
+  font-size: 0.82rem; font-weight: 700; color: var(--neon-cyan);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  text-shadow: 0 0 8px rgba(0,240,255,0.5);
+}}
 .modal-close {{
-  background: none; border: none; color: #94a3b8;
-  cursor: pointer; font-size: 1.1rem; padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem; transition: all 0.15s;
+  background: none; border: 1px solid rgba(0,240,255,0.2); color: var(--text-secondary);
+  cursor: pointer; font-size: 0.9rem; padding: 0.2rem 0.55rem;
+  border-radius: 2px; transition: all 0.15s; line-height: 1.4;
+  font-family: inherit;
 }}
-.modal-close:hover {{ background: #1e293b; color: #f1f5f9; }}
+.modal-close:hover {{
+  background: rgba(255,45,120,0.1); border-color: var(--neon-pink);
+  color: var(--neon-pink); box-shadow: 0 0 8px rgba(255,45,120,0.2);
+}}
 .modal-body {{
   flex: 1; overflow: hidden; display: flex; flex-direction: column;
-  padding: 1rem; gap: 0.75rem; min-height: 0;
+  padding: 0.875rem; gap: 0.65rem; min-height: 0;
 }}
-.modal-ip-info {{ display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; font-size: 0.875rem; }}
-.modal-ip-info a {{ color: #3b82f6; text-decoration: none; font-weight: 500; }}
-.modal-ip-info a:hover {{ color: #60a5fa; text-decoration: underline; }}
+.modal-ip-info {{
+  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  font-size: 0.76rem; letter-spacing: 0.04em;
+  padding: 0.45rem 0.75rem;
+  background: rgba(0,240,255,0.025);
+  border: 1px solid rgba(0,240,255,0.1); border-radius: 2px;
+}}
+.modal-ip-info a {{
+  color: var(--neon-cyan); text-decoration: none; font-weight: 500;
+  transition: text-shadow 0.15s;
+}}
+.modal-ip-info a:hover {{ text-shadow: 0 0 8px var(--neon-cyan); }}
 #modal-logs {{
-  flex: 1; min-height: 0; background: #0a0a0a; color: #e2e8f0;
-  border: 1px solid #334155; border-radius: 0.5rem;
-  padding: 0.75rem; font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 0.8rem; line-height: 1.6; resize: none; overflow: auto;
-  white-space: pre-wrap; word-break: break-all;
+  flex: 1; min-height: 0; background: #020308; color: #39ff9a;
+  border: 1px solid rgba(0,240,255,0.12); border-radius: 2px;
+  padding: 0.75rem; font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 0.76rem; line-height: 1.7; resize: none; overflow: auto;
+  white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;
+  scrollbar-width: thin; scrollbar-color: rgba(0,240,255,0.25) transparent;
+  text-shadow: 0 0 4px rgba(57,255,154,0.3);
 }}
 @media (max-width: 768px) {{
   main {{ flex-direction: column; }}
   .column {{ max-height: 40vh; }}
   header {{ padding: 0.75rem 1rem; }}
   .header-top {{ flex-direction: column; align-items: flex-start; }}
-  .modal-overlay {{ padding: 0; }}
+  .modal-overlay {{ padding: 0; backdrop-filter: none; }}
   .modal-box {{ width: 100vw; height: 100vh; border-radius: 0; }}
 }}
 </style>
@@ -250,10 +271,10 @@ main {{
     <div class="header-title"><a href="{REDIRECT}">🛡️ Firewall Console</a></div>
     <div class="header-stats">
       <span class="stat-badge cpu">⚡ {cpu}</span>
-      <span class="stat-badge blocked">🚫 Blocked: {blocked}</span>
+      <span class="stat-badge blocked">🚫 {blocked} blocked</span>
     </div>
   </div>
-  <div class="header-timestamp">📡 Traffic as of: {timestamp}</div>
+  <div class="header-timestamp">📡 traffic as of: {timestamp}</div>
 </header>
 """
     return HTML
