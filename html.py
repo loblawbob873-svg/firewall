@@ -207,7 +207,7 @@ main {{
 .modal-box {{
   background: #0f172a; border: 1px solid #334155;
   border-radius: 0.75rem; width: 100%; max-width: 860px;
-  max-height: 85vh; display: flex; flex-direction: column;
+  height: 85vh; display: flex; flex-direction: column;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.75);
 }}
 .modal-header {{
@@ -232,8 +232,8 @@ main {{
   flex: 1; min-height: 0; background: #0a0a0a; color: #e2e8f0;
   border: 1px solid #334155; border-radius: 0.5rem;
   padding: 0.75rem; font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 0.8rem; line-height: 1.6; resize: none; overflow-y: auto;
-  white-space: pre; height: 400px;
+  font-size: 0.8rem; line-height: 1.6; resize: none; overflow: auto;
+  white-space: pre-wrap; word-break: break-all;
 }}
 @media (max-width: 768px) {{
   main {{ flex-direction: column; }}
