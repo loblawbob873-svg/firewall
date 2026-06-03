@@ -1,5 +1,6 @@
 IP_BLOCKS = [
     "visionheight.com",
+    "TLM-Audit-Scanner",
     "mysqldump",
     "archives.tar",
     "backend.tar",
