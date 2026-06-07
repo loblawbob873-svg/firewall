@@ -1,6 +1,6 @@
 # Python Firewall — Real-Time DDoS Protection for Linux
 
-![Dashboard](image6.png)
+![Dashboard](dashboard.png)
 
 **A lightweight, zero-dependency DDoS and bot protection system that hooks directly into NFTables to ban attackers in real time.** No bloated agents, no cloud subscriptions — just Python, nftables, and instant blocks.
 
