@@ -1,2 +1,9 @@
 venv
+.venv
 __pycache__
+*.log
+*.pyc
+.opencode
+.opencode.json
+sitecustomize.py
+blocks.py
