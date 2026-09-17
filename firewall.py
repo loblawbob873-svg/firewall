@@ -76,6 +76,12 @@ class BackgroundTasks(threading.Thread):
 if __name__ == "__main__":
     import sys
     import uvicorn
+    # Country blocklists load at start in BOTH modes. Commit a182f58 rewrote this block for --print
+    # and dropped `CountryBlock().start()`, so since then the country sets were only as full as the
+    # last manual load and came up EMPTY after every boot (firewall.service flushes the ruleset).
+    c = CountryBlock()
+    c.daemon = True
+    c.start()
     if "--print" in sys.argv:
         # CLI display mode: run loop directly, no web server
         BackgroundTasks().run()

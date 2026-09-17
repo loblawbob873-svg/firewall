@@ -2,6 +2,7 @@ import re
 import psutil
 import subprocess
 import os
+import time
 from message import send_message
 from config import NFT_SAVED_RULES
 from config import COUNTRY_BLOCKLIST
@@ -51,10 +52,57 @@ def block_ip(ip, message, country=None):
         )
         send_message(message)
 
+def _country_set(filename):
+    return os.path.basename(filename).split('-')[0]
+
+
+def _set_exists(set_name):
+    return subprocess.run(["/usr/sbin/nft", "list", "set", "ip", "filter", set_name],
+                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+
+
+def load_country(filename, wait_seconds=120):
+    """Replace one country set with the contents of its zone file. Returns (loaded, failed).
+
+    ONE nft transaction per file ("flush set" + "add element" with every range), instead of one
+    `nft add` per range preceded by a full `nft list ruleset` to see if it is already there. That
+    was ~20,000 listings of an ever-growing ruleset, and the first range nft refused (an overlap)
+    raised out of the thread and silently skipped every country after it. The transaction is
+    atomic: the set is never seen half-empty, and a refused batch changes nothing.
+    """
+    set_name = _country_set(filename)
+    # At boot this can start before firewall.service has created the sets.
+    deadline = time.time() + wait_seconds
+    while not _set_exists(set_name):
+        if time.time() > deadline:
+            send_message(f"[country blocklist: set {set_name} does not exist, {filename} not loaded]")
+            return 0, 0
+        time.sleep(2)
+    with open(filename, 'r') as file:
+        ranges = [l.strip() for l in file if l.strip() and not l.strip().startswith('#')]
+    if not ranges:
+        return 0, 0
+    script = f"flush set ip filter {set_name}\nadd element ip filter {set_name} {{ {', '.join(ranges)} }}\n"
+    batch = subprocess.run(["/usr/sbin/nft", "-f", "-"], input=script, text=True, capture_output=True)
+    if batch.returncode == 0:
+        return len(ranges), 0
+    # The batch was refused as a whole (e.g. two overlapping ranges in the zone file). Fall back to
+    # adding one range at a time so one bad line cannot cost the rest of the country.
+    failed = 0
+    for ip in ranges:
+        one = subprocess.run(["/usr/sbin/nft", "add", "element", "ip", "filter", set_name, "{", ip, "}"],
+                             capture_output=True, text=True)
+        if one.returncode != 0:
+            failed += 1
+    return len(ranges) - failed, failed
+
+
 def block_country():
     for filename in COUNTRY_BLOCKLIST:
-        with open(filename, 'r') as file:
-            for line in file:
-                ip = line.strip()
-                if ip:
-                    block_ip(ip, f"{ip}", filename)
+        try:
+            loaded, failed = load_country(filename)
+            send_message(f"[country blocklist {_country_set(filename)}: {loaded} ranges loaded"
+                         + (f", {failed} refused" if failed else "") + "]")
+        except Exception as e:
+            # One unreadable file must not stop the other countries loading.
+            send_message(f"[country blocklist {filename} failed: {e}]")
